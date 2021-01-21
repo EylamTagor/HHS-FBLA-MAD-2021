@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "539510063044",
+    "project_id": "hhs-fbla-mad-2021-47488",
+    "storage_bucket": "hhs-fbla-mad-2021-47488.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539510063044:android:cf8745b8924df2e4ecee91",
+        "android_client_info": {
+          "package_name": "com.hhsfbla.hhs_fbla_mad_2021"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539510063044-7jn045k4jbo7dl73s75ch0q1srau3g97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSKwvdWrYlvWqfYd7fPAgD62mBcAALRnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539510063044-7jn045k4jbo7dl73s75ch0q1srau3g97.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
