@@ -1,4 +1,4 @@
-package com.hhsfbla.hhs_fbla_mad_2021.ui.dashboard;
+package com.hhsfbla.hhs_fbla_mad_2021.ui.jobs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +14,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 
-public class DashboardFragment extends Fragment {
+public class JobsFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
+    private JobsViewModel dashboardViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+                new ViewModelProvider(this).get(JobsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_jobs, container, false);
         final TextView textView = root.findViewById(R.id.text_dashboard);
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

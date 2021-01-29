@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_saved_jobs"
-        android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.dashboard.DashboardFragment"
+        android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.jobs.JobsFragment"
         android:label="@string/title_saved_jobs"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_jobs" />
 
     <fragment
         android:id="@+id/navigation_notifications"
