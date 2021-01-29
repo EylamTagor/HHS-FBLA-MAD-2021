@@ -22,4 +22,9 @@
         android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/profile_fragment" />
 </navigation>
