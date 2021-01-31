@@ -1,5 +1,7 @@
 package com.hhsfbla.hhs_fbla_mad_2021.classes;
 
+import android.media.Image;
+
 import java.util.ArrayList;
 
 public class User {
@@ -7,6 +9,16 @@ public class User {
     private String name;
     private String email;
     private ArrayList<Post> likedPosts;
+    private Image coverImg;
+    private Image pfp;
+    private ArrayList<User> following;
+    private ArrayList<User> followers;
+    private String jobTitle;
+    private String description;
+    private ArrayList<String> tags;
+    private ArrayList<String> skills;
+    private ArrayList<Experience> experiences;
+
 
     public User(int id, String name, String email){
         this.id = id;
