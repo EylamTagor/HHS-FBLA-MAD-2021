@@ -18,8 +18,7 @@
         android:layout_height="70dp"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintVertical_bias="0"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         tools:src="@tools:sample/backgrounds/scenic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +27,7 @@
 
     <TextView
         app:layout_constraintVertical_bias="0"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintHorizontal_bias="0"
         android:layout_marginStart="20dp"
         android:id="@+id/name"
@@ -41,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textStyle="bold"
         android:textColor="@color/LightGrey"
-        android:textSize="16sp"/>
+        android:textSize="14sp"/>
     <TextView
         app:layout_constraintVertical_bias="0"
         android:layout_marginTop="25dp"
@@ -94,10 +93,8 @@
         app:layout_constraintVertical_bias="0"
         android:layout_marginTop="12dp"
         app:layout_constraintHorizontal_bias="0"
-        android:layout_marginStart="20dp"
         android:id="@+id/description"
         android:layout_width="match_parent"
-        android:layout_marginEnd = "20dp"
         android:layout_height="wrap_content"
         android:text="- Designed app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n
 - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n
@@ -110,6 +107,7 @@
         android:textColor="@color/LightGrey"
         android:lineSpacingExtra="5dp"
         android:alpha=".8"
+        android:paddingBottom="10dp"
         android:textSize="10sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
