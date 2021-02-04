@@ -6,14 +6,24 @@ public class Experience {
     private Business workplace;
     private String startTime;
     private String endTime;
+    private String description;
     private boolean currentlyWorking;
 
-    public Experience(String title, Business workplace, String startTime, String endTime, boolean currentlyWorking){
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Experience(String title, Business workplace, String startTime, String endTime, String description, boolean currentlyWorking){
         this.title = title;
         this.workplace = workplace;
         this.startTime = startTime;
         this.endTime = endTime;
         this.currentlyWorking = currentlyWorking;
+        this.description = description;
     }
 
     public void setTitle(String title) {

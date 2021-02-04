@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/DarkGrey"
+    android:id="@+id/ExperienceLayout"
+    android:orientation="vertical"
+    android:elevation="2dp">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        tools:src="@tools:sample/backgrounds/scenic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="35dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginStart="20dp"
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apple Inc."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        android:textColor="@color/LightGrey"
+        android:textSize="16sp"/>
+    <TextView
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="25dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginStart="20dp"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data Analyst"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="@id/name"
+        android:textStyle="normal"
+        android:textColor="@color/LightGrey"
+        android:textSize="12sp"/>
+    <TextView
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="25dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginStart="5dp"
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="| May 2020"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/title"
+        app:layout_constraintTop_toTopOf="@id/name"
+        android:textStyle="normal"
+        android:textColor="@color/LightGrey"
+        android:textSize="12sp"/>
+    <TextView
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="25dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginStart="5dp"
+        android:id="@+id/end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="— Present"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/start"
+        app:layout_constraintTop_toTopOf="@id/name"
+        android:textStyle="normal"
+        android:textColor="@color/LightGrey"
+        android:textSize="12sp"/>
+    <TextView
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="12dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginStart="20dp"
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_marginEnd = "20dp"
+        android:layout_height="wrap_content"
+        android:text="- Designed app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n
+- Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n
+- Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:textStyle="normal"
+        android:textColor="@color/LightGrey"
+        android:lineSpacingExtra="5dp"
+        android:alpha=".8"
+        android:textSize="10sp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
