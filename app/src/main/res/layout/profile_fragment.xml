@@ -100,12 +100,45 @@
             app:layout_constraintStart_toEndOf="@+id/profile_icon"
             app:layout_constraintTop_toBottomOf="@+id/header"
             app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/my_businesses_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:text="My Businesses:"
+            android:textColor="@color/Green"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintVertical_bias="0" />
+
+        <ImageButton
+            android:id="@+id/add_business"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/ic_baseline_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_businesses_header"
+            app:layout_constraintVertical_bias="0.0" />
+
         <TextView
             android:id="@+id/about_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:text="About:"
             android:textColor="@color/Green"
@@ -115,24 +148,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_businesses_header"
+            app:layout_constraintTop_toBottomOf="@+id/divider2"
             app:layout_constraintVertical_bias="0" />
-
         <TextView
-            android:id="@+id/my_businesses_header"
+            android:id="@+id/social_vision_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:text="My Businesses:"
+            android:text="Social Vision:"
             android:textColor="@color/Green"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/experiences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/divider3"
             app:layout_constraintVertical_bias="0" />
         <TextView
             android:id="@+id/about"
@@ -158,7 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:text="Experiences:"
             android:textColor="@color/Green"
@@ -168,7 +201,28 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/about"
+            app:layout_constraintTop_toBottomOf="@+id/divider4"
+            app:layout_constraintVertical_bias="0" />
+        <TextView
+            android:id="@+id/social_vision"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20dp"
+            android:lineSpacingExtra="3dp"
+            android:text="My underlying belief is to make a positive contribution to the society and ensuring environment
+sustainability. I strive to create a healthier world and enrich lives of all communities
+at large through my initiatives. "
+            android:textColor="@color/LightGrey"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/experiences"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/social_vision_header"
             app:layout_constraintVertical_bias="0" />
 
         <Button
@@ -186,7 +240,7 @@
             app:layout_constraintStart_toEndOf="@+id/follower_count"
             app:layout_constraintTop_toBottomOf="@+id/header"
             app:layout_constraintVertical_bias="0.0"
-            app:rippleColor="#FFFFFF" />
+            />
 
         <Button
             android:id="@+id/follow_button"
@@ -208,9 +262,10 @@
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/DarkGreenGradient"
+            android:layout_height="0.4dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/Green"
+            android:alpha=".5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
@@ -218,15 +273,53 @@
             app:layout_constraintVertical_bias="0" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:id="@+id/experiences"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
             android:nestedScrollingEnabled="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/experience_header" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_marginTop="10dp"
+            android:alpha=".5"
+            android:background="@color/Green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_business"
+            app:layout_constraintVertical_bias="0" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:alpha=".5"
+            android:layout_marginTop="15dp"
+            android:background="@color/Green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/about"
+            app:layout_constraintVertical_bias="0" />
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:alpha=".5"
+            android:layout_marginTop="15dp"
+            android:background="@color/Green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/social_vision"
+            app:layout_constraintVertical_bias="0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
