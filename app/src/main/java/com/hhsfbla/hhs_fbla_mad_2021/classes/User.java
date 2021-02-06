@@ -8,11 +8,11 @@ public class User {
     private int id;
     private String name;
     private String email;
-    private ArrayList<Post> likedPosts;
+    private ArrayList<Integer> likedPosts;
     private Image coverImg;
     private Image pfp;
-    private ArrayList<User> following;
-    private ArrayList<User> followers;
+    private ArrayList<Integer> following;
+    private ArrayList<Integer> followers;
     private String jobTitle;
     private String description;
     private ArrayList<String> tags;
@@ -24,7 +24,7 @@ public class User {
         this.id = id;
         this.name = name;
         this.email = email;
-        likedPosts = new ArrayList<Post>();
+        likedPosts = new ArrayList<Integer>();
     }
 
     public int getId() {
@@ -47,13 +47,13 @@ public class User {
         this.name = name;
     }
 
-    public void likePost(Post post){
-        likedPosts.add(post);
+    public void likePost(Integer x){
+        likedPosts.add(x);
     }
 
-    public void removeLikedPost(Post post){
+    public void removeLikedPost(Integer postID){
         for(int i = 0;i<likedPosts.size();i++){
-            if(post.getId() == likedPosts.get(i).getId()){
+            if(postID == likedPosts.get(i)){
                 likedPosts.remove(i);
                 break;
             }
