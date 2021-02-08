@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/DarkGrey"
     android:id="@+id/ExperienceLayout"
-    android:orientation="vertical"
-    android:elevation="2dp">
+    android:orientation="vertical">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"

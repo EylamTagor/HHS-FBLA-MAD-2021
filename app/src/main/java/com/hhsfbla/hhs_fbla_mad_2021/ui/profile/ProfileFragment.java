@@ -32,6 +32,9 @@ public class ProfileFragment extends Fragment {
     private int followerCount;
     private int followingCount;
     private ArrayList<Experience> experiences;
+    //private ArrayList<Education> educations;
+    private ArrayList<String> skills;
+    private ArrayList<String> achievements;
     private RecyclerView recyclerView;
     private ExperiencesRVAdapter experiencesRVAdapter;
 
