@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.profile.ProfileFragment"
+        android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.profile.MyProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/profile_fragment" />
 </navigation>

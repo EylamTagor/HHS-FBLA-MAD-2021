@@ -60,18 +60,87 @@
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent="0.7" />
 
+
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="0"
         android:layout_marginStart="10dp"
         android:layout_marginTop="18dp"
         android:src="@drawable/ic_search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/search"
-        app:layout_constraintTop_toBottomOf="@+id/mail_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/mail_icon"
+        app:layout_constraintVertical_bias="0" />
 
+    <Button
+        android:id="@+id/following"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#00000000"
+        android:minHeight="0dp"
+        android:text="Following"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:textColor="@color/Green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/trending"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        app:layout_constraintVertical_bias="0" />
+
+    <View
+        android:id="@+id/following_selected"
+        android:layout_width="205dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="1dp"
+        android:background="@color/Green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/following"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/following"
+        app:layout_constraintVertical_bias="0"/>
+
+    <Button
+        android:id="@+id/trending"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:text="Trending"
+        android:alpha=".5"
+        android:minHeight="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintVertical_bias="0"
+        android:textColor="@color/LightGrey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        android:textAllCaps="false"/>
+
+    <View
+        android:id="@+id/trending_selected"
+        android:layout_width="205dp"
+        android:layout_height="1dp"
+        android:visibility="invisible"
+        android:layout_marginEnd="1dp"
+        android:background="@color/Green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/following_selected"
+        app:layout_constraintTop_toBottomOf="@+id/following"
+        app:layout_constraintVertical_bias="0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/posts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/following"
+        app:layout_constraintVertical_bias="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

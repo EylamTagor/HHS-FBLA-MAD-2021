@@ -1,7 +1,5 @@
 package com.hhsfbla.hhs_fbla_mad_2021.ui.profile;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -24,9 +22,9 @@ import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 
 import java.util.ArrayList;
 
-public class ProfileFragment extends Fragment {
+public class MyProfileFragment extends Fragment {
 
-    private ProfileViewModel mViewModel;
+    private MyProfileViewModel mViewModel;
     private String name;
     private String header;
     private int followerCount;
@@ -39,8 +37,8 @@ public class ProfileFragment extends Fragment {
     private ExperiencesRVAdapter experiencesRVAdapter;
 
 
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
+    public static MyProfileFragment newInstance() {
+        return new MyProfileFragment();
     }
 
     @Override
@@ -100,7 +98,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(MyProfileViewModel.class);
         // TODO: Use the ViewModel
     }
 

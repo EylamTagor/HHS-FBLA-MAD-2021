@@ -11,26 +11,30 @@ public class Post {
     private String description;
     private Image img;
     private ArrayList<User> usersLiked;
+    private ArrayList<String> hashtags;
 
-    public Post(int id, String title, String description, Image img){
+    public Post(int id, String title, String description, Image img, ArrayList<String> hashtags){
         this.id = id;
         this.title = title;
         this.description = description;
         this.img = img;
         usersLiked = new ArrayList<User>();
+        this.hashtags = hashtags;
     }
 
     public Image getImg() {
         return img;
     }
 
+    public ArrayList<String> getHashtags() { return hashtags; }
+
+    public void setHashtags(ArrayList<String> hashtags) { this.hashtags = hashtags; }
+
     public String getTitle() {
         return title;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() { return description; }
 
     public void setDescription(String description) {
         this.description = description;
