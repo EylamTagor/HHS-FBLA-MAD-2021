@@ -33,7 +33,7 @@ public class MyProfileFragment extends Fragment {
     //private ArrayList<Education> educations;
     private ArrayList<String> skills;
     private ArrayList<String> achievements;
-    private RecyclerView recyclerView;
+    private RecyclerView experiencesView;
     private ExperiencesRVAdapter experiencesRVAdapter;
 
 
@@ -45,8 +45,8 @@ public class MyProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
-        recyclerView = (RecyclerView)rootView.findViewById(R.id.experiences);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        experiencesView = (RecyclerView)rootView.findViewById(R.id.experiences);
+        experiencesView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         ArrayList<ExperiencesRVModel> experience = new ArrayList<>();
         experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
@@ -87,7 +87,7 @@ public class MyProfileFragment extends Fragment {
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
 
         experiencesRVAdapter = new ExperiencesRVAdapter(experience);
-        recyclerView.setAdapter(experiencesRVAdapter);
+        experiencesView.setAdapter(experiencesRVAdapter);
         return rootView;
 
 

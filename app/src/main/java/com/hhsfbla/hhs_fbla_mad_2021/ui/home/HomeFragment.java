@@ -11,12 +11,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+
+    private ArrayList<Post> followingPosts;
+    private ArrayList<Post> trendingPosts;
+    private RecyclerView postsView;
+
 
     private HomeViewModel homeViewModel;
 
