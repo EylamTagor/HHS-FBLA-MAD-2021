@@ -10,16 +10,26 @@ public class Post {
     private String title;
     private String description;
     private Image img;
+    private ArrayList<String> comments;
     private ArrayList<User> usersLiked;
     private ArrayList<String> hashtags;
 
-    public Post(int id, String title, String description, Image img, ArrayList<String> hashtags){
+
+    public Post(int id, String title, String description, Image img, ArrayList<String> hashtags, ArrayList<String> comments){
         this.id = id;
         this.title = title;
         this.description = description;
         this.img = img;
         usersLiked = new ArrayList<User>();
         this.hashtags = hashtags;
+        this.comments = comments;
+    }
+    public ArrayList<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<String> comments) {
+        this.comments = comments;
     }
 
     public Image getImg() {
