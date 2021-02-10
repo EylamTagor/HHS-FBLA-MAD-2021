@@ -1,9 +1,10 @@
-package com.hhsfbla.hhs_fbla_mad_2021;
+package com.hhsfbla.hhs_fbla_mad_2021.activities;
 
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.hhsfbla.hhs_fbla_mad_2021.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
