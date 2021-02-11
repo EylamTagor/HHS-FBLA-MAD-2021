@@ -6,21 +6,18 @@ import java.util.ArrayList;
 
 public class Post {
 
-    private int id;
     private String title;
     private String description;
     private Image img;
     private ArrayList<String> comments;
-    private ArrayList<User> usersLiked;
+    private ArrayList<String> usersLiked;
     private ArrayList<String> hashtags;
 
-
-    public Post(int id, String title, String description, Image img, ArrayList<String> hashtags, ArrayList<String> comments){
-        this.id = id;
+    public Post(String title, String description, Image img, ArrayList<String> hashtags,  ArrayList<String> comments){
         this.title = title;
         this.description = description;
         this.img = img;
-        usersLiked = new ArrayList<User>();
+        usersLiked = new ArrayList<>();
         this.hashtags = hashtags;
         this.comments = comments;
     }
@@ -50,9 +47,6 @@ public class Post {
         this.description = description;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public void setImg(Image img) {
         this.img = img;
@@ -66,13 +60,13 @@ public class Post {
         return usersLiked.size();
     }
 
-    public void like(User user){
-        usersLiked.add(user);
+    public void like(String userID){
+        usersLiked.add(userID);
     }
 
-    public void unlike(User user){
-        for(int i = 0;i<usersLiked.size();i++){
-            if(user.getId() == usersLiked.get(i).getId()){
+    public void unlike(String userID){
+        for(int i = 0; i < usersLiked.size(); i++)
+            if (usersLiked.get(i).equals(userID)) {
                 usersLiked.remove(i);
                 break;
             }
