@@ -5,12 +5,11 @@ import android.media.Image;
 import java.util.ArrayList;
 
 public class User {
-    private int id;
     private String name;
     private String email;
     private ArrayList<Integer> likedPosts;
-    private Image coverImg;
-    private Image pfp;
+    private String coverImg;
+    private String pfp;
     private ArrayList<Integer> following;
     private ArrayList<Integer> followers;
     private String jobTitle;
@@ -19,32 +18,110 @@ public class User {
     private ArrayList<String> skills;
     private ArrayList<Experience> experiences;
 
+    public User() {
+        this("", "");
+    }
 
-    public User(int id, String name, String email){
-        this.id = id;
+    public User(String name, String email){
         this.name = name;
         this.email = email;
         likedPosts = new ArrayList<Integer>();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public ArrayList<Integer> getLikedPosts() {
+        return likedPosts;
+    }
+
+    public void setLikedPosts(ArrayList<Integer> likedPosts) {
+        this.likedPosts = likedPosts;
+    }
+
+    public String getCoverImg() {
+        return coverImg;
+    }
+
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg;
+    }
+
+    public String getPfp() {
+        return pfp;
+    }
+
+    public void setPfp(String pfp) {
+        this.pfp = pfp;
+    }
+
+    public ArrayList<Integer> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(ArrayList<Integer> following) {
+        this.following = following;
+    }
+
+    public ArrayList<Integer> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(ArrayList<Integer> followers) {
+        this.followers = followers;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
+    public ArrayList<String> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(ArrayList<String> skills) {
+        this.skills = skills;
+    }
+
+    public ArrayList<Experience> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(ArrayList<Experience> experiences) {
+        this.experiences = experiences;
     }
 
     public void likePost(Integer x){
