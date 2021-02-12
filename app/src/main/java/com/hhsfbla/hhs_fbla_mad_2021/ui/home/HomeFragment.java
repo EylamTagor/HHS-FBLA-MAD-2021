@@ -61,10 +61,10 @@ public class HomeFragment extends Fragment {
         dummyHashtags.add("WOW so cool man!");
 
 
-        Post dummyPost = new Post(0,"I planted 1,000 trees", "Yesterday I planted 1000 trees and today I planted 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!",
+        Post dummyPost = new Post("I planted 1,000 trees", "Yesterday I planted 1000 trees and today I planted 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!",
                 null, dummyHashtags, dummyComments);
 
-        User dummyUser = new User(23, "Sky Johnson", "skyngthowhing@gmail.com");
+        User dummyUser = new User("Sky Johnson", "skyngthowhing@gmail.com");
         dummyUser.setJobTitle("UI/UX designer");
 
         posts.add(new PostsRVModel(dummyPost, dummyUser));

@@ -136,20 +136,5 @@ public class User {
             }
         }
     }
-
-    public Image getPfp() {
-        return pfp;
-    }
-
-    public void setPfp(Image pfp) {
-        this.pfp = pfp;
-    }
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
+    
 }

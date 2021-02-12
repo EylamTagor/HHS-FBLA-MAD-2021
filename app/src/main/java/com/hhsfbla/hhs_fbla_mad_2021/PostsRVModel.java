@@ -33,7 +33,7 @@ public class PostsRVModel {
     public int getNumComments() { return post.getComments().size(); }
     public String getName(){return user.getName();}
     public String getJobTitle(){return user.getJobTitle();}
-    public Image getPfp(){return user.getPfp();}
+    public String getPfp(){return user.getPfp();}
     public String getTitle(){return post.getTitle();}
 
 
