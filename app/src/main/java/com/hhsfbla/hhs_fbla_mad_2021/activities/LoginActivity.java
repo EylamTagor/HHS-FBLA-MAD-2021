@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signIn() {
+        Log.d("", "111");
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
         progressDialog.setMessage("Loading...");
@@ -130,17 +131,22 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("", "222");
         //Facebook
 //        mCallbackManager.onActivityResult(requestCode, resultCode, data);
         //Google
         if (requestCode == GOOGLE_SIGN_IN) {
+            Log.d("", "333");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            Log.d("", "444");
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                Log.d("", "555");
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
+                Log.d("", "666");
                 progressDialog.dismiss();
                 Toast.makeText(LoginActivity.this, "Google Sign In Failed", Toast.LENGTH_SHORT).show();
             }
@@ -255,7 +261,7 @@ public class LoginActivity extends AppCompatActivity {
      * @param acct the google account that was used to sign in
      */
     public void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-
+        Log.d("", "666");
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
@@ -267,5 +273,6 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                     }
                 });
+        Log.d("", "777");
     }
 }
