@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "539510063044-fsice4p2uq61o9ig3qustli9cdmlm56h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hhsfbla.hhs_fbla_mad_2021",
+            "certificate_hash": "bf06cfe6ac30a7b80d7347df880bcb84c155d633"
+          }
+        },
+        {
           "client_id": "539510063044-7jn045k4jbo7dl73s75ch0q1srau3g97.apps.googleusercontent.com",
           "client_type": 3
         }
