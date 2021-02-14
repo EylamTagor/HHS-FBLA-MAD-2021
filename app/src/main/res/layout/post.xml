@@ -160,18 +160,18 @@
 
         <Button
             android:id="@+id/likes"
-            android:layout_width="205dp"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
             android:background="#00000000"
             android:drawableLeft="@drawable/ic_no_heart"
-            android:paddingLeft="40dp"
-            android:paddingRight="40sp"
             android:minHeight="0dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="40sp"
             android:text="433 Likes"
             android:textAllCaps="false"
             android:textColor="@color/LightGrey"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/trending"
+            app:layout_constraintEnd_toEndOf="@id/divider3"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider"
@@ -179,20 +179,21 @@
 
         <Button
             android:id="@+id/comments"
-            android:layout_width="205dp"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
             android:background="#00000000"
-            android:paddingLeft="35dp"
-            android:paddingRight="35sp"
-            android:text="35 Comments"
             android:drawableLeft="@drawable/ic_comment"
             android:minHeight="0dp"
-            app:layout_constraintVertical_bias="0"
+            android:paddingStart="30dp"
+            android:paddingEnd="35sp"
+            android:text="35 Comments"
+            android:textAllCaps="false"
             android:textColor="@color/LightGrey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider3"
             app:layout_constraintTop_toBottomOf="@+id/divider"
-            android:textAllCaps="false"/>
+            app:layout_constraintVertical_bias="0" />
 
         <View
             android:id="@+id/divider2"
@@ -203,6 +204,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/likes" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="1dp"
+            android:layout_marginTop="15dp"
+            android:layout_height="30dp"
+            android:alpha=".25"
+
+            android:background="@color/LightGrey"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/divider2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tag_two" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
