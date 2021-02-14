@@ -171,7 +171,7 @@
             android:textAllCaps="false"
             android:textColor="@color/LightGrey"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/divider3"
+            app:layout_constraintEnd_toEndOf="@id/divider2"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider"
@@ -191,12 +191,12 @@
             android:textColor="@color/LightGrey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/divider3"
+            app:layout_constraintStart_toEndOf="@id/divider2"
             app:layout_constraintTop_toBottomOf="@+id/divider"
             app:layout_constraintVertical_bias="0" />
 
         <View
-            android:id="@+id/divider2"
+            android:id="@+id/divider4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:alpha=".25"
@@ -206,7 +206,7 @@
             app:layout_constraintTop_toBottomOf="@id/likes" />
 
         <View
-            android:id="@+id/divider3"
+            android:id="@+id/divider2"
             android:layout_width="1dp"
             android:layout_marginTop="15dp"
             android:layout_height="30dp"
@@ -214,7 +214,7 @@
 
             android:background="@color/LightGrey"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/divider2"
+            app:layout_constraintBottom_toBottomOf="@+id/divider4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tag_two" />
