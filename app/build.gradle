@@ -46,4 +46,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.airbnb.android:lottie:3.4.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.facebook.android:facebook-android-sdk:5.13.0'
 }
