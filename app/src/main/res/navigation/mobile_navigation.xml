@@ -13,6 +13,12 @@
 
     <fragment
         android:id="@+id/navigation_saved_jobs"
+        android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.saved.SavedFragment"
+        android:label="@string/title_saved_jobs"
+        tools:layout="@layout/fragment_saved" />
+
+    <fragment
+        android:id="@+id/navigation_jobs"
         android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.jobs.JobsFragment"
         android:label="@string/title_saved_jobs"
         tools:layout="@layout/fragment_jobs" />
