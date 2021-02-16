@@ -17,6 +17,7 @@ public class User {
     private ArrayList<String> tags;
     private ArrayList<String> skills;
     private ArrayList<Experience> experiences;
+    private ArrayList<String> notifIDs;
 
     public User() {
         this("", "");
@@ -136,5 +137,23 @@ public class User {
             }
         }
     }
-    
+
+    public void addNotification(String notifID){
+        this.notifIDs.add(notifID);
+
+    }
+
+    public void removeNotif(String notifID){
+        for(int i = 0;i<this.notifIDs.size();i++){
+            if(this.notifIDs.get(i).equals(notifID)){
+                this.notifIDs.remove(i);
+                break;
+            }
+        }
+    }
+
+    public ArrayList<String> getNotifIDs(){
+        return this.notifIDs;
+    }
+
 }
