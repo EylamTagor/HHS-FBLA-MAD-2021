@@ -1,13 +1,10 @@
 package com.hhsfbla.hhs_fbla_mad_2021;
-import android.media.Image;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,7 +32,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.StaticRV
     public void onBindViewHolder(@NonNull StaticRVViewHolder holder, int position) {
         PostsRVModel currentItem = posts.get(position);
         //NEED TO FIX, FIGURE OUT HOW TO SET IMAGE RESOURCE
-        holder.pfp.setImageResource(R.drawable.ic_profile_icon);
+        holder.pfp.setImageResource(R.drawable.ic_followers);
         holder.description.setText(currentItem.getDescription());
         holder.jobTitle.setText(currentItem.getJobTitle());
         holder.tag1.setText(currentItem.getHashtags().get(0));
