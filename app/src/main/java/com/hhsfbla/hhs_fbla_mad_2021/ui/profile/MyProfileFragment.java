@@ -29,7 +29,6 @@ public class MyProfileFragment extends Fragment {
     private String header;
     private int followerCount;
     private int followingCount;
-    private ArrayList<Experience> experiences;
     //private ArrayList<Education> educations;
     private ArrayList<String> skills;
     private ArrayList<String> achievements;
