@@ -35,13 +35,10 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.StaticRV
         holder.pfp.setImageResource(R.drawable.ic_followers);
         holder.description.setText(currentItem.getDescription());
         holder.jobTitle.setText(currentItem.getJobTitle());
-        holder.tag1.setText(currentItem.getHashtags().get(0));
-        holder.tag2.setText(currentItem.getHashtags().get(1));
-        holder.tag3.setText(currentItem.getHashtags().get(2));
+        holder.tag1.setText(currentItem.getHashtag());
         holder.title.setText(currentItem.getTitle());
         holder.name.setText(currentItem.getName());
         holder.likes.setText("540");
-        holder.comments.setText("100");
         //holder.likes.setText(currentItem.getLikes());
         //holder.comments.setText(currentItem.getNumComments());
 
@@ -61,26 +58,20 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.StaticRV
         TextView description;
         TextView title;
         TextView tag1;
-        TextView tag2;
-        TextView tag3;
         Button likes;
-        Button comments;
         ImageView pfp;
         LinearLayout postLayout;
 
         public StaticRVViewHolder(@NonNull View postView) {
             super(postView);
-            name = postView.findViewById(R.id.name);
-            jobTitle = postView.findViewById(R.id.job_title);
-            description = postView.findViewById(R.id.description);
-            pfp = postView.findViewById(R.id.profile_picture);
+            name = postView.findViewById(R.id.post_name);
+            jobTitle = postView.findViewById(R.id.post_job_title);
+            description = postView.findViewById(R.id.post_description);
+            pfp = postView.findViewById(R.id.post_profile_picture);
             postLayout =  postView.findViewById(R.id.post_layout);
-            tag1 = postView.findViewById(R.id.tag_one);
-            tag2 = postView.findViewById(R.id.tag_two);
-            tag3 = postView.findViewById(R.id.tag_three);
-            likes = postView.findViewById(R.id.likes);
-            comments = postView.findViewById(R.id.comments);
-            title = postView.findViewById(R.id.title);
+            tag1 = postView.findViewById(R.id.post_tag_one);
+            likes = postView.findViewById(R.id.post_likes);
+            title = postView.findViewById(R.id.post_header);
 
 
         }

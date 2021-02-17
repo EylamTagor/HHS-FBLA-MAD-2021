@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/profile_picture"
+            android:id="@+id/my_profile_profile_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -35,7 +35,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/my_profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -47,12 +47,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@+id/profile_picture"
+            app:layout_constraintStart_toEndOf="@+id/my_profile_profile_picture"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/website"
+            android:id="@+id/my_profile_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -64,12 +64,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/profile_picture"
-            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintStart_toEndOf="@+id/my_profile_profile_picture"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_name"
             app:layout_constraintVertical_bias="0" />
 
         <Button
-            android:id="@+id/profile_icon"
+            android:id="@+id/my_profile_follower_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
@@ -79,12 +79,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@+id/profile_picture"
-            app:layout_constraintTop_toBottomOf="@+id/website"
+            app:layout_constraintStart_toEndOf="@+id/my_profile_profile_picture"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_header"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/follower_count"
+            android:id="@+id/my_profile_follower_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -97,12 +97,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/profile_icon"
-            app:layout_constraintTop_toBottomOf="@+id/website"
+            app:layout_constraintStart_toEndOf="@+id/my_profile_follower_icon"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_header"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/my_businesses_header"
+            android:id="@+id/my_profile_my_businesses_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -115,10 +115,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider"
             app:layout_constraintVertical_bias="0" />
         <TextView
-            android:id="@+id/my_activity"
+            android:id="@+id/my_profile_my_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -131,11 +131,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider2"
             app:layout_constraintVertical_bias="0" />
 
         <Button
-            android:id="@+id/users_following"
+            android:id="@+id/my_profile_users_following"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -157,10 +157,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_activity"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_my_activity"
             app:layout_constraintVertical_bias="0" />
         <Button
-            android:id="@+id/liked_posts"
+            android:id="@+id/my_profile_liked_posts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -181,12 +181,12 @@
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/users_following"
-            app:layout_constraintTop_toBottomOf="@+id/my_activity"
+            app:layout_constraintStart_toEndOf="@id/my_profile_users_following"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_my_activity"
             app:layout_constraintVertical_bias="0" />
 
         <ImageButton
-            android:id="@+id/add_business"
+            android:id="@+id/my_profile_add_business"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
@@ -197,11 +197,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_businesses_header"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_my_businesses_header"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/about_header"
+            android:id="@+id/my_profile_about_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -211,14 +211,14 @@
             android:textColor="@color/Green"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/experiences"
+            app:layout_constraintBottom_toTopOf="@id/my_profile_experiences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider3"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider3"
             app:layout_constraintVertical_bias="0" />
         <TextView
-            android:id="@+id/social_vision_header"
+            android:id="@+id/my_profile_social_vision_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -228,15 +228,15 @@
             android:textColor="@color/Green"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/experiences"
+            app:layout_constraintBottom_toTopOf="@id/my_profile_experiences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider4"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider4"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/about"
+            android:id="@+id/my_profile_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -248,15 +248,15 @@
             android:textColor="@color/LightGrey"
             android:textSize="12sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@id/experiences"
+            app:layout_constraintBottom_toTopOf="@id/my_profile_experiences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/about_header"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_about_header"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/experiences_header"
+            android:id="@+id/my_profile_experiences_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -266,14 +266,14 @@
             android:textColor="@color/Green"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/experiences"
+            app:layout_constraintBottom_toTopOf="@id/my_profile_experiences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider5"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider5"
             app:layout_constraintVertical_bias="0" />
         <TextView
-            android:id="@+id/social_vision"
+            android:id="@+id/my_profile_social_vision"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -287,15 +287,15 @@ at large through my initiatives. "
             android:textColor="@color/LightGrey"
             android:textSize="12sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@id/experiences"
+            app:layout_constraintBottom_toTopOf="@id/my_profile_experiences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/social_vision_header"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_social_vision_header"
             app:layout_constraintVertical_bias="0" />
 
         <Button
-            android:id="@+id/mail_icon"
+            android:id="@+id/my_profile_mail_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="25dp"
@@ -304,15 +304,15 @@ at large through my initiatives. "
             android:background="@drawable/ic_mail_profile"
             android:cropToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/edit_button"
+            app:layout_constraintEnd_toStartOf="@id/my_profile_edit_button"
             app:layout_constraintHorizontal_bias="0.085"
-            app:layout_constraintStart_toEndOf="@+id/follower_count"
-            app:layout_constraintTop_toBottomOf="@+id/website"
+            app:layout_constraintStart_toEndOf="@+id/my_profile_follower_count"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_header"
             app:layout_constraintVertical_bias="0.0"
             />
 
         <Button
-            android:id="@+id/edit_button"
+            android:id="@+id/my_profile_edit_button"
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_marginLeft="35dp"
@@ -324,12 +324,12 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@+id/mail_icon"
-            app:layout_constraintTop_toBottomOf="@+id/website"
+            app:layout_constraintStart_toEndOf="@+id/my_profile_mail_icon"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_header"
             app:layout_constraintVertical_bias="0" />
 
         <View
-            android:id="@+id/divider"
+            android:id="@+id/my_profile_divider"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:layout_marginTop="15dp"
@@ -338,11 +338,11 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mail_icon"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_mail_icon"
             app:layout_constraintVertical_bias="0" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/experiences"
+            android:id="@+id/my_profile_experiences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -351,10 +351,10 @@ at large through my initiatives. "
             android:nestedScrollingEnabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/experiences_header" />
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_experiences_header" />
 
         <View
-            android:id="@+id/divider2"
+            android:id="@+id/my_profile_divider2"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:layout_marginTop="10dp"
@@ -363,11 +363,11 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_business"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_add_business"
             app:layout_constraintVertical_bias="0" />
 
         <View
-            android:id="@+id/divider3"
+            android:id="@+id/my_profile_divider3"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:alpha=".5"
@@ -376,10 +376,10 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/users_following"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_users_following"
             app:layout_constraintVertical_bias="0" />
         <View
-            android:id="@+id/divider4"
+            android:id="@+id/my_profile_divider4"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:alpha=".5"
@@ -388,10 +388,10 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/about"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_about"
             app:layout_constraintVertical_bias="0" />
         <View
-            android:id="@+id/divider5"
+            android:id="@+id/my_profile_divider5"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:alpha=".5"
@@ -400,7 +400,7 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/social_vision"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_social_vision"
             app:layout_constraintVertical_bias="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

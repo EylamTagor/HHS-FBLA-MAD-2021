@@ -9,33 +9,26 @@ public class Post {
     private String title;
     private String description;
     private Image img;
-    private ArrayList<String> comments;
     private ArrayList<String> usersLiked;
-    private ArrayList<String> hashtags;
+    private String hashtag;
 
-    public Post(String title, String description, Image img, ArrayList<String> hashtags,  ArrayList<String> comments){
+    public Post(String title, String description, Image img, String hashtag){
         this.title = title;
         this.description = description;
         this.img = img;
         usersLiked = new ArrayList<>();
-        this.hashtags = hashtags;
-        this.comments = comments;
-    }
-    public ArrayList<String> getComments() {
-        return comments;
+        this.hashtag = hashtag;
+
     }
 
-    public void setComments(ArrayList<String> comments) {
-        this.comments = comments;
-    }
 
     public Image getImg() {
         return img;
     }
 
-    public ArrayList<String> getHashtags() { return hashtags; }
+    public String getHashtag() { return hashtag; }
 
-    public void setHashtags(ArrayList<String> hashtags) { this.hashtags = hashtags; }
+    public void setHashtag(String hashtag) { this.hashtag = hashtag; }
 
     public String getTitle() {
         return title;

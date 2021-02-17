@@ -10,12 +10,14 @@ public class Notification {
     private String postID;
     private String message;
 
+    //Follow
     public Notification(String hostID, String userID){
         this.type = 2;
         this.hostID = hostID;
         this.userID = userID;
     }
 
+    //Like
     public Notification(String hostID, String userID, String postID){
         this.type = 1;
         this.hostID = hostID;

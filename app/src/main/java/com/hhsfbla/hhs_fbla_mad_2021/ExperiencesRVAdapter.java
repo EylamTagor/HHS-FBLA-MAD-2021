@@ -1,12 +1,9 @@
 package com.hhsfbla.hhs_fbla_mad_2021;
-import android.media.Image;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,11 +30,8 @@ public class ExperiencesRVAdapter extends RecyclerView.Adapter<ExperiencesRVAdap
     @Override
     public void onBindViewHolder(@NonNull StaticRVViewHolder holder, int position) {
         ExperiencesRVModel currentItem = experiences.get(position);
-        holder.logo.setImageResource(currentItem.getWorkplace().getLogo());
         holder.description.setText(currentItem.getDescription());
-        holder.start.setText(currentItem.getStartTime());
-        holder.end.setText(currentItem.getEndTime());
-        holder.title.setText(currentItem.getTitle());
+        holder.header.setText(currentItem.getHeader());
         holder.description.setText(currentItem.getDescription());
 
     }
@@ -50,21 +44,15 @@ public class ExperiencesRVAdapter extends RecyclerView.Adapter<ExperiencesRVAdap
 
     public static class StaticRVViewHolder extends RecyclerView.ViewHolder{
         TextView name;
-        TextView title;
-        TextView start;
-        TextView end;
+        TextView header;
         TextView description;
-        ImageView logo;
         LinearLayout experienceLayout;
 
         public StaticRVViewHolder(@NonNull View experienceView) {
             super(experienceView);
-            name = experienceView.findViewById(R.id.name);
-            title = experienceView.findViewById(R.id.title);
-            start = experienceView.findViewById(R.id.start);
-            end = experienceView.findViewById(R.id.end);
-            description = experienceView.findViewById(R.id.description);
-            logo = experienceView.findViewById(R.id.logo);
+            name = experienceView.findViewById(R.id.experience_name);
+            header = experienceView.findViewById(R.id.experience_header);
+            description = experienceView.findViewById(R.id.experience_description);
             experienceLayout =  experienceView.findViewById(R.id.ExperienceLayout);
         }
     }
