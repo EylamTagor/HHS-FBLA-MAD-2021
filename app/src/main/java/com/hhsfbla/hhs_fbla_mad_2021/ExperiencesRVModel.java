@@ -12,8 +12,8 @@ public class ExperiencesRVModel {
         this.experience = experience;
     }
 
-    public String getTitle() {
-        return experience.getTitle();
+    public String getHeader() {
+        return experience.getTitle() + " | " + experience.getStartTime() + "-" + experience.getEndTime();
     }
     public Business getWorkplace() {
         return experience.getWorkplace();
@@ -24,6 +24,7 @@ public class ExperiencesRVModel {
     public boolean isCurrentlyWorking() { return experience.isCurrentlyWorking(); }
     public String getStartTime() { return experience.getStartTime(); }
     public String getDescription(){return experience.getDescription();}
+
 
     public ExperiencesRVModel(Experience experience) {
         this.experience = experience;

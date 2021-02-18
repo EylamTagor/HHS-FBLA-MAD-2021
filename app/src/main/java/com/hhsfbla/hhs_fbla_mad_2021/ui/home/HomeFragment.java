@@ -46,14 +46,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        postsView = (RecyclerView)rootView.findViewById(R.id.posts);
+        postsView = (RecyclerView)rootView.findViewById(R.id.home_posts);
         postsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         ArrayList<PostsRVModel> posts = new ArrayList<>();
         ArrayList<String> dummyHashtags = new ArrayList<>();
-        dummyHashtags.add("sustainability");
-        dummyHashtags.add("Environemtalism");
-        dummyHashtags.add("Human Rights");
+        dummyHashtags.add("Sustainability");
+
 
         ArrayList<String> dummyComments = new ArrayList<>();
         dummyHashtags.add("you are a genius");
@@ -62,7 +61,7 @@ public class HomeFragment extends Fragment {
 
 
         Post dummyPost = new Post("I planted 1,000 trees", "Yesterday I planted 1000 trees and today I planted 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!",
-                null, dummyHashtags, dummyComments);
+                null, "#sustainability");
 
         User dummyUser = new User("Sky Johnson", "skyngthowhing@gmail.com");
         dummyUser.setJobTitle("UI/UX designer");

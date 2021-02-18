@@ -29,7 +29,6 @@ public class MyProfileFragment extends Fragment {
     private String header;
     private int followerCount;
     private int followingCount;
-    private ArrayList<Experience> experiences;
     //private ArrayList<Education> educations;
     private ArrayList<String> skills;
     private ArrayList<String> achievements;
@@ -44,8 +43,8 @@ public class MyProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
-        experiencesView = (RecyclerView)rootView.findViewById(R.id.experiences);
+        View rootView = inflater.inflate(R.layout.my_profile_fragment, container, false);
+        experiencesView = (RecyclerView)rootView.findViewById(R.id.my_profile_experiences);
         experiencesView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         ArrayList<ExperiencesRVModel> experience = new ArrayList<>();

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/DarkGrey"
+    android:id="@+id/saved_job_layout"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+>
+
+        <Button
+            android:layout_marginTop="15dp"
+            android:id="@+id/saved_business_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/saved_title"
+            android:layout_width="150dp"
+            android:autoSizeTextType="uniform"
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="Software Engineer"
+            android:textColor="@color/LightGrey"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/saved_business_logo"
+            app:layout_constraintTop_toBottomOf="@id/saved_divider"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/saved_business_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="Google Inc"
+            android:textColor="@color/LightGrey"
+            android:textSize="17sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/saved_business_logo"
+            app:layout_constraintTop_toBottomOf="@id/saved_title"
+            app:layout_constraintVertical_bias="0" />
+
+        <Button
+            android:id="@+id/job_save_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/saved_title"
+            app:layout_constraintTop_toBottomOf="@id/saved_divider"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ic_saved"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saved_apply_button"
+            android:layout_marginTop="10dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/apply_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@id/saved_title"
+            app:layout_constraintTop_toBottomOf="@id/saved_divider"
+            app:layout_constraintVertical_bias="1"
+             />
+        <View
+            android:id="@+id/saved_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha=".25"
+            android:background="@color/LightGrey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -8,7 +8,7 @@
     tools:context=".ui.home.HomeFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/home_collar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -24,22 +24,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/mail_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/ic_mail_top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
 
     <EditText
-        android:id="@+id/search"
+        android:id="@+id/home_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/search_bg"
@@ -56,13 +43,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/home_collar"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent="0.7" />
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/home_search_icon"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="10dp"
@@ -71,12 +58,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/search"
-        app:layout_constraintTop_toBottomOf="@+id/mail_icon"
+        app:layout_constraintStart_toEndOf="@+id/home_search"
+        app:layout_constraintTop_toBottomOf="@+id/home_collar"
         app:layout_constraintVertical_bias="0" />
 
     <Button
-        android:id="@+id/following"
+        android:id="@+id/home_following"
         android:layout_width="205dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -87,25 +74,25 @@
         android:textAllCaps="false"
         android:textColor="@color/Green"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/trending"
+        app:layout_constraintEnd_toStartOf="@+id/home_trending"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search"
+        app:layout_constraintTop_toBottomOf="@+id/home_search"
         app:layout_constraintVertical_bias="0" />
 
     <View
-        android:id="@+id/following_selected"
+        android:id="@+id/home_following_selected"
         android:layout_width="205dp"
         android:layout_height="1dp"
         android:layout_marginEnd="1dp"
         android:background="@color/Green"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/following"
+        app:layout_constraintEnd_toEndOf="@+id/home_following"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/following"
+        app:layout_constraintTop_toBottomOf="@+id/home_following"
         app:layout_constraintVertical_bias="0"/>
 
     <Button
-        android:id="@+id/trending"
+        android:id="@+id/home_trending"
         android:layout_width="205dp"
         android:layout_height="wrap_content"
         android:background="#00000000"
@@ -117,11 +104,11 @@
         android:textColor="@color/LightGrey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search"
+        app:layout_constraintTop_toBottomOf="@+id/home_search"
         android:textAllCaps="false"/>
 
     <View
-        android:id="@+id/trending_selected"
+        android:id="@+id/home_trending_selected"
         android:layout_width="205dp"
         android:layout_height="1dp"
         android:visibility="invisible"
@@ -129,17 +116,17 @@
         android:background="@color/Green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/following_selected"
-        app:layout_constraintTop_toBottomOf="@+id/following"
+        app:layout_constraintStart_toEndOf="@+id/home_following_selected"
+        app:layout_constraintTop_toBottomOf="@+id/home_following"
         app:layout_constraintVertical_bias="0" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/posts"
+        android:id="@+id/home_posts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/following_selected"
+        app:layout_constraintTop_toBottomOf="@+id/home_following_selected"
         app:layout_constraintVertical_bias="0"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"/>

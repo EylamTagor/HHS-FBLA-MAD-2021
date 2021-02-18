@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/profile_picture"
+            android:id="@+id/my_business_profile_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -35,7 +35,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/my_business_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -47,12 +47,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@+id/profile_picture"
+            app:layout_constraintStart_toEndOf="@+id/my_business_profile_picture"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/website"
+            android:id="@+id/my_business_header"
             android:linksClickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,12 +65,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/profile_picture"
-            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintStart_toEndOf="@+id/my_business_profile_picture"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_name"
             app:layout_constraintVertical_bias="0" />
 
         <Button
-            android:id="@+id/profile_icon"
+            android:id="@+id/my_business_follower_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
@@ -80,12 +80,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toEndOf="@+id/profile_picture"
-            app:layout_constraintTop_toBottomOf="@+id/website"
+            app:layout_constraintStart_toEndOf="@+id/my_business_profile_picture"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_header"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/follower_count"
+            android:id="@+id/my_business_follower_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -98,13 +98,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/profile_icon"
-            app:layout_constraintTop_toBottomOf="@+id/website"
+            app:layout_constraintStart_toEndOf="@+id/my_business_follower_icon"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_header"
             app:layout_constraintVertical_bias="0" />
 
 
         <TextView
-            android:id="@+id/about_header"
+            android:id="@+id/my_business_about_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -114,14 +114,14 @@
             android:textColor="@color/Green"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/job_openings"
+            app:layout_constraintBottom_toTopOf="@id/my_business_job_openings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_divider"
             app:layout_constraintVertical_bias="0" />
         <TextView
-            android:id="@+id/csr_vision_header"
+            android:id="@+id/my_business_csr_vision_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -131,15 +131,15 @@
             android:textColor="@color/Green"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/job_openings"
+            app:layout_constraintBottom_toTopOf="@id/my_business_job_openings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider2"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_divider2"
             app:layout_constraintVertical_bias="0" />
 
         <Button
-            android:id="@+id/CSR_report_link"
+            android:id="@+id/my_business_CSR_report_link"
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -151,15 +151,15 @@
             android:textColor="@color/Green"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/job_opening_header"
+            app:layout_constraintBottom_toTopOf="@id/my_business_job_opening_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider3"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_divider3"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/ESG_score_header"
+            android:id="@+id/my_business_ESG_score_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -167,14 +167,14 @@
             android:textColor="@color/Green"
             android:textSize="18dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/ESG_score"
+            app:layout_constraintEnd_toStartOf="@+id/my_business_ESG_score"
             app:layout_constraintHorizontal_bias="1"
             android:layout_marginEnd="10dp"
-            app:layout_constraintStart_toEndOf="@+id/CSR_report_link"
-            app:layout_constraintTop_toTopOf="@+id/divider3" />
+            app:layout_constraintStart_toEndOf="@+id/my_business_CSR_report_link"
+            app:layout_constraintTop_toTopOf="@+id/my_business_divider3" />
 
         <TextView
-            android:id="@+id/ESG_score"
+            android:id="@+id/my_business_ESG_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="17"
@@ -185,9 +185,9 @@
             android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/divider3" />
+            app:layout_constraintTop_toTopOf="@+id/my_business_divider3" />
         <TextView
-            android:id="@+id/about"
+            android:id="@+id/my_business_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -199,14 +199,14 @@
             android:textColor="@color/LightGrey"
             android:textSize="12sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@id/job_openings"
+            app:layout_constraintBottom_toTopOf="@id/my_business_job_openings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/about_header"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_about_header"
             app:layout_constraintVertical_bias="0" />
         <TextView
-            android:id="@+id/job_opening_header"
+            android:id="@+id/my_business_job_opening_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -216,14 +216,14 @@
             android:textColor="@color/Green"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/job_openings"
+            app:layout_constraintBottom_toTopOf="@id/my_business_job_openings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider4"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_divider4"
             app:layout_constraintVertical_bias="0" />
         <TextView
-            android:id="@+id/csr_vision"
+            android:id="@+id/my_business_csr_vision"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -237,15 +237,15 @@ at large through my initiatives. "
             android:textColor="@color/LightGrey"
             android:textSize="12sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@id/job_openings"
+            app:layout_constraintBottom_toTopOf="@id/my_business_job_openings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/csr_vision_header"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_csr_vision_header"
             app:layout_constraintVertical_bias="0" />
 
         <Button
-            android:id="@+id/mail_icon"
+            android:id="@+id/my_business_mail_icon"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="25dp"
@@ -256,13 +256,13 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.085"
-            app:layout_constraintStart_toEndOf="@+id/follower_count"
-            app:layout_constraintTop_toBottomOf="@+id/website"
+            app:layout_constraintStart_toEndOf="@+id/my_business_follower_count"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_header"
             app:layout_constraintVertical_bias="0.0"
             />
 
         <Button
-            android:id="@+id/follow_button"
+            android:id="@+id/my_business_follow_button"
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_marginLeft="35dp"
@@ -274,12 +274,12 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@+id/mail_icon"
-            app:layout_constraintTop_toBottomOf="@+id/website"
+            app:layout_constraintStart_toEndOf="@+id/my_business_mail_icon"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_header"
             app:layout_constraintVertical_bias="0" />
 
         <View
-            android:id="@+id/divider"
+            android:id="@+id/my_business_divider"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:layout_marginTop="15dp"
@@ -288,11 +288,11 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mail_icon"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_mail_icon"
             app:layout_constraintVertical_bias="0" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/job_openings"
+            android:id="@+id/my_business_job_openings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -301,10 +301,10 @@ at large through my initiatives. "
             android:nestedScrollingEnabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/job_opening_header" />
+            app:layout_constraintTop_toBottomOf="@+id/my_business_job_opening_header" />
 
         <View
-            android:id="@+id/divider2"
+            android:id="@+id/my_business_divider2"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:alpha=".5"
@@ -313,10 +313,10 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/about"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_about"
             app:layout_constraintVertical_bias="0" />
         <View
-            android:id="@+id/divider3"
+            android:id="@+id/my_business_divider3"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:alpha=".5"
@@ -325,10 +325,10 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/csr_vision"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_csr_vision"
             app:layout_constraintVertical_bias="0" />
         <View
-            android:id="@+id/divider4"
+            android:id="@+id/my_business_divider4"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:alpha=".5"
@@ -337,7 +337,7 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/CSR_report_link"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_CSR_report_link"
             app:layout_constraintVertical_bias="0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

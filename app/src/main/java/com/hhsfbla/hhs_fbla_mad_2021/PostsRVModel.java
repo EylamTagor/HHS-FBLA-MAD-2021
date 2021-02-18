@@ -25,12 +25,9 @@ public class PostsRVModel {
 
 
     public String getDescription() { return post.getDescription(); }
-    public ArrayList<String> getHashtags() {
-        return post.getHashtags();
+    public String getHashtag() {
+        return post.getHashtag();
     }
-    public Image getImage() { return post.getImg(); }
-    public int getLikes() { return post.getLikes(); }
-    public int getNumComments() { return post.getComments().size(); }
     public String getName(){return user.getName();}
     public String getJobTitle(){return user.getJobTitle();}
     public String getPfp(){return user.getPfp();}
