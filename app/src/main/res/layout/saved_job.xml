@@ -5,95 +5,99 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/DarkGrey"
-    android:id="@+id/job_layout"
+    android:id="@+id/saved_job_layout"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/job_bg">
+        android:layout_marginBottom="10dp"
+>
 
         <Button
             android:layout_marginTop="15dp"
-            android:id="@+id/job_business_logo"
+            android:id="@+id/saved_business_logo"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/job_title"
-            android:layout_width="180dp"
+            android:id="@+id/saved_title"
+            android:layout_width="150dp"
             android:autoSizeTextType="uniform"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:text="Software Engineer"
             android:textColor="@color/LightGrey"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/job_save_button"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/job_business_logo"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/saved_business_logo"
+            app:layout_constraintTop_toBottomOf="@id/saved_divider"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/job_business_name"
+            android:id="@+id/saved_business_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
             android:text="Google Inc"
             android:textColor="@color/LightGrey"
-            android:textSize="16sp"
+            android:textSize="17sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/job_business_logo"
-            app:layout_constraintTop_toBottomOf="@id/job_title"
+            app:layout_constraintStart_toEndOf="@+id/saved_business_logo"
+            app:layout_constraintTop_toBottomOf="@id/saved_title"
             app:layout_constraintVertical_bias="0" />
 
         <Button
             android:id="@+id/job_save_button"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="15dp"
             app:layout_constraintVertical_bias="0"
-            app:layout_constraintBottom_toTopOf="@+id/job_description"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/saved_title"
+            app:layout_constraintTop_toBottomOf="@id/saved_divider"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/ic_not_saved"/>
+            android:background="@drawable/ic_saved"/>
 
-        <TextView
-            android:id="@+id/job_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="15dp"
-            android:lineSpacingExtra="5dp"
-            android:paddingBottom="10dp"
-            android:text="- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n
-- Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n
-- Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%"
-            android:textColor="@color/LightGrey"
-            android:textSize="10sp"
-            android:textStyle="normal"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saved_apply_button"
+            android:layout_marginTop="10dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="0dp"
+            android:background="@drawable/apply_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@id/saved_title"
+            app:layout_constraintTop_toBottomOf="@id/saved_divider"
+            app:layout_constraintVertical_bias="1"
+             />
+        <View
+            android:id="@+id/saved_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha=".25"
+            android:background="@color/LightGrey"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/job_business_name"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
