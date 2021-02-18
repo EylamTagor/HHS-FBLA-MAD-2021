@@ -7,17 +7,18 @@ import java.util.ArrayList;
 public class User {
     private String name;
     private String email;
-    private ArrayList<Integer> likedPosts;
+    private ArrayList<String> likedPosts;
     private String coverImg;
     private String pfp;
-    private ArrayList<Integer> following;
-    private ArrayList<Integer> followers;
+    private ArrayList<String> following;
+    private ArrayList<String> followers;
     private String jobTitle;
     private String description;
-    private ArrayList<String> tags;
     private ArrayList<String> skills;
-    private ArrayList<Experience> experiences;
+    private ArrayList<String> experiences;
     private ArrayList<String> notifIDs;
+    private ArrayList<String> myBusinesses;
+    private ArrayList<String> myPosts;
 
     public User() {
         this("", "");
@@ -26,7 +27,14 @@ public class User {
     public User(String name, String email){
         this.name = name;
         this.email = email;
-        likedPosts = new ArrayList<Integer>();
+        likedPosts = new ArrayList<String>();
+        following = new ArrayList<String>();
+        followers = new ArrayList<String>();
+        skills = new ArrayList<String>();
+        experiences = new ArrayList<String>();
+        notifIDs = new ArrayList<String>();
+        myBusinesses = new ArrayList<String>();
+        myPosts = new ArrayList<String>();
     }
 
     public String getName() {
@@ -45,11 +53,11 @@ public class User {
         this.email = email;
     }
 
-    public ArrayList<Integer> getLikedPosts() {
+    public ArrayList<String> getLikedPosts() {
         return likedPosts;
     }
 
-    public void setLikedPosts(ArrayList<Integer> likedPosts) {
+    public void setLikedPosts(ArrayList<String> likedPosts) {
         this.likedPosts = likedPosts;
     }
 
@@ -69,19 +77,19 @@ public class User {
         this.pfp = pfp;
     }
 
-    public ArrayList<Integer> getFollowing() {
+    public ArrayList<String> getFollowing() {
         return following;
     }
 
-    public void setFollowing(ArrayList<Integer> following) {
+    public void setFollowing(ArrayList<String> following) {
         this.following = following;
     }
 
-    public ArrayList<Integer> getFollowers() {
+    public ArrayList<String> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(ArrayList<Integer> followers) {
+    public void setFollowers(ArrayList<String> followers) {
         this.followers = followers;
     }
 
@@ -101,14 +109,6 @@ public class User {
         this.description = description;
     }
 
-    public ArrayList<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
-    }
-
     public ArrayList<String> getSkills() {
         return skills;
     }
@@ -117,11 +117,11 @@ public class User {
         this.skills = skills;
     }
 
-    public ArrayList<Experience> getExperiences() {
+    public ArrayList<String> getExperiences() {
         return experiences;
     }
 
-    public void setExperiences(ArrayList<Experience> experiences) {
+    public void setExperiences(ArrayList<String> experiences) {
         this.experiences = experiences;
     }
 
@@ -129,14 +129,15 @@ public class User {
         likedPosts.add(x);
     }
 
-    public void removeLikedPost(Integer postID){
+    public void removeLikedPost(String postID){
         for(int i = 0;i<likedPosts.size();i++){
-            if(postID == likedPosts.get(i)){
+            if(postID.equals() likedPosts.get(i)){
                 likedPosts.remove(i);
                 break;
             }
         }
     }
+    public
 
     public void addNotification(String notifID){
         this.notifIDs.add(notifID);
@@ -155,5 +156,31 @@ public class User {
     public ArrayList<String> getNotifIDs(){
         return this.notifIDs;
     }
+
+    public ArrayList<String> getMyBusinesses() {
+        return myBusinesses;
+    }
+
+    public ArrayList<String> getMyPosts() {
+        return myPosts;
+    }
+
+     public void addBusiness(String ID){
+        this.myBusinesses.add(ID);
+     }
+
+     public void removeBusiness(String ID){
+         for(int i = 0;i<this.myBusinesses.size();i++){
+             if(this.myBusinesses.get(i).equals(ID)){
+                 this.myBusinesses.remove(i);
+                 break;
+             }
+         }
+     }
+
+     public void addPost(String ID){
+        this.myPosts.add(ID);
+     }
+
 
 }

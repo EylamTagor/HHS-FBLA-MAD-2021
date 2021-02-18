@@ -3,7 +3,7 @@ package com.hhsfbla.hhs_fbla_mad_2021.classes;
 public class Experience {
 
     private String title;
-    private Business workplace;
+    private String workplace;
     private String startTime;
     private String endTime;
     private String description;
@@ -17,7 +17,7 @@ public class Experience {
         this.description = description;
     }
 
-    public Experience(String title, Business workplace, String startTime, String endTime, String description, boolean currentlyWorking){
+    public Experience(String title, String workplace, String startTime, String endTime, String description, boolean currentlyWorking){
         this.title = title;
         this.workplace = workplace;
         this.startTime = startTime;
@@ -42,11 +42,11 @@ public class Experience {
         this.currentlyWorking = currentlyWorking;
     }
 
-    public Business getWorkplace() {
+    public String getWorkplace() {
         return workplace;
     }
 
-    public void setWorkplace(Business workplace) {
+    public void setWorkplace(String workplace) {
         this.workplace = workplace;
     }
 
