@@ -48,42 +48,39 @@ public class MyProfileFragment extends Fragment {
         experiencesView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         ArrayList<ExperiencesRVModel> experience = new ArrayList<>();
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
+        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
+        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
+        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
+        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
+        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
+        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
+        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
+        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", new Business("Apple Inc", R.drawable.ic_launcher_foreground),
-                "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
-                "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
-                "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
+
 
         experiencesRVAdapter = new ExperiencesRVAdapter(experience);
         experiencesView.setAdapter(experiencesRVAdapter);

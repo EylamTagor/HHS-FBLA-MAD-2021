@@ -15,7 +15,7 @@ public class ExperiencesRVModel {
     public String getHeader() {
         return experience.getTitle() + " | " + experience.getStartTime() + "-" + experience.getEndTime();
     }
-    public Business getWorkplace() {
+    public String getWorkplace() {
         return experience.getWorkplace();
     }
     public String getEndTime() {

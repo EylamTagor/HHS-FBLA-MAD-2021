@@ -25,7 +25,6 @@ public class NotificationsRVModel {
     }
     public String getPostID() { return notification.getPostID(); }
     public String getUserID() { return notification.getUserID(); }
-    public String getMessage() { return notification.getMessage(); }
 
 
     public NotificationsRVModel(Notification notification) {

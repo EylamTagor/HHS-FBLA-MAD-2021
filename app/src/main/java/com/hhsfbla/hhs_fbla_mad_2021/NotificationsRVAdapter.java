@@ -31,12 +31,20 @@ public class NotificationsRVAdapter extends RecyclerView.Adapter<NotificationsRV
     @Override
     public void onBindViewHolder(@NonNull StaticRVViewHolder holder, int position) {
         NotificationsRVModel currentItem = notifications.get(position);
-        holder.message.setText(currentItem.getMessage());
+
+        //If someone liked
         if(currentItem.getType() == 1) {
             holder.view.setText("View Profile");
+
+            //USE ID TO FIND User to find NAME
+            holder.message.setText("Full Name" + " Just followed you");
         }
+
+        //If someone followed
         else {
             holder.view.setText("View Post");
+            //USE ID TO FIND User to find NAME
+            holder.message.setText("Full Name" + " Just liked your post");
         }
 
 

@@ -33,6 +33,15 @@
                 tools:src="@tools:sample/avatars" />
         </androidx.cardview.widget.CardView>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintHorizontal_bias="1"
+            android:background="@drawable/ic_share"
+            app:layout_constraintBottom_toTopOf="@+id/post_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/post_job_title"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/post_name"
             android:layout_width="wrap_content"
