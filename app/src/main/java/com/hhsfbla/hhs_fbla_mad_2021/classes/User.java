@@ -14,6 +14,7 @@ public class User {
     private ArrayList<String> followers;
     private String jobTitle;
     private String description;
+    private String socialVision;
     private ArrayList<String> skills;
     private ArrayList<String> experiences;
     private ArrayList<String> notifIDs;
@@ -177,7 +178,15 @@ public class User {
         return myPosts;
     }
 
-     public void addBusiness(String ID){
+    public String getSocialVision() {
+        return socialVision;
+    }
+
+    public void setSocialVision(String socialVision) {
+        this.socialVision = socialVision;
+    }
+
+    public void addBusiness(String ID){
         this.myBusinesses.add(ID);
      }
 
