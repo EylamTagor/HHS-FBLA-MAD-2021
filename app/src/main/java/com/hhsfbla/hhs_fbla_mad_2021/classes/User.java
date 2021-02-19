@@ -24,6 +24,18 @@ public class User {
         this("", "");
     }
 
+    public void setMyBusinesses(ArrayList<String> myBusinesses) {
+        this.myBusinesses = myBusinesses;
+    }
+
+    public void setMyPosts(ArrayList<String> myPosts) {
+        this.myPosts = myPosts;
+    }
+
+    public void setNotifIDs(ArrayList<String> notifIDs) {
+        this.notifIDs = notifIDs;
+    }
+
     public User(String name, String email){
         this.name = name;
         this.email = email;
@@ -125,19 +137,19 @@ public class User {
         this.experiences = experiences;
     }
 
-    public void likePost(Integer x){
+    public void likePost(String x){
         likedPosts.add(x);
     }
 
     public void removeLikedPost(String postID){
         for(int i = 0;i<likedPosts.size();i++){
-            if(postID.equals() likedPosts.get(i)){
+            if(postID.equals(likedPosts.get(i))){
                 likedPosts.remove(i);
                 break;
             }
         }
     }
-    public
+
 
     public void addNotification(String notifID){
         this.notifIDs.add(notifID);

@@ -8,12 +8,13 @@ import java.util.ArrayList;
 
 public class Business {
     private String name;
-    private int logo;
+    private String logo;
     private ArrayList<String> jobOffers;
 
-    public Business(String name, int logo){
+    public Business(String name, String logo){
         this.name = name;
         this.logo = logo;
+
     }
 
     public String getName() {
@@ -24,11 +25,11 @@ public class Business {
         this.name = name;
     }
 
-    public int getLogo() {
+    public String getLogo() {
         return logo;
     }
 
-    public void setLogo(int logo) {
+    public void setLogo(String logo) {
         this.logo = logo;
     }
 

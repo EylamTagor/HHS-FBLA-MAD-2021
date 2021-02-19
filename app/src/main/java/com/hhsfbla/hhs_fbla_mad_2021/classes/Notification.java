@@ -5,12 +5,9 @@ public class Notification {
     //1 = someone liked your post
     //2 = someone followed you
     private int type;
-
-
     private String hostID;
     private String userID;
     private String postID;
-    private String message;
 
     //Follow
     public Notification(String hostID, String userID){
@@ -19,7 +16,7 @@ public class Notification {
         this.userID = userID;
 
         //TEMP
-        this.message = "Joseph narglesmen followed you";
+        //this.message = "Joseph narglesmen followed you";
         // Define message using "user name followed you"
 
     }
@@ -32,7 +29,7 @@ public class Notification {
         this.postID = postID;
 
         //TEMP
-        this.message= "John doe liked your post";
+        //this.message= "John doe liked your post";
         // Define message using "user name liked your post"
     }
     public String getHostID() {
@@ -57,14 +54,6 @@ public class Notification {
 
     public void setPostID(String postID) {
         this.postID = postID;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public int getType() {
