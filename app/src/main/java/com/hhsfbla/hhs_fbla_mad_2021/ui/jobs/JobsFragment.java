@@ -1,10 +1,13 @@
 package com.hhsfbla.hhs_fbla_mad_2021.ui.jobs;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +40,7 @@ public class JobsFragment extends Fragment {
     private JobsViewModel mViewModel;
     private RecyclerView jobsView;
     private JobsRVAdapter jobsRVAdapter;
+    private SearchView searchView;
 
 
 
@@ -64,6 +68,19 @@ public class JobsFragment extends Fragment {
 
         jobsRVAdapter = new JobsRVAdapter(jobs);
         jobsView.setAdapter(jobsRVAdapter);
+        searchView = rootView.findViewById(R.id.jobs_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                jobsRVAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
         return rootView;
 
 

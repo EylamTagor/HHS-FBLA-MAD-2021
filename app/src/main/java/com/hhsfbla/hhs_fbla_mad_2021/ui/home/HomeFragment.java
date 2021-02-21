@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,10 +38,12 @@ public class HomeFragment extends Fragment {
 
     private ArrayList<PostsRVModel> followingPosts = new ArrayList<>();
     private ArrayList<PostsRVModel> trendingPosts = new ArrayList<>();
+
     private Button followingButton;
     private Button trendingButton;
     private View trendingSelected;
     private View followingSelected;
+    private SearchView searchView;
 
 
 
@@ -95,6 +98,30 @@ public class HomeFragment extends Fragment {
                 trendingButton.setAlpha(1);
                 followingButton.setAlpha(.5f);
 
+            }
+        });
+        searchView = rootView.findViewById(R.id.home_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                trendingPostsRVAdapter.getFilter().filter(s);
+
+                followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
+                trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
+                followingSelected.setVisibility(View.INVISIBLE);
+                trendingSelected.setVisibility(View.VISIBLE);
+                trendingPostsView.setVisibility(View.VISIBLE);
+                followingPostsView.setVisibility(View.INVISIBLE);
+                trendingButton.setTextColor(Color.parseColor("#10C380"));
+                followingButton.setTextColor(Color.parseColor("#F2F2F2"));
+                trendingButton.setAlpha(1);
+                followingButton.setAlpha(.5f);
+                return false;
             }
         });
 

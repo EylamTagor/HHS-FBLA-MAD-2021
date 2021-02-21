@@ -12,6 +12,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="40dp"
+            app:rippleColor="@color/DarkGrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:scaleType="center"
+            app:maxImageSize="40dp"
+            android:src="@drawable/ic_plus"
+            app:tint="@color/white"
+            app:backgroundTint="@color/Green"
+
+            app:layout_constraintHorizontal_bias="1"/>
+
+
         <androidx.cardview.widget.CardView
             android:id="@+id/my_business_profile_picture"
             android:layout_width="wrap_content"
