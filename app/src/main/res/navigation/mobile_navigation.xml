@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/my_profile_action"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_saved_jobs"

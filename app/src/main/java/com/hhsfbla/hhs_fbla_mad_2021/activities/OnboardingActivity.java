@@ -96,8 +96,15 @@ public class OnboardingActivity extends AppCompatActivity {
             Picasso.get().load(fuser.getPhotoUrl()).into(pfp);
         });
 
-        pfp.setOnClickListener(v -> {
-            openFileChooser();
+        pfp.setOnClickListener(v -> openFileChooser());
+
+        doneButton.setOnClickListener(v -> {
+            Intent intent = new Intent(OnboardingActivity.this, HomeActivity.class);
+
+            if(getIntent().getStringExtra("FROM_FRAGMENT") != null && getIntent().getStringExtra("FROM_FRAGMENT").equals("MyProfileFragment"))
+                intent.putExtra("fragmentToLoad", "MyProfileFragment");
+
+            startActivity(intent);
         });
     }
 

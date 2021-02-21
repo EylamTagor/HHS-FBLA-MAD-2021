@@ -2,6 +2,7 @@ package com.hhsfbla.hhs_fbla_mad_2021.ui.profile;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,14 +15,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.LoginActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.OnboardingActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
@@ -51,7 +57,8 @@ public class MyProfileFragment extends Fragment {
     private CircleImageView pfp;
     private TextView name;
 
-
+    private Button editButton;
+    private Button signOutButton;
 
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
@@ -93,6 +100,23 @@ public class MyProfileFragment extends Fragment {
         }*/
 
         Picasso.get().load(fbuser.getPhotoUrl()).into(pfp);
+
+        editButton = rootView.findViewById(R.id.my_profile_edit);
+        editButton.setOnClickListener(v -> {
+            Intent intent = new Intent(rootView.getContext(), OnboardingActivity.class);
+            intent.putExtra("FROM_FRAGMENT", "MyProfileFragment");
+            getContext().startActivity(intent);
+        });
+
+        signOutButton = rootView.findViewById(R.id.my_profile_sign_out);
+        signOutButton.setOnClickListener(v -> {
+            AuthUI.getInstance().signOut(getContext()).addOnCompleteListener(task -> {
+                LoginManager.getInstance().logOut();
+                fbuser = null;
+                startActivity(new Intent(rootView.getContext(), LoginActivity.class));
+            });
+        });
+
         /*experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
@@ -142,5 +166,4 @@ public class MyProfileFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(MyProfileViewModel.class);
         // TODO: Use the ViewModel
     }
-
 }

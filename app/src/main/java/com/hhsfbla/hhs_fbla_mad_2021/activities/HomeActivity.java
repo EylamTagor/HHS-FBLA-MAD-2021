@@ -30,6 +30,8 @@ public class HomeActivity extends AppCompatActivity {
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        if (getIntent().getStringExtra("fragmentToLoad") != null && getIntent().getStringExtra("fragmentToLoad").equals("MyProfileFragment"))
+            navController.navigate(R.id.my_profile_action);
     }
 
 }

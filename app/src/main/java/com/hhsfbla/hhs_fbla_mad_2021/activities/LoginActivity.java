@@ -75,6 +75,10 @@ public class LoginActivity extends AppCompatActivity {
         Button test = findViewById(R.id.testButton);
         test.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, HomeActivity.class)));
 
+//        // OB test, delete later
+//        Button obTest = findViewById(R.id.obbtn);
+//        obTest.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, OnboardingActivity.class)));
+
         // FB
         callbackManager = CallbackManager.Factory.create();
 
