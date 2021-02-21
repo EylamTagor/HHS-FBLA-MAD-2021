@@ -99,12 +99,10 @@ public class OnboardingActivity extends AppCompatActivity {
         pfp.setOnClickListener(v -> openFileChooser());
 
         doneButton.setOnClickListener(v -> {
-            Intent intent = new Intent(OnboardingActivity.this, HomeActivity.class);
-
-            if(getIntent().getStringExtra("FROM_FRAGMENT") != null && getIntent().getStringExtra("FROM_FRAGMENT").equals("MyProfileFragment"))
-                intent.putExtra("fragmentToLoad", "MyProfileFragment");
-
-            startActivity(intent);
+            if (uploadTask != null && uploadTask.isInProgress())
+                Toast.makeText(OnboardingActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+            else
+                uploadFile(fuser.getUid());
         });
     }
 
@@ -114,25 +112,6 @@ public class OnboardingActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, RESULT_LOAD_IMAGE);
     }
-
-//    private void editUser(Uri uri) {
-//        User u = new User(name.getText().toString(), fuser.getEmail());
-//        u.setJobTitle(job.getText().toString());
-//        u.setDescription(about.getText().toString());
-//        u.setSocialVision(vision.getText().toString());
-//
-//
-//        if (uri != null) {
-//            db.collection("users").document(user.getUid()).update("pic", uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void aVoid) {
-//                    startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
-//                }
-//            });
-//        } else {
-//            startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
-//        }
-//    }
 
     /**
      * This method gets called after an action to get data from the user
@@ -153,48 +132,56 @@ public class OnboardingActivity extends AppCompatActivity {
         }
     }
 
-//    /**
-//     * Uploads the event image to cloud storage with the file name as id
-//     *
-//     * @param id the name of the file
-//     */
-//    public void uploadFile(String id) {
-//        if (name.getText().toString().trim().equalsIgnoreCase("")) {
-//            Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT).show();
-//            name.requestFocus();
-//            return;
-//        }
-//        if (hasImageChanged && bitmap != null) {
-//            progressDialog.setMessage("Uploading...");
-//            progressDialog.show();
-//            final StorageReference fileRef = storageReference.child(id);
-//            byte[] file = rotator.getBytesFromBitmap(bitmap);
-//            uploadTask = fileRef.putBytes(file)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                @Override
-//                                public void onSuccess(Uri uri) {
-//                                    editUser(uri);
-//                                }
-//                            });
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception exception) {
-//
-//                        }
-//                    })
-//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-//
-//                        }
-//                    });
-//        } else {
-//            editUser(null);
-//        }
-//    }
+    /**
+     * Uploads the event image to cloud storage with the file name as id
+     *
+     * @param id the name of the file
+     */
+    public void uploadFile(String id) {
+        if (name.getText().toString().trim().equalsIgnoreCase("")) {
+            Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT).show();
+            name.requestFocus();
+            return;
+        }
+
+        if (hasImageChanged && bitmap != null) {
+            progressDialog.setMessage("Uploading...");
+            progressDialog.show();
+            final StorageReference fileRef = storageReference.child(id);
+            byte[] file = rotator.getBytesFromBitmap(bitmap);
+            uploadTask = fileRef.putBytes(file)
+                    .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl().addOnSuccessListener(this::editUser)).addOnFailureListener(exception -> {}).addOnProgressListener(taskSnapshot -> {}); // leave this just in case
+        } else {
+            editUser(null);
+        }
+    }
+
+    private void editUser(Uri uri) {
+        // update user's fields
+        db.collection("users").document(fuser.getUid()).update("name", name.getText().toString());
+        db.collection("users").document(fuser.getUid()).update("jobTitle", job.getText().toString());
+        db.collection("users").document(fuser.getUid()).update("description", about.getText().toString());
+        db.collection("users").document(fuser.getUid()).update("socialVision", vision.getText().toString());
+//        db.collection("users").document(fuser.getUid()).update("experiences", exp);
+//        db.collection("users").document(fuser.getUid()).update("education", edu);
+//        db.collection("users").document(fuser.getUid()).update("skills", ski);
+
+        if (uri != null)
+            db.collection("users").document(fuser.getUid()).update("pfp", uri.toString()).addOnSuccessListener(aVoid -> {
+                Intent intent = new Intent(OnboardingActivity.this, HomeActivity.class);
+
+                if (getIntent().getStringExtra("FROM_FRAGMENT") != null && getIntent().getStringExtra("FROM_FRAGMENT").equals("MyProfileFragment"))
+                    intent.putExtra("fragmentToLoad", "MyProfileFragment");
+
+                startActivity(intent);
+            });
+        else {
+            Intent intent = new Intent(OnboardingActivity.this, HomeActivity.class);
+
+            if (getIntent().getStringExtra("FROM_FRAGMENT") != null && getIntent().getStringExtra("FROM_FRAGMENT").equals("MyProfileFragment"))
+                intent.putExtra("fragmentToLoad", "MyProfileFragment");
+
+            startActivity(intent);
+        }
+    }
 }

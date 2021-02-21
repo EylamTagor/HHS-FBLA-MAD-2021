@@ -3,6 +3,7 @@ package com.hhsfbla.hhs_fbla_mad_2021.ui.profile;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -81,6 +82,12 @@ public class MyProfileFragment extends Fragment {
         db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
             name.setText(u.getName());
+
+            if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase("")) {
+                Picasso.get().load(Uri.parse(u.getPfp())).into(pfp);
+            } else {
+                Picasso.get().load(fbuser.getPhotoUrl()).into(pfp);
+            }
         });
 
         /*
@@ -98,8 +105,6 @@ public class MyProfileFragment extends Fragment {
         for(int i = 0;i<experiencesObj.size(); i++){
             experience.add(new ExperiencesRVModel(experiencesObj.get(i)));
         }*/
-
-        Picasso.get().load(fbuser.getPhotoUrl()).into(pfp);
 
         editButton = rootView.findViewById(R.id.my_profile_edit);
         editButton.setOnClickListener(v -> {
