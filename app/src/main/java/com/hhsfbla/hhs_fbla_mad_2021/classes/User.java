@@ -17,6 +17,7 @@ public class User {
     private String socialVision;
     private ArrayList<String> skills;
     private ArrayList<String> experiences;
+    private ArrayList<String> education;
     private ArrayList<String> notifIDs;
     private ArrayList<String> myBusinesses;
     private ArrayList<String> myPosts;
@@ -136,6 +137,14 @@ public class User {
 
     public void setExperiences(ArrayList<String> experiences) {
         this.experiences = experiences;
+    }
+
+    public ArrayList<String> getEducation() {
+        return education;
+    }
+
+    public void setEducation(ArrayList<String> education) {
+        this.education = education;
     }
 
     public void likePost(String x){
