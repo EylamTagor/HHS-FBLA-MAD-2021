@@ -29,7 +29,7 @@
                     android:layout_height="64dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/job_bg"
+                    android:background="@drawable/pfp_bg"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
