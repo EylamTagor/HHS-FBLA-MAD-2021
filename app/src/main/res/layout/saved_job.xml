@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
 >
+        <!-- staticText--> the UI for an individual saved job. All individual elements are identifiable by their ID.
 
         <Button
             android:layout_marginTop="15dp"

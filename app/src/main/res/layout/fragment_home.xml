@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <!-- staticText--> the UI for the home page. All individual elements are identifiable by their ID.
+
     <TextView
         android:id="@+id/home_collar"
         android:layout_width="wrap_content"
@@ -25,7 +27,7 @@
         app:layout_constraintVertical_bias="0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/home_post_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabSize="normal"

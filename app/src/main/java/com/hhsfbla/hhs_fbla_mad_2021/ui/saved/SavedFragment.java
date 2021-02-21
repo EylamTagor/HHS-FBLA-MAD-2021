@@ -34,11 +34,15 @@ import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 
 import java.util.ArrayList;
 
+import kotlinx.coroutines.Job;
+
 public class SavedFragment extends Fragment {
 
     private SavedViewModel mViewModel;
     private RecyclerView savedView;
     private SavedRVAdapter savedRVAdapter;
+    ArrayList<SavedRVModel> savedJobs = new ArrayList<>();
+
 
 
 
@@ -50,13 +54,20 @@ public class SavedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+
+        //Pull down firebase savedJobs and set = to SavedJob field. Should then display.
+        /*
+        for(int i = 0; i <savedJobs.size(); i++){
+            this.savedJobs.add(new SavedRVModel(savedJobs.get(i)));
+        }*/
+
         View rootView = inflater.inflate(R.layout.fragment_saved, container, false);
         savedView = (RecyclerView)rootView.findViewById(R.id.saved_saved_jobs);
         savedView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        ArrayList<SavedRVModel> savedJobs = new ArrayList<>();
 
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+      /*  savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
         savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
         savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
         savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
@@ -69,11 +80,15 @@ public class SavedFragment extends Fragment {
         savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
         savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
 
-
-        savedRVAdapter = new SavedRVAdapter(savedJobs);
+*/
+        savedRVAdapter = new SavedRVAdapter(this.savedJobs);
         savedView.setAdapter(savedRVAdapter);
         return rootView;
 
+    }
+
+    public void addSavedJob(JobOffer jobOffer){
+        savedJobs.add(new SavedRVModel(jobOffer));
     }
 
     /**

@@ -37,6 +37,8 @@ import java.util.ArrayList;
 
 public class JobsFragment extends Fragment {
 
+
+    //Fields
     private JobsViewModel mViewModel;
     private RecyclerView jobsView;
     private JobsRVAdapter jobsRVAdapter;
@@ -44,11 +46,11 @@ public class JobsFragment extends Fragment {
 
 
 
-
     public static JobsFragment newInstance() {
         return new JobsFragment();
     }
 
+    // Initializations when the View is first created. connects UI to backend.
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -82,10 +84,6 @@ public class JobsFragment extends Fragment {
             }
         });
         return rootView;
-
-
-
-
     }
 
     @Override
