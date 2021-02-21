@@ -3,20 +3,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
 
-public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.StaticRVViewHolder> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.StaticRVViewHolder> implements Filterable {
     private ArrayList<PostsRVModel> posts;
+    private ArrayList<PostsRVModel> postsFull;
+
     int row_index = -1;
 
     public PostsRVAdapter(ArrayList<PostsRVModel> items) {
-        this.posts = items;
+        posts = items;
+        postsFull = new ArrayList<>(items);
     }
 
     @NonNull
@@ -51,6 +58,47 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.StaticRV
     public int getItemCount() {
         return posts.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return postsFilter;
+    }
+
+    private Filter postsFilter = new Filter(){
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<PostsRVModel> filteredList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(postsFull);
+            }
+            else{
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+                for(PostsRVModel item : postsFull){
+                    if(item.getTitle().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                    else if(item.getHashtag().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                    else if(item.getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            posts.clear();
+            posts.addAll((List)filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public static class StaticRVViewHolder extends RecyclerView.ViewHolder{
         TextView name;

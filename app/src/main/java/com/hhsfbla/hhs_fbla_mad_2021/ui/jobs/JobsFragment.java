@@ -1,10 +1,13 @@
 package com.hhsfbla.hhs_fbla_mad_2021.ui.jobs;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,10 +37,12 @@ import java.util.ArrayList;
 
 public class JobsFragment extends Fragment {
 
+
+    //Fields
     private JobsViewModel mViewModel;
     private RecyclerView jobsView;
     private JobsRVAdapter jobsRVAdapter;
-
+    private SearchView searchView;
 
 
 
@@ -45,6 +50,7 @@ public class JobsFragment extends Fragment {
         return new JobsFragment();
     }
 
+    // Initializations when the View is first created. connects UI to backend.
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -54,26 +60,30 @@ public class JobsFragment extends Fragment {
 
         ArrayList<JobsRVModel> jobs = new ArrayList<>();
 
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations")));
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations")));
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations")));
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations")));
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations")));
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations")));
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations")));
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations")));
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations")));
-
-
+        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
+        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
+        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
+        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
+        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
+        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
+        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
 
         jobsRVAdapter = new JobsRVAdapter(jobs);
         jobsView.setAdapter(jobsRVAdapter);
+        searchView = rootView.findViewById(R.id.jobs_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                jobsRVAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
         return rootView;
-
-
-
-
     }
 
     @Override
