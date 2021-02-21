@@ -56,16 +56,18 @@ public class SavedFragment extends Fragment {
 
         ArrayList<SavedRVModel> savedJobs = new ArrayList<>();
 
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "www.apple.com", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
 
 
         savedRVAdapter = new SavedRVAdapter(savedJobs);
