@@ -304,14 +304,16 @@ public class OnboardingActivity extends AppCompatActivity {
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             final User u = documentSnapshot.toObject(User.class);
 
-            for (String id : u.getEducation())
-                db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
-                    final Education e = documentSnapshot1.toObject(Education.class);
-                    educationList.add(e);
-                    educationRVModels.add(new EducationRVModel(e));
-                    educationRVAdapter.setEducations(educationList);
-                    educationRVAdapter.notifyDataSetChanged();
-                });
+            if(u.getEducation() != null) {
+                for (String id : u.getEducation())
+                    db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
+                        final Education e = documentSnapshot1.toObject(Education.class);
+                        educationList.add(e);
+                        educationRVModels.add(new EducationRVModel(e));
+                        educationRVAdapter.setEducations(educationList);
+                        educationRVAdapter.notifyDataSetChanged();
+                    });
+            }
         });
 
         skillList = new ArrayList<>();
