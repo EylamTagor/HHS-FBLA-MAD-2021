@@ -29,7 +29,6 @@ import com.hhsfbla.hhs_fbla_mad_2021.SkillsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.SkillsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.LoginActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.OnboardingActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
@@ -40,6 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 public class MyProfileFragment extends Fragment {
 
@@ -80,6 +81,9 @@ public class MyProfileFragment extends Fragment {
     private Button editButton;
     private Button signOutButton;
 
+    private Button copyrightInfoButton;
+    private Button reportBugButton;
+
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
     }
@@ -94,6 +98,9 @@ public class MyProfileFragment extends Fragment {
         skillsView.setLayoutManager(new NonScrollingLLM(getActivity()));
         educationView = rootView.findViewById(R.id.my_profile_education);
         educationView.setLayoutManager(new NonScrollingLLM(getActivity()));
+
+        copyrightInfoButton = rootView.findViewById(R.id.my_profile_view_copyright);
+        reportBugButton = rootView.findViewById(R.id.my_profile_report_bug);
 
         pfp = rootView.findViewById(R.id.pfpImage);
         name = rootView.findViewById(R.id.my_profile_name);
@@ -134,6 +141,18 @@ public class MyProfileFragment extends Fragment {
                 startActivity(new Intent(rootView.getContext(), LoginActivity.class));
             });
         });
+        copyrightInfoButton.setOnClickListener(v -> {
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                v.getContext().startActivity(intent);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/NbedNqwVFTSXSrRQ7")), null);
+
+        });
+        reportBugButton.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                v.getContext().startActivity(intent);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1mVytYJ3PKIuxIDnuQAg4PDeZgaZE5rkHz4NipMyAZAU/edit?usp=sharing")), null);
+        });
 
         // Experiences RV
         experienceList = new ArrayList<>();
@@ -161,14 +180,16 @@ public class MyProfileFragment extends Fragment {
         db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             final User u = documentSnapshot.toObject(User.class);
 
-            for (String id : u.getEducation())
-                db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
-                    final Education e = documentSnapshot1.toObject(Education.class);
-                    educationList.add(e);
-                    educationRVModels.add(new EducationRVModel(e));
-                    educationRVAdapter.setEducations(educationList);
-                    educationRVAdapter.notifyDataSetChanged();
-                });
+            if(u.getEducation() != null) {
+                for (String id : u.getEducation())
+                    db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
+                        final Education e = documentSnapshot1.toObject(Education.class);
+                        educationList.add(e);
+                        educationRVModels.add(new EducationRVModel(e));
+                        educationRVAdapter.setEducations(educationList);
+                        educationRVAdapter.notifyDataSetChanged();
+                    });
+            }
         });
 
         // Skills RV

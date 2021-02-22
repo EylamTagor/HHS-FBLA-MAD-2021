@@ -132,6 +132,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/my_profile_divider2"
             app:layout_constraintVertical_bias="0" />
+        <TextView
+            android:id="@+id/my_profile_help_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:text="Help Center:"
+            android:textColor="@color/Green"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider3"
+            app:layout_constraintVertical_bias="0" />
 
         <Button
             android:id="@+id/my_profile_users_following"
@@ -143,20 +159,67 @@
             android:letterSpacing="-.005"
             android:minHeight="0dp"
             android:elevation="2dp"
-            android:background="@drawable/button_border"
             android:textAllCaps="false"
             android:text="Users I'm Following"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingLeft="7dp"
-            android:paddingRight="7dp"
-            android:textColor="@color/LightGrey"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/DarkGrey"
             android:textSize="12sp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/my_profile_my_activity"
+            app:layout_constraintVertical_bias="0" />
+
+        <Button
+            android:id="@+id/my_profile_report_bug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:elevation="2dp"
+            android:layout_marginStart="20dp"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="-.005"
+            android:minHeight="0dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:text="Report Bug"
+            android:textAllCaps="false"
+            android:textColor="@color/DarkGrey"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/my_profile_view_copyright"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_help_center" />
+        <Button
+            android:id="@+id/my_profile_view_copyright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="-.005"
+            android:minHeight="0dp"
+            android:elevation="2dp"
+            android:textAllCaps="false"
+            android:text="View Copyright Info"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/DarkGrey"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_help_center"
             app:layout_constraintVertical_bias="0" />
         <Button
             android:id="@+id/my_profile_liked_posts"
@@ -167,15 +230,14 @@
             android:minHeight="0dp"
             android:elevation="2dp"
             android:textAllCaps="false"
-            android:background="@drawable/button_border"
             android:text="Posts I've Liked"
             android:letterSpacing="-.005"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingLeft="7dp"
-            android:paddingRight="7dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:fontFamily="sans-serif"
-            android:textColor="@color/LightGrey"
+            android:textColor="@color/DarkGrey"
             android:textSize="12sp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -214,7 +276,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider3"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider4"
             app:layout_constraintVertical_bias="0" />
         <TextView
             android:id="@+id/my_profile_social_vision_header"
@@ -231,7 +293,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider4"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider5"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
@@ -268,7 +330,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider5"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider6"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
@@ -285,7 +347,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider6"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider7"
             app:layout_constraintVertical_bias="0" />
         <TextView
             android:id="@+id/my_profile_skills_header"
@@ -301,7 +363,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider7"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider8"
             app:layout_constraintVertical_bias="0" />
         <TextView
             android:id="@+id/my_profile_social_vision"
@@ -439,7 +501,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_about"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_view_copyright"
             app:layout_constraintVertical_bias="0" />
         <View
             android:id="@+id/my_profile_divider5"
@@ -451,7 +513,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_social_vision"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_about"
             app:layout_constraintVertical_bias="0" />
         <View
             android:id="@+id/my_profile_divider6"
@@ -463,7 +525,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_experiences"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_social_vision"
             app:layout_constraintVertical_bias="0" />
         <View
             android:id="@+id/my_profile_divider7"
@@ -475,8 +537,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_experiences"
+            app:layout_constraintVertical_bias="0" />
+        <View
+            android:id="@+id/my_profile_divider8"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:alpha=".5"
+            android:layout_marginTop="15dp"
+            android:background="@color/Green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/my_profile_education"
             app:layout_constraintVertical_bias="0" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
