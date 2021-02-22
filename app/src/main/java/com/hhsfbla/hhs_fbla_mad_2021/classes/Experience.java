@@ -30,11 +30,11 @@ public class Experience {
      * @param currentlyWorking Whether the user is currently working
      */
     public Experience(String title, String workplace, String startTime, String endTime, String description, boolean currentlyWorking){
+        this.currentlyWorking = currentlyWorking;
         this.title = title;
         this.workplace = workplace;
         this.startTime = startTime;
-        this.endTime = endTime;
-        this.currentlyWorking = currentlyWorking;
+        this.endTime = currentlyWorking? "Present" : endTime;
         this.description = description;
     }
 

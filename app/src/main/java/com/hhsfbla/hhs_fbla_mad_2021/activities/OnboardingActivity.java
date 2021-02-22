@@ -14,12 +14,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.api.Distribution;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
@@ -27,9 +25,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.hhsfbla.hhs_fbla_mad_2021.EducationRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.EducationRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.util.ImageRotator;
@@ -38,7 +39,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -56,6 +56,9 @@ public class OnboardingActivity extends AppCompatActivity {
     private ExperiencesRVAdapter experiencesRVAdapter;
     private List<Experience> experienceList;
     private ArrayList<ExperiencesRVModel> experienceRVModels;
+    private EducationRVAdapter educationRVAdapter;
+    private List<Education> educationList;
+    private ArrayList<EducationRVModel> educationRVModels;
 
     private static final int RESULT_LOAD_IMAGE = 1;
     private Bitmap bitmap;
@@ -66,6 +69,7 @@ public class OnboardingActivity extends AppCompatActivity {
     private ImageRotator rotator;
 
     private Dialog experienceDialog;
+    private Dialog educationDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class OnboardingActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
 
         experienceDialog = new Dialog(this);
+        educationDialog = new Dialog(this);
 
         db = FirebaseFirestore.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -100,7 +105,7 @@ public class OnboardingActivity extends AppCompatActivity {
         education = findViewById(R.id.ob_education);
         skills = findViewById(R.id.ob_skills);
 
-        // autofilling name & pfp
+        // autofilling text fields & pfp
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
 
@@ -108,7 +113,12 @@ public class OnboardingActivity extends AppCompatActivity {
             job.setText(u.getJobTitle());
             about.setText(u.getDescription());
             vision.setText(u.getSocialVision());
-            Picasso.get().load(fuser.getPhotoUrl()).into(pfp);
+
+            if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase("")) {
+                Picasso.get().load(Uri.parse(u.getPfp())).into(pfp);
+            } else {
+                Picasso.get().load(fuser.getPhotoUrl()).into(pfp);
+            }
         });
 
         pfp.setOnClickListener(v -> openFileChooser());
@@ -154,12 +164,70 @@ public class OnboardingActivity extends AppCompatActivity {
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
                 }
+
+                db.collection("users").document(fuser.getUid()).update("name", name.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("jobTitle", job.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("description", about.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("socialVision", vision.getText().toString());
+
                 experienceDialog.dismiss();
                 finish();
                 startActivity(getIntent());
             });
 
             experienceDialog.show();
+        });
+
+        addEducation.setOnClickListener(v -> {
+            educationDialog.setContentView(R.layout.add_education_dialog);
+
+            TextInputEditText school = educationDialog.findViewById(R.id.edu_school);
+            TextInputEditText degree = educationDialog.findViewById(R.id.edu_degree);
+            TextInputEditText start = educationDialog.findViewById(R.id.edu_start);
+            TextInputEditText end = educationDialog.findViewById(R.id.edu_end);
+            SwitchMaterial current = educationDialog.findViewById(R.id.edu_current);
+            Button done = educationDialog.findViewById(R.id.edu_done);
+
+            current.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (current.isChecked()) {
+                    educationDialog.findViewById(R.id.edu_end_layout).setVisibility(View.GONE);
+                    end.setText("");
+                } else {
+                    educationDialog.findViewById(R.id.edu_end_layout).setVisibility(View.VISIBLE);
+                }
+            });
+
+            done.setOnClickListener(view -> {
+                Education e = new Education(
+                        school.getText().toString(),
+                        start.getText().toString(),
+                        end.getText().toString(),
+                        degree.getText().toString(),
+                        current.isChecked());
+
+                db.collection("educations").add(e)
+                        .addOnSuccessListener(documentReference -> {
+                            db.collection("users").document(fuser.getUid()).update("educations", FieldValue.arrayUnion(documentReference.getId()));
+                            Toast.makeText(this, "Education added.", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(documentReference -> Toast.makeText(this, "Invalid education. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
+
+                try {
+                    TimeUnit.MILLISECONDS.sleep(250);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+
+                db.collection("users").document(fuser.getUid()).update("name", name.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("jobTitle", job.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("description", about.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("socialVision", vision.getText().toString());
+
+                educationDialog.dismiss();
+                finish();
+                startActivity(getIntent());
+            });
+
+            educationDialog.show();
         });
 
         doneButton.setOnClickListener(v -> {
@@ -185,6 +253,24 @@ public class OnboardingActivity extends AppCompatActivity {
                     experienceRVModels.add(new ExperiencesRVModel(e));
                     experiencesRVAdapter.setExperiences(experienceList);
                     experiencesRVAdapter.notifyDataSetChanged();
+                });
+        });
+
+        educationList = new ArrayList<>();
+        educationRVModels = new ArrayList<>();
+        education.setLayoutManager(new NonScrollingLLM(this));
+        educationRVAdapter = new EducationRVAdapter(educationRVModels);
+        education.setAdapter(educationRVAdapter);
+        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            final User u = documentSnapshot.toObject(User.class);
+            // TODO: educations is size 0 wtf
+            for (String id : u.getEducation())
+                db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
+                    final Education e = documentSnapshot1.toObject(Education.class);
+                    educationList.add(e);
+                    educationRVModels.add(new EducationRVModel(e));
+                    educationRVAdapter.setEducations(educationList);
+                    educationRVAdapter.notifyDataSetChanged();
                 });
         });
     }

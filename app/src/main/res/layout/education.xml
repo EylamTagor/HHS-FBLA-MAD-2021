@@ -43,7 +43,7 @@
             android:textSize="12sp"/>
 
         <TextView
-            android:id="@+id/ducation_period"
+            android:id="@+id/education_period"
             android:layout_width="wrap_content"
             android:layout_height="14dp"
             android:text="May 2020 - Present"

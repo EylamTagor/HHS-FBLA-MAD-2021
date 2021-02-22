@@ -1,14 +1,18 @@
 package com.hhsfbla.hhs_fbla_mad_2021;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class EducationRVAdapter extends RecyclerView.Adapter<EducationRVAdapter.StaticRVViewHolder> {
     private ArrayList<EducationRVModel> education;
@@ -42,6 +46,18 @@ public class EducationRVAdapter extends RecyclerView.Adapter<EducationRVAdapter.
         return education.size();
     }
 
+    /**
+     * Updates the list of experiences using a new list
+     *
+     * @param edus new list to replace the old list
+     */
+    public void setEducations(List<Education> edus) {
+        education.clear();
+
+        for (Education e : edus)
+            education.add(new EducationRVModel(e));
+    }
+
     public static class StaticRVViewHolder extends RecyclerView.ViewHolder{
         TextView schoolName;
         TextView period;
@@ -51,7 +67,7 @@ public class EducationRVAdapter extends RecyclerView.Adapter<EducationRVAdapter.
         public StaticRVViewHolder(@NonNull View educationView) {
             super(educationView);
             schoolName = educationView.findViewById(R.id.education_school_name);
-            period = educationView.findViewById(R.id.ob_education_header);
+            period = educationView.findViewById(R.id.education_period);
             degree = educationView.findViewById(R.id.education_degree);
             educationLayout =  educationView.findViewById(R.id.education_layout);
         }

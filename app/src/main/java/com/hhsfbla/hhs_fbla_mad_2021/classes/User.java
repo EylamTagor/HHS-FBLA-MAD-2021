@@ -64,11 +64,16 @@ public class User {
     public User(String name, String email){
         this.name = name;
         this.email = email;
+        pfp = "";
+        jobTitle = "";
+        description = "";
+        socialVision = "";
         likedPosts = new ArrayList<String>();
         following = new ArrayList<String>();
         followers = new ArrayList<String>();
         skills = new ArrayList<String>();
         experiences = new ArrayList<String>();
+        education = new ArrayList<String>();
         notifIDs = new ArrayList<String>();
         myBusinesses = new ArrayList<String>();
         myPosts = new ArrayList<String>();
