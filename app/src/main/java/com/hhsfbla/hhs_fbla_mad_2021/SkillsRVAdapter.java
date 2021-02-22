@@ -8,7 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class SkillsRVAdapter extends RecyclerView.Adapter<SkillsRVAdapter.StaticRVViewHolder> {
     private ArrayList<SkillsRVModel> skills;
@@ -38,6 +42,18 @@ public class SkillsRVAdapter extends RecyclerView.Adapter<SkillsRVAdapter.Static
     @Override
     public int getItemCount() {
         return skills.size();
+    }
+
+    /**
+     * Updates the list of skills using a new list
+     *
+     * @param skis new list to replace the old list
+     */
+    public void setSkills(List<String> skis) {
+        skills.clear();
+
+        for (String s : skis)
+            skills.add(new SkillsRVModel(s));
     }
 
     public static class StaticRVViewHolder extends RecyclerView.ViewHolder{

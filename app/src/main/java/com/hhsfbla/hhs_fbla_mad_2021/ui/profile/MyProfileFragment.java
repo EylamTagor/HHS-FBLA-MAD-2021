@@ -51,6 +51,7 @@ public class MyProfileFragment extends Fragment {
     //private ArrayList<Education> educations;
     private ArrayList<String> skills;
     private ArrayList<String> achievements;
+
     private RecyclerView experiencesView;
     private RecyclerView educationView;
     private RecyclerView skillsView;
@@ -59,8 +60,15 @@ public class MyProfileFragment extends Fragment {
     private ExperiencesRVAdapter experiencesRVAdapter;
     private List<Experience> experienceList;
     private ArrayList<ExperiencesRVModel> experienceRVModels;
+
     private EducationRVAdapter educationRVAdapter;
+    private List<Education> educationList;
+    private ArrayList<EducationRVModel> educationRVModels;
+
+
     private SkillsRVAdapter skillsRVAdapter;
+    private List<String> skillList;
+    private ArrayList<SkillsRVModel> skillsRVModels;
 
     private User user;
     private FirebaseUser fbuser;
@@ -80,13 +88,12 @@ public class MyProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.my_profile_fragment, container, false);
-        experiencesView = (RecyclerView)rootView.findViewById(R.id.my_profile_experiences);
+        experiencesView = rootView.findViewById(R.id.my_profile_experiences);
         experiencesView.setLayoutManager(new NonScrollingLLM(getActivity()));
-        skillsView = (RecyclerView)rootView.findViewById(R.id.my_profile_skills);
+        skillsView = rootView.findViewById(R.id.my_profile_skills);
         skillsView.setLayoutManager(new NonScrollingLLM(getActivity()));
-        educationView = (RecyclerView)rootView.findViewById(R.id.my_profile_education);
+        educationView = rootView.findViewById(R.id.my_profile_education);
         educationView.setLayoutManager(new NonScrollingLLM(getActivity()));
-
 
         pfp = rootView.findViewById(R.id.pfpImage);
         name = rootView.findViewById(R.id.my_profile_name);
@@ -144,6 +151,40 @@ public class MyProfileFragment extends Fragment {
                     experiencesRVAdapter.setExperiences(experienceList);
                     experiencesRVAdapter.notifyDataSetChanged();
                 });
+        });
+
+        // Education RV
+        educationList = new ArrayList<>();
+        educationRVModels = new ArrayList<>();
+        educationRVAdapter = new EducationRVAdapter(educationRVModels);
+        educationView.setAdapter(educationRVAdapter);
+        db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            final User u = documentSnapshot.toObject(User.class);
+
+            for (String id : u.getEducation())
+                db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
+                    final Education e = documentSnapshot1.toObject(Education.class);
+                    educationList.add(e);
+                    educationRVModels.add(new EducationRVModel(e));
+                    educationRVAdapter.setEducations(educationList);
+                    educationRVAdapter.notifyDataSetChanged();
+                });
+        });
+
+        // Skills RV
+        skillList = new ArrayList<>();
+        skillsRVModels = new ArrayList<>();
+        skillsRVAdapter = new SkillsRVAdapter(skillsRVModels);
+        skillsView.setAdapter(skillsRVAdapter);
+        db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            final User u = documentSnapshot.toObject(User.class);
+
+            for (String skill : u.getSkills()) {
+                skillList.add(skill);
+                skillsRVModels.add(new SkillsRVModel(skill));
+                skillsRVAdapter.setSkills(skillList);
+                skillsRVAdapter.notifyDataSetChanged();
+            }
         });
 
         return rootView;

@@ -47,7 +47,7 @@ public class EducationRVAdapter extends RecyclerView.Adapter<EducationRVAdapter.
     }
 
     /**
-     * Updates the list of experiences using a new list
+     * Updates the list of educations using a new list
      *
      * @param edus new list to replace the old list
      */

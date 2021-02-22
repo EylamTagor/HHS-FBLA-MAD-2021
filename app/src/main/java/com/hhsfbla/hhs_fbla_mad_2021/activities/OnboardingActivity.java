@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +30,8 @@ import com.hhsfbla.hhs_fbla_mad_2021.EducationRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.SkillsRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.SkillsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
@@ -53,12 +55,18 @@ public class OnboardingActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     private RecyclerView experiences, education, skills;
+
     private ExperiencesRVAdapter experiencesRVAdapter;
     private List<Experience> experienceList;
     private ArrayList<ExperiencesRVModel> experienceRVModels;
+
     private EducationRVAdapter educationRVAdapter;
     private List<Education> educationList;
     private ArrayList<EducationRVModel> educationRVModels;
+
+    private SkillsRVAdapter skillsRVAdapter;
+    private List<String> skillList;
+    private ArrayList<SkillsRVModel> skillsRVModels;
 
     private static final int RESULT_LOAD_IMAGE = 1;
     private Bitmap bitmap;
@@ -70,6 +78,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
     private Dialog experienceDialog;
     private Dialog educationDialog;
+    private Dialog skillDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +90,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         experienceDialog = new Dialog(this);
         educationDialog = new Dialog(this);
+        skillDialog = new Dialog(this);
 
         db = FirebaseFirestore.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -230,6 +240,36 @@ public class OnboardingActivity extends AppCompatActivity {
             educationDialog.show();
         });
 
+        addSkill.setOnClickListener(v -> {
+            skillDialog.setContentView(R.layout.add_skill_dialog);
+
+            TextInputEditText skill = skillDialog.findViewById(R.id.ski_skill);
+            Button done = skillDialog.findViewById(R.id.ski_done);
+
+            done.setOnClickListener(view -> {
+                db.collection("users").document(fuser.getUid()).update("skills", FieldValue.arrayUnion(skill.getText().toString())).addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Skill added.", Toast.LENGTH_SHORT).show();
+                });
+
+                try {
+                    TimeUnit.MILLISECONDS.sleep(250);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+
+                db.collection("users").document(fuser.getUid()).update("name", name.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("jobTitle", job.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("description", about.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("socialVision", vision.getText().toString());
+
+                skillDialog.dismiss();
+                finish();
+                startActivity(getIntent());
+            });
+
+            skillDialog.show();
+        });
+
         doneButton.setOnClickListener(v -> {
             if (uploadTask != null && uploadTask.isInProgress())
                 Toast.makeText(OnboardingActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
@@ -263,7 +303,7 @@ public class OnboardingActivity extends AppCompatActivity {
         education.setAdapter(educationRVAdapter);
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             final User u = documentSnapshot.toObject(User.class);
-            // TODO: educations is size 0 wtf
+
             for (String id : u.getEducation())
                 db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
                     final Education e = documentSnapshot1.toObject(Education.class);
@@ -272,6 +312,22 @@ public class OnboardingActivity extends AppCompatActivity {
                     educationRVAdapter.setEducations(educationList);
                     educationRVAdapter.notifyDataSetChanged();
                 });
+        });
+
+        skillList = new ArrayList<>();
+        skillsRVModels = new ArrayList<>();
+        skills.setLayoutManager(new NonScrollingLLM(this));
+        skillsRVAdapter = new SkillsRVAdapter(skillsRVModels);
+        skills.setAdapter(skillsRVAdapter);
+        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            final User u = documentSnapshot.toObject(User.class);
+
+            for (String skill : u.getSkills()) {
+                skillList.add(skill);
+                skillsRVModels.add(new SkillsRVModel(skill));
+                skillsRVAdapter.setSkills(skillList);
+                skillsRVAdapter.notifyDataSetChanged();
+            }
         });
     }
 

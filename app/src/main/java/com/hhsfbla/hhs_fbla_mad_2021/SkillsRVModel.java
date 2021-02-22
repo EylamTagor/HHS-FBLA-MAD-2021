@@ -9,7 +9,7 @@ public class SkillsRVModel {
     private String skill;
 
 
-    public void addExperience(String skill) {
+    public void addSkill(String skill) {
         this.skill = skill;
     }
 
