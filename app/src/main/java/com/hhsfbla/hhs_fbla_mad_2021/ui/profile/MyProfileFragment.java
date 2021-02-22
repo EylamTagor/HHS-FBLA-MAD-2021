@@ -1,35 +1,30 @@
 package com.hhsfbla.hhs_fbla_mad_2021.ui.profile;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.facebook.login.LoginManager;
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.LoginActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.OnboardingActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.util.NonScrollingLLM;
@@ -60,7 +55,7 @@ public class MyProfileFragment extends Fragment {
     private FirebaseFirestore db;
 
     private CircleImageView pfp;
-    private TextView name;
+    private TextView name, header, about, vision, followerCount;
 
     private Button editButton;
     private Button signOutButton;
@@ -78,12 +73,20 @@ public class MyProfileFragment extends Fragment {
 
         pfp = rootView.findViewById(R.id.pfpImage);
         name = rootView.findViewById(R.id.my_profile_name);
+        header = rootView.findViewById(R.id.my_profile_header);
+        about = rootView.findViewById(R.id.my_profile_about);
+        vision = rootView.findViewById(R.id.my_profile_social_vision);
+        followerCount = rootView.findViewById(R.id.my_profile_follower_count);
 
         db = FirebaseFirestore.getInstance();
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
         db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
             name.setText(u.getName());
+            header.setText(u.getJobTitle());
+            about.setText(u.getDescription());
+            vision.setText(u.getSocialVision());
+            followerCount.setText("" + u.getFollowers().size());
 
             if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase("")) {
                 Picasso.get().load(Uri.parse(u.getPfp())).into(pfp);
