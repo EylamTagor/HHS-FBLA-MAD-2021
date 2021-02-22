@@ -11,10 +11,14 @@ public class Post {
     private ArrayList<String> usersLiked;
     private String hashtag;
 
-    public Post(String title, String description, Image img, String hashtag){
+    public Post(){
+        this("", "", "");
+    }
+
+    public Post(String title, String description, String hashtag){
         this.title = title;
         this.description = description;
-        usersLiked = new ArrayList<>();
+        usersLiked = new ArrayList<String>();
         this.hashtag = hashtag;
 
     }

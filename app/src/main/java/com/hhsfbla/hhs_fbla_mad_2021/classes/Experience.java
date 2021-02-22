@@ -9,6 +9,10 @@ public class Experience {
     private String description;
     private boolean currentlyWorking;
 
+    public Experience(){
+        this("", "", "", "", "", false);
+    }
+
     public Experience(String title, String workplace, String startTime, String endTime, String description, boolean currentlyWorking){
         this.title = title;
         this.workplace = workplace;
