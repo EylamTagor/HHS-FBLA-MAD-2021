@@ -12,6 +12,9 @@ public class JobOffer {
     private String link;
     private String jobDescription;
 
+    /**
+     * No args constructor
+     */
     public JobOffer(){
         this("", "", "", "");
     }
