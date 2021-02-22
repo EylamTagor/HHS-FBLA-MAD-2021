@@ -41,7 +41,7 @@
                     android:layout_marginHorizontal="16dp"
                     app:boxBackgroundColor="@color/DarkGrey"
                     app:boxStrokeColor="@color/white"
-                    app:boxStrokeWidth="10sp"
+                    app:boxStrokeWidth="6sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ob_pfp"
                     app:layout_constraintTop_toTopOf="@+id/ob_pfp">
@@ -65,7 +65,7 @@
                 android:layout_marginHorizontal="16dp"
                 app:boxBackgroundColor="@color/DarkGrey"
                 app:boxStrokeColor="@color/white"
-                app:boxStrokeWidth="10sp">
+                app:boxStrokeWidth="6sp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ob_job"
@@ -84,7 +84,7 @@
                 android:layout_marginHorizontal="16dp"
                 app:boxBackgroundColor="@color/DarkGrey"
                 app:boxStrokeColor="@color/white"
-                app:boxStrokeWidth="10sp">
+                app:boxStrokeWidth="6sp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ob_about"
@@ -103,7 +103,7 @@
                 android:layout_marginHorizontal="16dp"
                 app:boxBackgroundColor="@color/DarkGrey"
                 app:boxStrokeColor="@color/white"
-                app:boxStrokeWidth="10sp">
+                app:boxStrokeWidth="6sp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ob_vision"
@@ -157,7 +157,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ob_experiences"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"/>
 
             <View
                 android:id="@+id/ob_divider2"
@@ -203,7 +204,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ob_education"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"/>
 
             <View
                 android:id="@+id/ob_divider3"
@@ -249,7 +251,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ob_skills"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"/>
 
             <View
                 android:id="@+id/ob_divider4"
