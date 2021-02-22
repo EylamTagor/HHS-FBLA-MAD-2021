@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                Toast.makeText(LoginActivity.this, "AAAAAAAAAAAAAA", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Facebook Sign-in Canceled", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -192,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                 .get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                 try {
-                    if (document.getId().equals(fuser.getUid()) && !document.get("name").equals("")) {
+                    if (document.getId().equals(fuser.getUid())) {
                         progressDialog.dismiss();
                         sendToHomePage();
                         return;

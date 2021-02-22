@@ -7,7 +7,7 @@
     android:background="@color/DarkGrey"
 
 
-    tools:context=".activities.OtherProfileActivity">
+    tools:context=".ui.profile.MyProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,11 +28,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/other_profile_pfpImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:scaleType="centerCrop"
-                tools:src="@tools:sample/avatars" />
+                android:background="@drawable/pfp_bg"
+                android:scaleType="centerCrop" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -101,7 +102,6 @@
             app:layout_constraintStart_toEndOf="@+id/other_profile_follower_icon"
             app:layout_constraintTop_toBottomOf="@+id/other_profile_header"
             app:layout_constraintVertical_bias="0" />
-
 
         <TextView
             android:id="@+id/other_profile_about_header"
@@ -176,6 +176,38 @@
             app:layout_constraintTop_toBottomOf="@+id/other_profile_divider5"
             app:layout_constraintVertical_bias="0" />
         <TextView
+            android:id="@+id/other_profile_education_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Education:"
+            android:textColor="@color/Green"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_profile_divider6"
+            app:layout_constraintVertical_bias="0" />
+        <TextView
+            android:id="@+id/other_profile_skills_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Skills:"
+            android:textColor="@color/Green"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_profile_divider7"
+            app:layout_constraintVertical_bias="0" />
+        <TextView
             android:id="@+id/other_profile_social_vision"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -198,36 +230,32 @@ at large through my initiatives. "
             app:layout_constraintVertical_bias="0" />
 
         <Button
-            android:id="@+id/other_profile_mail_icon"
-            android:layout_width="35dp"
+            android:id="@+id/other_profile_follow"
+
+            android:layout_width="70dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="25dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/ic_mail_profile"
-            android:cropToPadding="false"
+            android:text="Follow"
+            android:padding="0dp"
+            android:textSize="10sp"
+            app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.085"
+            app:layout_constraintEnd_toStartOf="@+id/other_profile_mail"
+            app:layout_constraintHorizontal_bias=".5"
             app:layout_constraintStart_toEndOf="@+id/other_profile_follower_count"
             app:layout_constraintTop_toBottomOf="@+id/other_profile_header"
-            app:layout_constraintVertical_bias="0.0"
-            />
+            app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/other_profile_follow_button"
-            android:layout_width="80dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="5dp"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/other_profile_mail"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginRight="20dp"
-            android:text="Follow"
-            android:textSize="10sp"
+            android:background="@drawable/ic_mail_profile"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@+id/other_profile_mail_icon"
             app:layout_constraintTop_toBottomOf="@+id/other_profile_header"
             app:layout_constraintVertical_bias="0" />
 
@@ -241,7 +269,7 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/other_profile_mail_icon"
+            app:layout_constraintTop_toBottomOf="@+id/other_profile_follow"
             app:layout_constraintVertical_bias="0" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -250,12 +278,35 @@ at large through my initiatives. "
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_profile_experiences_header" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/other_profile_education"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_profile_education_header" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/other_profile_skills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
             android:nestedScrollingEnabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/other_profile_experiences_header"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/other_profile_skills_header" />
 
         <View
             android:id="@+id/other_profile_divider4"
@@ -280,6 +331,30 @@ at large through my initiatives. "
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/other_profile_social_vision"
+            app:layout_constraintVertical_bias="0" />
+        <View
+            android:id="@+id/other_profile_divider6"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:alpha=".5"
+            android:layout_marginTop="15dp"
+            android:background="@color/Green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_profile_experiences"
+            app:layout_constraintVertical_bias="0" />
+        <View
+            android:id="@+id/other_profile_divider7"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:alpha=".5"
+            android:layout_marginTop="15dp"
+            android:background="@color/Green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_profile_education"
             app:layout_constraintVertical_bias="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
