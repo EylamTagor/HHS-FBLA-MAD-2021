@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/DarkGrey"
 
+
     tools:context=".activities.OtherProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -253,7 +254,8 @@ at large through my initiatives. "
             android:nestedScrollingEnabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/other_profile_experiences_header" />
+            app:layout_constraintTop_toBottomOf="@+id/other_profile_experiences_header"
+            />
 
         <View
             android:id="@+id/other_profile_divider4"

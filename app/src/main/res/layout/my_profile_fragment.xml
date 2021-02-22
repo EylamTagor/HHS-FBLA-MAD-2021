@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/DarkGrey"
 
+
     tools:context=".ui.profile.MyProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -344,6 +345,7 @@ at large through my initiatives. "
             android:id="@+id/my_profile_experiences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="55dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"

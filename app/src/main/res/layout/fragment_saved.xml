@@ -23,10 +23,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
     <androidx.recyclerview.widget.RecyclerView
-
+        android:layout_height="0dp"
+        android:layout_marginBottom="53dp"
         android:id="@+id/saved_saved_jobs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
