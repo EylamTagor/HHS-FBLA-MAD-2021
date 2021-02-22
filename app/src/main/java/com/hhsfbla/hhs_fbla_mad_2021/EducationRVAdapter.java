@@ -51,7 +51,7 @@ public class EducationRVAdapter extends RecyclerView.Adapter<EducationRVAdapter.
         public StaticRVViewHolder(@NonNull View educationView) {
             super(educationView);
             schoolName = educationView.findViewById(R.id.education_school_name);
-            period = educationView.findViewById(R.id.education_period);
+            period = educationView.findViewById(R.id.ob_education_header);
             degree = educationView.findViewById(R.id.education_degree);
             educationLayout =  educationView.findViewById(R.id.education_layout);
         }
