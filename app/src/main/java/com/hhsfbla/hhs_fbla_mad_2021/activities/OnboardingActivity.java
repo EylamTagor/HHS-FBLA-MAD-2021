@@ -1,32 +1,31 @@
 package com.hhsfbla.hhs_fbla_mad_2021.activities;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.util.ImageRotator;
@@ -54,9 +53,7 @@ public class OnboardingActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private ImageRotator rotator;
 
-    private ArrayList<Experience> exp;
-    private ArrayList<Education> edu;
-    private ArrayList<String> ski;
+    private Dialog experienceDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +62,8 @@ public class OnboardingActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCanceledOnTouchOutside(false);
+
+        experienceDialog = new Dialog(this);
 
         db = FirebaseFirestore.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -97,6 +96,47 @@ public class OnboardingActivity extends AppCompatActivity {
         });
 
         pfp.setOnClickListener(v -> openFileChooser());
+
+        addExperience.setOnClickListener(v -> {
+            experienceDialog.setContentView(R.layout.add_experience_dialog);
+
+            TextInputEditText title = experienceDialog.findViewById(R.id.exp_title);
+            TextInputEditText workplace = experienceDialog.findViewById(R.id.exp_workplace);
+            TextInputEditText start = experienceDialog.findViewById(R.id.exp_start);
+            TextInputEditText end = experienceDialog.findViewById(R.id.exp_end);
+            TextInputEditText desc = experienceDialog.findViewById(R.id.exp_desc);
+            SwitchMaterial currentlyWorking = experienceDialog.findViewById(R.id.exp_currentlyWorking);
+            Button done = experienceDialog.findViewById(R.id.exp_done);
+
+            currentlyWorking.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (currentlyWorking.isChecked()) {
+                    experienceDialog.findViewById(R.id.exp_end_layout).setVisibility(View.GONE);
+                    end.setText("");
+                } else {
+                    experienceDialog.findViewById(R.id.exp_end_layout).setVisibility(View.VISIBLE);
+                }
+            });
+
+            done.setOnClickListener(view -> {
+                Experience e = new Experience(
+                        title.getText().toString(),
+                        workplace.getText().toString(),
+                        start.getText().toString(),
+                        end.getText().toString(),
+                        desc.getText().toString(),
+                        currentlyWorking.isChecked());
+
+                db.collection("experiences").add(e)
+                        .addOnSuccessListener(documentReference -> {
+                            Toast.makeText(this, "Experience added successfully.", Toast.LENGTH_SHORT).show();
+                            db.collection("users").document(fuser.getUid()).update("experiences", FieldValue.arrayUnion(documentReference.getId()));
+                        }).addOnFailureListener(documentReference -> Toast.makeText(this, "Invalid experience. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
+
+                experienceDialog.dismiss();
+            });
+
+            experienceDialog.show();
+        });
 
         doneButton.setOnClickListener(v -> {
             if (uploadTask != null && uploadTask.isInProgress())
@@ -150,7 +190,9 @@ public class OnboardingActivity extends AppCompatActivity {
             final StorageReference fileRef = storageReference.child(id);
             byte[] file = rotator.getBytesFromBitmap(bitmap);
             uploadTask = fileRef.putBytes(file)
-                    .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl().addOnSuccessListener(this::editUser)).addOnFailureListener(exception -> {}).addOnProgressListener(taskSnapshot -> {}); // leave this just in case
+                    .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl().addOnSuccessListener(this::editUser)).addOnFailureListener(exception -> {
+                    }).addOnProgressListener(taskSnapshot -> {
+                    }); // leave this just in case
         } else {
             editUser(null);
         }
@@ -162,9 +204,6 @@ public class OnboardingActivity extends AppCompatActivity {
         db.collection("users").document(fuser.getUid()).update("jobTitle", job.getText().toString());
         db.collection("users").document(fuser.getUid()).update("description", about.getText().toString());
         db.collection("users").document(fuser.getUid()).update("socialVision", vision.getText().toString());
-//        db.collection("users").document(fuser.getUid()).update("experiences", exp);
-//        db.collection("users").document(fuser.getUid()).update("education", edu);
-//        db.collection("users").document(fuser.getUid()).update("skills", ski);
 
         if (uri != null)
             db.collection("users").document(fuser.getUid()).update("pfp", uri.toString()).addOnSuccessListener(aVoid -> {
