@@ -8,7 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExperiencesRVAdapter extends RecyclerView.Adapter<ExperiencesRVAdapter.StaticRVViewHolder> {
     private ArrayList<ExperiencesRVModel> experiences;
@@ -30,16 +34,27 @@ public class ExperiencesRVAdapter extends RecyclerView.Adapter<ExperiencesRVAdap
     @Override
     public void onBindViewHolder(@NonNull StaticRVViewHolder holder, int position) {
         ExperiencesRVModel currentItem = experiences.get(position);
-        holder.description.setText(currentItem.getDescription());
+        holder.name.setText(currentItem.getWorkplace());
         holder.header.setText(currentItem.getHeader());
         holder.description.setText(currentItem.getDescription());
 
     }
 
-
     @Override
     public int getItemCount() {
         return experiences.size();
+    }
+
+    /**
+     * Updates the list of experiences using a new list
+     *
+     * @param exps new list to replace the old list
+     */
+    public void setExperiences(List<Experience> exps) {
+        experiences.clear();
+
+        for (Experience e : exps)
+            experiences.add(new ExperiencesRVModel(e));
     }
 
     public static class StaticRVViewHolder extends RecyclerView.ViewHolder{

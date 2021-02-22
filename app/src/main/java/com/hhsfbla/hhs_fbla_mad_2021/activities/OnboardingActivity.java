@@ -6,18 +6,20 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.api.Distribution;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
@@ -25,13 +27,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
+import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.util.ImageRotator;
+import com.hhsfbla.hhs_fbla_mad_2021.util.NonScrollingLLM;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,7 +49,11 @@ public class OnboardingActivity extends AppCompatActivity {
     private TextInputEditText name, job, about, vision;
     private ImageButton addExperience, addEducation, addSkill;
     private ProgressDialog progressDialog;
+
     private RecyclerView experiences, education, skills;
+    private ExperiencesRVAdapter experiencesRVAdapter;
+    private List<Experience> experienceList;
+    private ArrayList<ExperiencesRVModel> experienceRVModels;
 
     private static final int RESULT_LOAD_IMAGE = 1;
     private Bitmap bitmap;
@@ -83,6 +93,7 @@ public class OnboardingActivity extends AppCompatActivity {
         addExperience = findViewById(R.id.ob_add_experience);
         addEducation = findViewById(R.id.ob_add_education);
         addSkill = findViewById(R.id.ob_add_skill);
+
         experiences = findViewById(R.id.ob_experiences);
         education = findViewById(R.id.ob_education);
         skills = findViewById(R.id.ob_skills);
@@ -92,11 +103,15 @@ public class OnboardingActivity extends AppCompatActivity {
             User u = documentSnapshot.toObject(User.class);
 
             name.setText(u.getName());
+            job.setText(u.getJobTitle());
+            about.setText(u.getDescription());
+            vision.setText(u.getSocialVision());
             Picasso.get().load(fuser.getPhotoUrl()).into(pfp);
         });
 
         pfp.setOnClickListener(v -> openFileChooser());
 
+        // dialogs
         addExperience.setOnClickListener(v -> {
             experienceDialog.setContentView(R.layout.add_experience_dialog);
 
@@ -128,11 +143,13 @@ public class OnboardingActivity extends AppCompatActivity {
 
                 db.collection("experiences").add(e)
                         .addOnSuccessListener(documentReference -> {
-                            Toast.makeText(this, "Experience added successfully.", Toast.LENGTH_SHORT).show();
                             db.collection("users").document(fuser.getUid()).update("experiences", FieldValue.arrayUnion(documentReference.getId()));
+                            Toast.makeText(this, "Experience added.", Toast.LENGTH_SHORT).show();
                         }).addOnFailureListener(documentReference -> Toast.makeText(this, "Invalid experience. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
 
                 experienceDialog.dismiss();
+                finish();
+                startActivity(getIntent());
             });
 
             experienceDialog.show();
@@ -143,6 +160,25 @@ public class OnboardingActivity extends AppCompatActivity {
                 Toast.makeText(OnboardingActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
             else
                 uploadFile(fuser.getUid());
+        });
+
+        // recyclerview stuff
+        experienceList = new ArrayList<>();
+        experienceRVModels = new ArrayList<>();
+        experiences.setLayoutManager(new NonScrollingLLM(this));
+        experiencesRVAdapter = new ExperiencesRVAdapter(experienceRVModels);
+        experiences.setAdapter(experiencesRVAdapter);
+        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            final User u = documentSnapshot.toObject(User.class);
+
+            for (String id : u.getExperiences())
+                db.collection("experiences").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
+                    final Experience e = documentSnapshot1.toObject(Experience.class);
+                    experienceList.add(e);
+                    experienceRVModels.add(new ExperiencesRVModel(e));
+                    experiencesRVAdapter.setExperiences(experienceList);
+                    experiencesRVAdapter.notifyDataSetChanged();
+                });
         });
     }
 
