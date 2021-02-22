@@ -1,4 +1,4 @@
-package com.hhsfbla.hhs_fbla_mad_2021;
+package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.saved;
 
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;

@@ -1,4 +1,4 @@
-package com.hhsfbla.hhs_fbla_mad_2021;
+package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts;
 
 import android.media.Image;
 

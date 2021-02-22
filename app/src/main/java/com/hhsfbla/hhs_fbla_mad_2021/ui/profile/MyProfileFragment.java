@@ -20,13 +20,13 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.hhsfbla.hhs_fbla_mad_2021.EducationRVAdapter;
-import com.hhsfbla.hhs_fbla_mad_2021.EducationRVModel;
-import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVAdapter;
-import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVModel;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVModel;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
-import com.hhsfbla.hhs_fbla_mad_2021.SkillsRVAdapter;
-import com.hhsfbla.hhs_fbla_mad_2021.SkillsRVModel;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.skills.SkillsRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.skills.SkillsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.LoginActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.OnboardingActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
@@ -39,8 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class MyProfileFragment extends Fragment {
 

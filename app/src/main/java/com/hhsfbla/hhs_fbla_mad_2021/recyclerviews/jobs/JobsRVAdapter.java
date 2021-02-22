@@ -1,26 +1,21 @@
-package com.hhsfbla.hhs_fbla_mad_2021;
-import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
+package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVViewHolder> implements Filterable {
     private ArrayList<JobsRVModel> jobs;

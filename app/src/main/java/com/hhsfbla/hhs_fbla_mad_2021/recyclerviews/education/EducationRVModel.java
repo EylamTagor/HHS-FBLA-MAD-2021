@@ -1,4 +1,4 @@
-package com.hhsfbla.hhs_fbla_mad_2021;
+package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education;
 
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
 

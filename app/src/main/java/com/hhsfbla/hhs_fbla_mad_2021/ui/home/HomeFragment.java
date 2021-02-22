@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.hhsfbla.hhs_fbla_mad_2021.PostsRVAdapter;
-import com.hhsfbla.hhs_fbla_mad_2021.PostsRVModel;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;

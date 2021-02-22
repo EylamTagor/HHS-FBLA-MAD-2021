@@ -1,4 +1,4 @@
-package com.hhsfbla.hhs_fbla_mad_2021;
+package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 
 import java.util.ArrayList;
