@@ -5,10 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    >
 
     <!-- staticText--> the UI for the home page. All individual elements are identifiable by their ID.
 
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_collar_tie"
+        app:layout_constraintBottom_toTopOf="@+id/home_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/home_collar"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/home_collar"
         android:layout_width="wrap_content"
@@ -128,24 +140,28 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_following_posts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_following_selected"
         app:layout_constraintVertical_bias="0"
+        android:layout_marginBottom="66dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_trending_posts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="66dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_following_selected"
-        app:layout_constraintVertical_bias="0"
-        android:layout_marginStart="20dp"
-        android:visibility="invisible"
-        android:layout_marginEnd="20dp"/>
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
