@@ -9,6 +9,10 @@ public class Notification {
     private String userID;
     private String postID;
 
+    public Notification(){
+        this("", "", "");
+    }
+
     //Follow
     public Notification(String hostID, String userID){
         this.type = 2;
