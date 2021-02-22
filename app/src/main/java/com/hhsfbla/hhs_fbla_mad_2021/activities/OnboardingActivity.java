@@ -38,6 +38,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -147,6 +149,11 @@ public class OnboardingActivity extends AppCompatActivity {
                             Toast.makeText(this, "Experience added.", Toast.LENGTH_SHORT).show();
                         }).addOnFailureListener(documentReference -> Toast.makeText(this, "Invalid experience. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
 
+                try {
+                    TimeUnit.MILLISECONDS.sleep(250);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
                 experienceDialog.dismiss();
                 finish();
                 startActivity(getIntent());
