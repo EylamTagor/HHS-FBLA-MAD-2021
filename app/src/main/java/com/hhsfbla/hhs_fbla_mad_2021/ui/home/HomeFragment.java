@@ -138,14 +138,13 @@ public class HomeFragment extends Fragment {
         dummyHashtags.add("WOW so cool man!");
 
 
-        Post dummyPost = new Post("I planted 1,000 trees", "Yesterday I planted 1000 trees and today I planted 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!",
-                null, "#sustainability");
+        Post dummyPost = new Post("I planted 1,000 trees", "Yesterday I planted 1000 trees and today I planted 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!", "#sustainability");
 
         User dummyUser = new User("Sky Johnson", "skyngthowhing@gmail.com");
         dummyUser.setJobTitle("UI/UX designer");
 
         Post dummyPost2 = new Post("I ate 2,000 plants", "Yesterday I ate 2000 trees and today I ate 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!",
-                null, "#environmentalism");
+                 "#environmentalism");
 
         User dummyUser2 = new User("Suarez Wanderlax", "skyngthowhing@gmail.com");
         dummyUser2.setJobTitle("CEO of Yummy");

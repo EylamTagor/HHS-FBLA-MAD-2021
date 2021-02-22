@@ -24,12 +24,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hhsfbla.hhs_fbla_mad_2021.EducationRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.EducationRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.ExperiencesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.SkillsRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.SkillsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.LoginActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.OnboardingActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.squareup.picasso.Picasso;
@@ -49,7 +54,13 @@ public class MyProfileFragment extends Fragment {
     private ArrayList<String> skills;
     private ArrayList<String> achievements;
     private RecyclerView experiencesView;
+    private RecyclerView educationView;
+    private RecyclerView skillsView;
+
+
     private ExperiencesRVAdapter experiencesRVAdapter;
+    private EducationRVAdapter educationRVAdapter;
+    private SkillsRVAdapter skillsRVAdapter;
 
     private User user;
     private FirebaseUser fbuser;
@@ -71,7 +82,10 @@ public class MyProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.my_profile_fragment, container, false);
         experiencesView = (RecyclerView)rootView.findViewById(R.id.my_profile_experiences);
         experiencesView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
+        skillsView = (RecyclerView)rootView.findViewById(R.id.my_profile_skills);
+        skillsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        educationView = (RecyclerView)rootView.findViewById(R.id.my_profile_education);
+        educationView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
 
         pfp = rootView.findViewById(R.id.pfpImage);
@@ -90,21 +104,25 @@ public class MyProfileFragment extends Fragment {
             }
         });
 
-        /*
-        ArrayList<Experience> experiencesObj = new ArrayList<Experience>();
+
+        /*ArrayList<Experience> experiencesObj = new ArrayList<Experience>();
 
         for(int i = 0; i< user.getExperiences().size(); i++){
             db.collection("experiences").document(user.getExperiences().get(i)).get().addOnSuccessListener(documentSnapshot -> {
                 experiencesObj.add(documentSnapshot.toObject(Experience.class));
             });
-        }
+        }*/
 
-        ArrayList<ExperiencesRVModel> experience = new ArrayList<>();
+        ArrayList<ExperiencesRVModel> experiences = new ArrayList<>();
+        ArrayList<EducationRVModel> educations = new ArrayList<>();
+        ArrayList<SkillsRVModel> skills = new ArrayList<>();
 
-
+/*
         for(int i = 0;i<experiencesObj.size(); i++){
             experience.add(new ExperiencesRVModel(experiencesObj.get(i)));
-        }*/
+        }
+
+ */
 
         editButton = rootView.findViewById(R.id.my_profile_edit);
         editButton.setOnClickListener(v -> {
@@ -122,45 +140,58 @@ public class MyProfileFragment extends Fragment {
             });
         });
 
-        /*experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
+        skills.add(new SkillsRVModel("Python"));
+        skills.add(new SkillsRVModel("Python"));
+        skills.add(new SkillsRVModel("Python"));
+        skills.add(new SkillsRVModel("Python"));
+
+        educations.add(new EducationRVModel(new Education("Harvard", "June 2018", "July 2022", "Computer Science BSE", true)));
+        educations.add(new EducationRVModel(new Education("Homestead High School", "June 2014", "May 2018", "General", false)));
+
+        experiences.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
+        experiences.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
+        experiences.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
+        experiences.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
+        experiences.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
+        experiences.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
+        experiences.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
                 "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
-        experience.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
+        experiences.add(new ExperiencesRVModel(new Experience("Data Analyst", "Apple Inc",
                 "May 2020", "- present","- Designed app pages in AdobeXD w/ an emphasis on user experience through " +
                 "divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to " +
-                "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));*/
+                "increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%", true )));
 
 
-       // experiencesRVAdapter = new ExperiencesRVAdapter(experience);
-        //experiencesView.setAdapter(experiencesRVAdapter);
+        experiencesRVAdapter = new ExperiencesRVAdapter(experiences);
+        experiencesView.setAdapter(experiencesRVAdapter);
+
+        educationRVAdapter = new EducationRVAdapter(educations);
+        educationView.setAdapter(educationRVAdapter);
+
+        skillsRVAdapter = new SkillsRVAdapter(skills);
+        skillsView.setAdapter(skillsRVAdapter);
+
         return rootView;
-
-
 
 
     }
