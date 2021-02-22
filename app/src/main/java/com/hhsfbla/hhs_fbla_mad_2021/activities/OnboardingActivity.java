@@ -207,7 +207,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
                 db.collection("educations").add(e)
                         .addOnSuccessListener(documentReference -> {
-                            db.collection("users").document(fuser.getUid()).update("educations", FieldValue.arrayUnion(documentReference.getId()));
+                            db.collection("users").document(fuser.getUid()).update("education", FieldValue.arrayUnion(documentReference.getId()));
                             Toast.makeText(this, "Education added.", Toast.LENGTH_SHORT).show();
                         }).addOnFailureListener(documentReference -> Toast.makeText(this, "Invalid education. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
 
