@@ -42,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="Johnson Smith"
             android:textColor="@color/LightGrey"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -59,7 +58,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
-            android:text="Data Scientist @ Apple"
             android:textColor="@color/LightGrey"
             android:textSize="14sp"
             android:textStyle="normal"
@@ -92,7 +90,6 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp"
-            android:text="4100"
             android:textColor="@color/LightGrey"
             android:textSize="13sp"
             android:textStyle="normal"
@@ -246,7 +243,6 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="5dp"
             android:lineSpacingExtra="3dp"
-            android:text="High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations"
             android:textColor="@color/LightGrey"
             android:textSize="12sp"
             android:textStyle="normal"
@@ -274,6 +270,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/my_profile_divider5"
             app:layout_constraintVertical_bias="0" />
+
         <TextView
             android:id="@+id/my_profile_education_header"
             android:layout_width="wrap_content"
@@ -312,12 +309,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
             android:lineSpacingExtra="3dp"
-            android:text="My underlying belief is to make a positive contribution to the society and ensuring environment
-sustainability. I strive to create a healthier world and enrich lives of all communities
-at large through my initiatives. "
             android:textColor="@color/LightGrey"
             android:textSize="12sp"
             android:textStyle="normal"
