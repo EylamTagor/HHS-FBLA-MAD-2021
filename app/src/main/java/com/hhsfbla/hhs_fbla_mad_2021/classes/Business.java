@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  *
  * Represents a business
- * @author Ayush
+ *
  */
 public class Business {
     private String name;

@@ -2,7 +2,7 @@ package com.hhsfbla.hhs_fbla_mad_2021.classes;
 
 /**
  * Represents an experience a user has completed
- * @author Ayush
+ *
  */
 public class Experience {
 

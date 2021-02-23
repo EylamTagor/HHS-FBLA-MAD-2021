@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * This class stores information for a post
- * @author Ayush
+ *
  */
 public class Post {
 

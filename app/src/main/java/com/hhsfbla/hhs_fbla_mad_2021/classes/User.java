@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * This class represents a user
- * @author Ayush
+ *
  */
 public class User {
     private String name;

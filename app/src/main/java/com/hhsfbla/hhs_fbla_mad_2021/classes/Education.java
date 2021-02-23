@@ -2,7 +2,7 @@ package com.hhsfbla.hhs_fbla_mad_2021.classes;
 
 /**
  * Represents an educational experience a user has
- * @author Ayush
+ *
  */
 public class Education {
     private String school, start, end, degree;

@@ -3,7 +3,7 @@ package com.hhsfbla.hhs_fbla_mad_2021.classes;
 /**
  * This class represents a JobOffer that a Business can create and users can apply for
  *
- * @author Ayush
+ *
  */
 public class JobOffer {
 
