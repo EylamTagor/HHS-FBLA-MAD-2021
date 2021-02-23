@@ -1,15 +1,16 @@
 package com.hhsfbla.hhs_fbla_mad_2021.ui.home;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,23 +20,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
-import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
 
@@ -46,18 +49,18 @@ public class HomeFragment extends Fragment {
     private PostsRVAdapter followingPostsRVAdapter;
     private PostsRVAdapter trendingPostsRVAdapter;
 
-    private ArrayList<PostsRVModel> followingPosts = new ArrayList<>();
-    private ArrayList<PostsRVModel> trendingPosts = new ArrayList<>();
-
+    private FirebaseUser fuser;
+    private FirebaseFirestore db;
     private Button followingButton;
     private Button trendingButton;
+    private ProgressDialog progressDialog;
     private View trendingSelected;
+    private Button searchButton;
     private View followingSelected;
-    private SearchView searchView;
+    private FloatingActionButton postButton;
+    private Dialog postingDialog;
 
-    private User user;
-    private FirebaseUser fbuser;
-    private FirebaseFirestore db;
+
 
 
 
@@ -70,15 +73,28 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        //Linking UI XML to fields
         followingPostsView = (RecyclerView)rootView.findViewById(R.id.home_following_posts);
         followingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         trendingPostsView = (RecyclerView)rootView.findViewById(R.id.home_trending_posts);
         trendingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         trendingButton = rootView.findViewById(R.id.home_trending);
         followingButton = rootView.findViewById(R.id.home_following);
+        searchButton = rootView.findViewById(R.id.home_search);
         trendingSelected = rootView.findViewById(R.id.home_trending_selected);
         followingSelected = rootView.findViewById(R.id.home_following_selected);
+        postButton = rootView.findViewById(R.id.home_post_button);
 
+        //Firebase
+        db = FirebaseFirestore.getInstance();
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        //Posting button
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
+        postingDialog = new Dialog(getActivity());
 
         followingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,58 +129,24 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        searchView = rootView.findViewById(R.id.home_search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                trendingPostsRVAdapter.getFilter().filter(s);
-
-                followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
-                trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
-                followingSelected.setVisibility(View.INVISIBLE);
-                trendingSelected.setVisibility(View.VISIBLE);
-                trendingPostsView.setVisibility(View.VISIBLE);
-                followingPostsView.setVisibility(View.INVISIBLE);
-                trendingButton.setTextColor(Color.parseColor("#10C380"));
-                followingButton.setTextColor(Color.parseColor("#F2F2F2"));
-                trendingButton.setAlpha(1);
-                followingButton.setAlpha(.5f);
-                return false;
-            }
+        searchButton.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), SearchActivity.class));
         });
+
 
         ArrayList<PostsRVModel> followingPosts = new ArrayList<>();
         ArrayList<PostsRVModel> trendingPosts = new ArrayList<>();
 
-        db = FirebaseFirestore.getInstance();
-        fbuser = FirebaseAuth.getInstance().getCurrentUser();
-
-        ArrayList<Post> allPosts = new ArrayList<Post>();
-
-        /*db.collection("posts").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
-            User u = documentSnapshot.toObject(User.class);
-        });*/
-
-        db.collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                allPosts.add(document.toObject(Post.class));
-                            }
-                        } else {
-
-                        }
-                    }
-                });
-
         ArrayList<String> dummyHashtags = new ArrayList<>();
         dummyHashtags.add("Sustainability");
+
+
+        ArrayList<String> dummyComments = new ArrayList<>();
+        dummyHashtags.add("you are a genius");
+        dummyHashtags.add("I agree");
+        dummyHashtags.add("WOW so cool man!");
+
 
         Post dummyPost = new Post("I planted 1,000 trees", "Yesterday I planted 1000 trees and today I planted 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!", "#sustainability");
 
@@ -197,6 +179,46 @@ public class HomeFragment extends Fragment {
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPosts);
         followingPostsView.setAdapter(followingPostsRVAdapter);
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
+
+
+        //Posting functionality
+        postButton.setOnClickListener(v -> {
+            postingDialog.setContentView(R.layout.posting_dialog);
+
+            TextInputEditText title = postingDialog.findViewById(R.id.new_post_title);
+            TextInputEditText hashtag = postingDialog.findViewById(R.id.new_post_hashtag);
+            TextInputEditText content = postingDialog.findViewById(R.id.new_post_content);
+            Button post = postingDialog.findViewById(R.id.new_post_post);
+
+
+            post.setOnClickListener(view -> {
+                Post p = new Post(
+                        title.getText().toString(),
+                        hashtag.getText().toString(),
+                        content.getText().toString());
+
+                db.collection("posts").add(p)
+                        .addOnSuccessListener(documentReference -> {
+                            db.collection("users").document(fuser.getUid()).update("myPosts", FieldValue.arrayUnion(documentReference.getId()));
+                            Toast.makeText(getActivity(), "Post added.", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(documentReference -> Toast.makeText(getActivity(), "Invalid education. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
+
+                try {
+                    TimeUnit.MILLISECONDS.sleep(250);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+
+                db.collection("users").document(fuser.getUid()).update("title", title.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("content", content.getText().toString());
+
+                postingDialog.dismiss();
+            });
+
+            postingDialog.show();
+        });
+
         return rootView;
 
     }

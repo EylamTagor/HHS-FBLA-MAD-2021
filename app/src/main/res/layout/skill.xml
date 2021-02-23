@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/DarkGrey"
+    android:background="@color/fui_transparent"
     android:id="@+id/skill_layout"
     android:orientation="vertical">
 

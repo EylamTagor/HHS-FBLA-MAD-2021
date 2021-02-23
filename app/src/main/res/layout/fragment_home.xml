@@ -5,20 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/DarkGrey"
     tools:context=".ui.home.HomeFragment"
     >
 
     <!-- staticText--> the UI for the home page. All individual elements are identifiable by their ID.
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintHorizontal_bias="0"
         android:layout_marginLeft="3dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/ic_collar_tie"
-        app:layout_constraintBottom_toTopOf="@+id/home_search"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@+id/home_collar"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
@@ -37,6 +38,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/home_search"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/ic_search"
+        android:layout_marginTop="25dp"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/home_post_button"
@@ -57,26 +72,7 @@
 
         app:layout_constraintHorizontal_bias="1"/>
 
-    <SearchView
-        android:id="@+id/home_search"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="15dp"
-        android:queryHint="#hashtags, post titles, names"
-        android:background="@drawable/search_bg"
-        android:iconifiedByDefault="false"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:queryBackground="@android:color/transparent"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_collar"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_percent="0.7" />
+
 
 
     <Button
@@ -93,7 +89,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/home_trending"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_search"
+        app:layout_constraintTop_toBottomOf="@+id/home_collar"
         app:layout_constraintVertical_bias="0" />
 
     <View
@@ -121,7 +117,7 @@
         android:textColor="@color/LightGrey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_search"
+        app:layout_constraintTop_toBottomOf="@+id/home_collar"
         android:textAllCaps="false"/>
 
     <View

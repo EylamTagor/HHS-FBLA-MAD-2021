@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".activities.OnboardingActivity">
 
     <ScrollView
@@ -157,6 +158,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ob_experiences"
                 android:layout_width="match_parent"
+                android:layout_marginTop = "10dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"/>
 
@@ -204,6 +206,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ob_education"
                 android:layout_width="match_parent"
+                android:layout_marginTop = "10dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"/>
 
@@ -250,6 +253,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ob_skills"
+                android:layout_marginTop = "10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"/>

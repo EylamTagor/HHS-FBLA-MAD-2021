@@ -38,14 +38,14 @@ public class NotificationsRVAdapter extends RecyclerView.Adapter<NotificationsRV
             holder.view.setText("View Profile");
 
             //USE ID TO FIND User to find NAME
-            holder.message.setText("Full Name" + " Just followed you");
+            holder.message.setText("Full Name" + " just followed you");
         }
 
         //If someone followed
         else {
             holder.view.setText("View Post");
             //USE ID TO FIND User to find NAME
-            holder.message.setText("Full Name" + " Just liked your post");
+            holder.message.setText("Full Name" + " just liked your post");
         }
 
 
