@@ -14,12 +14,15 @@ public class Post {
     private String description;
     private ArrayList<String> usersLiked;
     private String hashtag;
+    private String userPostedID;
+
+
 
     /**
      * No args constructor
      */
     public Post(){
-        this("", "", "");
+        this("", "", "","");
     }
 
     /**
@@ -28,11 +31,12 @@ public class Post {
      * @param description The description
      * @param hashtag The hashtag associated with the post
      */
-    public Post(String title, String description, String hashtag){
+    public Post(String title, String description, String hashtag, String userPostedID){
         this.title = title;
         this.description = description;
         usersLiked = new ArrayList<String>();
         this.hashtag = hashtag;
+        this.userPostedID = userPostedID;
 
     }
 
@@ -121,6 +125,14 @@ public class Post {
                 break;
             }
         }
+
+    public String getUserPostedID() {
+        return userPostedID;
+    }
+
+    public void setUserPostedID(String userPostedID) {
+        this.userPostedID = userPostedID;
+    }
     }
 
 

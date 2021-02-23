@@ -82,7 +82,7 @@ public class MyProfileFragment extends Fragment {
     private ArrayList<SkillsRVModel> skillsRVModels;
 
     private MyBusinessesRVAdapter myBusinessesRVAdapter;
-    private List<String> myBusinessesList;
+    private List<Business> myBusinessesList;
     private ArrayList<MyBusinessesRVModel> myBusinessesRVModels;
 
 
@@ -235,24 +235,23 @@ public class MyProfileFragment extends Fragment {
 
         //my Businesses RV
 
-        /*myBusinessesList = new ArrayList<>();
+        myBusinessesList = new ArrayList<>();
         myBusinessesRVModels = new ArrayList<>();
         myBusinessesRVAdapter = new MyBusinessesRVAdapter(myBusinessesRVModels);
         myBusinessesView.setAdapter(myBusinessesRVAdapter);
-        db.collection("businesses").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+        db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             final User u = documentSnapshot.toObject(User.class);
-            for (Business b : u.getMyBusinesses()) {
-                myBusinessesList.add(b);
-                myBusinessesRVModels.add(new MyBusinessesRVModel(b));
-                myBusinessesRVAdapter.setbusinesses(myBusinessesList);
-                myBusinessesRVAdapter.notifyDataSetChanged();
+            for (String id : u.getMyBusinesses()) {
+                db.collection("businesses").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
+                    final Business b = documentSnapshot1.toObject(Business.class);
+                    myBusinessesList.add(b);
+                    myBusinessesRVModels.add(new MyBusinessesRVModel(b));
+                    myBusinessesRVAdapter.setbusinesses(myBusinessesList);
+                    myBusinessesRVAdapter.notifyDataSetChanged();
+                });
             }
 
         });
-        */
-
-
-
         return rootView;
     }
 

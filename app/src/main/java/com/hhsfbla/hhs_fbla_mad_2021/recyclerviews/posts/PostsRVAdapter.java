@@ -1,5 +1,6 @@
 package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHolder> implements Filterable {
+public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHolder> {
     private ArrayList<PostsRVModel> posts;
-    private ArrayList<PostsRVModel> postsFull;
     private PostsRVAdapter.OnItemClickListener listener;
 
     private FirebaseUser fuser;
@@ -36,7 +39,6 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
 
     public PostsRVAdapter(ArrayList<PostsRVModel> items) {
         posts = items;
-        postsFull = new ArrayList<>(items);
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
     }
@@ -53,58 +55,24 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
     public void onBindViewHolder(@NonNull RVViewHolder holder, int position) {
         PostsRVModel currentItem = posts.get(position);
         //NEED TO FIX, FIGURE OUT HOW TO SET IMAGE RESOURCE
+
+        //Get User
+
+        //holder.name.setText(user.getName());
+        //holder.jobTitle.setText(user.getJobTitle());
+
         holder.pfp.setImageResource(R.drawable.ic_followers);
         holder.description.setText(currentItem.getDescription());
-        holder.jobTitle.setText(currentItem.getJobTitle());
+
         holder.tag1.setText(currentItem.getHashtag());
         holder.title.setText(currentItem.getTitle());
-        holder.name.setText(currentItem.getName());
-        holder.likes.setText("540");
+        Log.println(Log.DEBUG,"nada","" + currentItem.getLikes());
 //        holder.likes.setText(currentItem.getLikes());
-//        holder.comments.setText(currentItem.getNumComments());
     }
 
     @Override
     public int getItemCount() {
         return posts.size();
-    }
-
-    @Override
-    public Filter getFilter() {
-        return postsFilter;
-    }
-
-    private Filter postsFilter = new Filter() {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            List<PostsRVModel> filteredList = new ArrayList<>();
-
-            if (charSequence == null || charSequence.length() == 0) {
-                filteredList.addAll(postsFull);
-            } else {
-                String filterPattern = charSequence.toString().toLowerCase().trim();
-                for (PostsRVModel item : postsFull) {
-                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    } else if (item.getHashtag().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    } else if (item.getName().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            posts.clear();
-            posts.addAll((List) filterResults.values);
-            notifyDataSetChanged();
-        }
     };
 
     public class RVViewHolder extends RecyclerView.ViewHolder {
@@ -133,7 +101,12 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
             share.setOnClickListener(v -> listener.onItemClick(share, getAdapterPosition()));
         }
     }
+    public void setPosts(List<Post> posts) {
+        this.posts.clear();
 
+        for (Post p : posts)
+            this.posts.add(new PostsRVModel(p));
+    }
     /**
      * Used to specify action after clicking on the RecyclerView that utilizes this adapter
      */

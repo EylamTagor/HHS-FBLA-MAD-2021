@@ -12,15 +12,11 @@ import java.util.ArrayList;
 public class PostsRVModel {
 
     private Post post;
-    private User user;
 
 
 
     public void addPost(Post post) {
         this.post = post;
-    }
-    public void addUser(User user) {
-        this.user = user;
     }
 
 
@@ -28,14 +24,13 @@ public class PostsRVModel {
     public String getHashtag() {
         return post.getHashtag();
     }
-    public String getName(){return user.getName();}
-    public String getJobTitle(){return user.getJobTitle();}
-    public String getPfp(){return user.getPfp();}
+    public String getUserID(){
+        return post.getUserPostedID();
+    }
     public String getTitle(){return post.getTitle();}
     public int getLikes(){return post.getLikes();}
 
-    public PostsRVModel(Post post, User user) {
+    public PostsRVModel(Post post) {
         this.post = post;
-        this.user = user;
     }
 }
