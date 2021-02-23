@@ -236,7 +236,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
      */
     @Override
     public void onItemClick(View v, int position) {
-        if (shareDialog.canShow(ShareLinkContent.class)) {
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
             ShareLinkContent linkContent = new ShareLinkContent.Builder().build();
             shareDialog.show(linkContent);
         }
