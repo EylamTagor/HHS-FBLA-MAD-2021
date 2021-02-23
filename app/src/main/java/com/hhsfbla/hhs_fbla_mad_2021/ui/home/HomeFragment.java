@@ -45,20 +45,19 @@ public class HomeFragment extends Fragment {
     private HomeViewModel mViewModel;
     private RecyclerView followingPostsView;
     private RecyclerView trendingPostsView;
-
     private PostsRVAdapter followingPostsRVAdapter;
     private PostsRVAdapter trendingPostsRVAdapter;
-
-    private FirebaseUser fuser;
-    private FirebaseFirestore db;
     private Button followingButton;
     private Button trendingButton;
+    private FirebaseUser fuser;
+    private FirebaseFirestore db;
     private ProgressDialog progressDialog;
+    private Dialog postingDialog;
+    private FloatingActionButton postButton;
     private View trendingSelected;
     private Button searchButton;
     private View followingSelected;
-    private FloatingActionButton postButton;
-    private Dialog postingDialog;
+
 
 
 

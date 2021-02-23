@@ -15,6 +15,11 @@ public class Business {
     private String name;
     private String logo;
     private ArrayList<String> jobOffers;
+    private String website;
+    private String about;
+    private String CSRVision;
+    private String CSRLink;
+    private int CSRScore;
 
     /**
      * No args constructor for the Business class
@@ -96,4 +101,45 @@ public class Business {
             }
         }
     }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getCSRVision() {
+        return CSRVision;
+    }
+
+    public void setCSRVision(String CSRVision) {
+        this.CSRVision = CSRVision;
+    }
+
+    public String getCSRLink() {
+        return CSRLink;
+    }
+
+    public void setCSRLink(String CSRLink) {
+        this.CSRLink = CSRLink;
+    }
+
+    public int getCSRScore() {
+        return CSRScore;
+    }
+
+    public void setCSRScore(int CSRScore) {
+        this.CSRScore = CSRScore;
+    }
+
 }

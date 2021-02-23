@@ -7,24 +7,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.login.LoginManager;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.my_businesses.MyBusinessesRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.my_businesses.MyBusinessesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.skills.SkillsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.skills.SkillsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.LoginActivity;
@@ -37,6 +47,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,6 +65,7 @@ public class MyProfileFragment extends Fragment {
     private RecyclerView experiencesView;
     private RecyclerView educationView;
     private RecyclerView skillsView;
+    private RecyclerView myBusinessesView;
 
 
     private ExperiencesRVAdapter experiencesRVAdapter;
@@ -69,6 +81,11 @@ public class MyProfileFragment extends Fragment {
     private List<String> skillList;
     private ArrayList<SkillsRVModel> skillsRVModels;
 
+    private MyBusinessesRVAdapter myBusinessesRVAdapter;
+    private List<String> myBusinessesList;
+    private ArrayList<MyBusinessesRVModel> myBusinessesRVModels;
+
+
     private User user;
     private FirebaseUser fbuser;
     private FirebaseFirestore db;
@@ -78,6 +95,8 @@ public class MyProfileFragment extends Fragment {
 
     private Button editButton;
     private Button signOutButton;
+
+    private ImageButton addBusinessButton;
 
     private Button copyrightInfoButton;
     private Button reportBugButton;
@@ -94,6 +113,8 @@ public class MyProfileFragment extends Fragment {
         experiencesView.setLayoutManager(new NonScrollingLLM(getActivity()));
         skillsView = rootView.findViewById(R.id.my_profile_skills);
         skillsView.setLayoutManager(new NonScrollingLLM(getActivity()));
+        myBusinessesView = rootView.findViewById(R.id.my_profile_my_businesses);
+        myBusinessesView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         educationView = rootView.findViewById(R.id.my_profile_education);
         educationView.setLayoutManager(new NonScrollingLLM(getActivity()));
 
@@ -106,6 +127,7 @@ public class MyProfileFragment extends Fragment {
         about = rootView.findViewById(R.id.my_profile_about);
         vision = rootView.findViewById(R.id.my_profile_social_vision);
         followerCount = rootView.findViewById(R.id.my_profile_follower_count);
+        addBusinessButton = rootView.findViewById(R.id.my_profile_add_business);
 
         db = FirebaseFirestore.getInstance();
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -150,6 +172,11 @@ public class MyProfileFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 v.getContext().startActivity(intent);
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1mVytYJ3PKIuxIDnuQAg4PDeZgaZE5rkHz4NipMyAZAU/edit?usp=sharing")), null);
+        });
+
+        //Add business button
+        addBusinessButton.setOnClickListener(v -> {
+
         });
 
         // Experiences RV
@@ -205,6 +232,26 @@ public class MyProfileFragment extends Fragment {
                 skillsRVAdapter.notifyDataSetChanged();
             }
         });
+
+        //my Businesses RV
+
+        /*myBusinessesList = new ArrayList<>();
+        myBusinessesRVModels = new ArrayList<>();
+        myBusinessesRVAdapter = new MyBusinessesRVAdapter(myBusinessesRVModels);
+        myBusinessesView.setAdapter(myBusinessesRVAdapter);
+        db.collection("businesses").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            final User u = documentSnapshot.toObject(User.class);
+            for (Business b : u.getMyBusinesses()) {
+                myBusinessesList.add(b);
+                myBusinessesRVModels.add(new MyBusinessesRVModel(b));
+                myBusinessesRVAdapter.setbusinesses(myBusinessesList);
+                myBusinessesRVAdapter.notifyDataSetChanged();
+            }
+
+        });
+        */
+
+
 
         return rootView;
     }

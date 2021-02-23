@@ -73,7 +73,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/my_business_header"
+            android:id="@+id/my_business_website"
             android:linksClickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/my_business_profile_picture"
-            app:layout_constraintTop_toBottomOf="@+id/my_business_header"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_website"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
@@ -120,7 +120,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/my_business_follower_icon"
-            app:layout_constraintTop_toBottomOf="@+id/my_business_header"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_website"
             app:layout_constraintVertical_bias="0" />
 
 
@@ -278,7 +278,7 @@ at large through my initiatives. "
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.085"
             app:layout_constraintStart_toEndOf="@+id/my_business_follower_count"
-            app:layout_constraintTop_toBottomOf="@+id/my_business_header"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_website"
             app:layout_constraintVertical_bias="0.0"
             />
 
@@ -296,7 +296,7 @@ at large through my initiatives. "
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toEndOf="@+id/my_business_mail_icon"
-            app:layout_constraintTop_toBottomOf="@+id/my_business_header"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_website"
             app:layout_constraintVertical_bias="0" />
 
         <View
