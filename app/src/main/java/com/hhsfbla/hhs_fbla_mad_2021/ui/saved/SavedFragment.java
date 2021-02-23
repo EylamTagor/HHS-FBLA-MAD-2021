@@ -1,6 +1,8 @@
 package com.hhsfbla.hhs_fbla_mad_2021.ui.saved;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +15,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 
+import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.saved.SavedRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.saved.SavedRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
+import com.squareup.picasso.Picasso;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SavedFragment extends Fragment {
@@ -29,7 +41,9 @@ public class SavedFragment extends Fragment {
     private SavedRVAdapter savedRVAdapter;
     ArrayList<SavedRVModel> savedJobs = new ArrayList<>();
 
-
+    private User user;
+    private FirebaseUser fbuser;
+    private FirebaseFirestore db;
 
 
 
@@ -53,22 +67,54 @@ public class SavedFragment extends Fragment {
         savedView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
 
-      /*  savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
-        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        db = FirebaseFirestore.getInstance();
+        fbuser = FirebaseAuth.getInstance().getCurrentUser();
 
+        db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            User u = documentSnapshot.toObject(User.class);
+            ArrayList<String> savedOffers = u.getJobOffers();
+            db.collection("jobOffers")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    for(String ID: savedOffers){
+                                        if(document.getId().equals(ID)){
+                                            savedJobs.add(new SavedRVModel(document.toObject(JobOffer.class)));
+                                            Log.d("WORKS", "TEST");
+                                            Log.d("Array", savedJobs.toString());
+                                        }
+                                    }
+
+                                }
+                                savedRVAdapter = new SavedRVAdapter(savedJobs);
+                                savedView.setAdapter(savedRVAdapter);
+                            } else {
+
+                            }
+                        }
+                    });
+
+        });
+        Log.d("Array2", savedJobs.toString());
+/*
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
+        savedJobs.add(new SavedRVModel(new JobOffer("112343211dds", "Backend Developer", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "blah blah")));
 */
-        savedRVAdapter = new SavedRVAdapter(this.savedJobs);
-        savedView.setAdapter(savedRVAdapter);
+
+
         return rootView;
 
     }
