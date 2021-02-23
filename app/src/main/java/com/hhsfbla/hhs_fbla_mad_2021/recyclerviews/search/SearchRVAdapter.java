@@ -1,4 +1,5 @@
 package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.search;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.OtherProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +104,25 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.Static
             name = searchView.findViewById(R.id.search_item_name);
             pfp = searchView.findViewById(R.id.search_item_pfp);
             header = searchView.findViewById(R.id.search_item_header);
+
+            searchView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    view.getContext().startActivity(new Intent(view.getContext(), OtherProfileActivity.class));
+
+
+                    //upload job ID to firebase
+
+
+                    //Delete this after we get firebase working
+                    // savedJobs.add(new JobOffer(jobs.get(getAdapterPosition()).getbusinessID(),jobs.get(getAdapterPosition()).getJobTitle(),jobs.get(getAdapterPosition()).getLink(), jobs.get(getAdapterPosition()).getJobDescription() ));
+                }
+            });
         }
+
+
     }
+
+
 }
 

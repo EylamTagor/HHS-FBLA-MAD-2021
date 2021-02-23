@@ -20,7 +20,7 @@ public class SearchRVModel {
     public String getHeader() {
         if(isUser)
             return user.getName();
-        return "";
+        return "Business";
     }
     public String getPfp() {
         if(isUser)

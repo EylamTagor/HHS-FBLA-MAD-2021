@@ -51,7 +51,7 @@ public class SearchActivity extends AppCompatActivity {
 
         searches.add(new SearchRVModel(new User("Joe mama", "joemama@gmail.com")));
         searches.add(new SearchRVModel(new Business("Joe mama", "joemama@gmail.com")));
-        searches.add(new SearchRVModel(new User("Joe mama", "joemama@gmail.com")));
+        searches.add(new SearchRVModel(new User("Ayush S", "joemama@gmail.com")));
         searches.add(new SearchRVModel(new Business("Joe mama", "joemama@gmail.com")));
         searches.add(new SearchRVModel(new User("Joe mama", "joemama@gmail.com")));
         searches.add(new SearchRVModel(new Business("Joe mama", "joemama@gmail.com")));
