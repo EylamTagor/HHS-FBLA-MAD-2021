@@ -33,11 +33,17 @@
                 tools:src="@tools:sample/avatars" />
         </androidx.cardview.widget.CardView>
 
-        <com.facebook.share.widget.ShareButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/post_share"
             android:layout_width="80dp"
             android:layout_height="32dp"
             android:background="@drawable/job_bg"
+            android:drawableLeft="@drawable/com_facebook_button_icon"
+            android:fontFamily="sans-serif"
+            android:padding="8dp"
+            android:text="Share"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/post_header"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"

@@ -114,7 +114,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         TextView title;
         TextView tag1;
         Button likes;
-        ShareButton share;
+        AppCompatButton share;
         ImageView pfp;
         LinearLayout postLayout;
 
