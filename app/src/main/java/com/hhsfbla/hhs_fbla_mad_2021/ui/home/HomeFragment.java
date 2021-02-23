@@ -1,5 +1,6 @@
 package com.hhsfbla.hhs_fbla_mad_2021.ui.home;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.hhsfbla.hhs_fbla_mad_2021.activities.HomeActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
@@ -36,14 +39,11 @@ public class HomeFragment extends Fragment {
     private PostsRVAdapter followingPostsRVAdapter;
     private PostsRVAdapter trendingPostsRVAdapter;
 
-    private ArrayList<PostsRVModel> followingPosts = new ArrayList<>();
-    private ArrayList<PostsRVModel> trendingPosts = new ArrayList<>();
-
     private Button followingButton;
     private Button trendingButton;
     private View trendingSelected;
+    private Button searchButton;
     private View followingSelected;
-    private SearchView searchView;
 
 
 
@@ -63,6 +63,7 @@ public class HomeFragment extends Fragment {
         trendingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         trendingButton = rootView.findViewById(R.id.home_trending);
         followingButton = rootView.findViewById(R.id.home_following);
+        searchButton = rootView.findViewById(R.id.home_search);
         trendingSelected = rootView.findViewById(R.id.home_trending_selected);
         followingSelected = rootView.findViewById(R.id.home_following_selected);
 
@@ -100,30 +101,11 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        searchView = rootView.findViewById(R.id.home_search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                trendingPostsRVAdapter.getFilter().filter(s);
-
-                followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
-                trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
-                followingSelected.setVisibility(View.INVISIBLE);
-                trendingSelected.setVisibility(View.VISIBLE);
-                trendingPostsView.setVisibility(View.VISIBLE);
-                followingPostsView.setVisibility(View.INVISIBLE);
-                trendingButton.setTextColor(Color.parseColor("#10C380"));
-                followingButton.setTextColor(Color.parseColor("#F2F2F2"));
-                trendingButton.setAlpha(1);
-                followingButton.setAlpha(.5f);
-                return false;
-            }
+        searchButton.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), SearchActivity.class));
         });
+
 
         ArrayList<PostsRVModel> followingPosts = new ArrayList<>();
         ArrayList<PostsRVModel> trendingPosts = new ArrayList<>();

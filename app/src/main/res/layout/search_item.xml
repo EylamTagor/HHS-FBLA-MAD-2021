@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/fui_transparent"
+    android:id="@+id/search_item_layout"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        >
+        <!-- staticText--> the UI for an individual searched item that appears when you search for a user or business. All individual elements are identifiable by their ID.
+
+        <Button
+            android:layout_marginTop="15dp"
+            android:id="@+id/search_item_pfp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/search_item_name"
+            android:layout_width="150dp"
+            android:autoSizeTextType="uniform"
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:text="Insert Name"
+            android:textColor="@color/LightGrey"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/search_item_pfp"
+            app:layout_constraintTop_toBottomOf="@id/saved_divider"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/search_item_header"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="UX designer"
+            android:textColor="@color/LightGrey"
+            android:autoSizeTextType="uniform"
+            android:layout_height="15dp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/search_item_pfp"
+            app:layout_constraintTop_toBottomOf="@id/search_item_name"
+            app:layout_constraintVertical_bias="0" />
+
+
+        <View
+            android:id="@+id/saved_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha=".25"
+            android:background="@color/LightGrey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -62,14 +62,12 @@ public class ExperiencesRVAdapter extends RecyclerView.Adapter<ExperiencesRVAdap
         TextView name;
         TextView header;
         TextView description;
-        LinearLayout experienceLayout;
 
         public StaticRVViewHolder(@NonNull View experienceView) {
             super(experienceView);
             name = experienceView.findViewById(R.id.experience_name);
             header = experienceView.findViewById(R.id.experience_header);
             description = experienceView.findViewById(R.id.experience_description);
-            experienceLayout =  experienceView.findViewById(R.id.ExperienceLayout);
         }
     }
 }
