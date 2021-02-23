@@ -1,4 +1,6 @@
 package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +13,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +35,10 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
 
     //Can probably delete after we get firebase upload
     private ArrayList<JobOffer> savedJobs;
+
+    private User user;
+    private FirebaseUser fbuser;
+    private FirebaseFirestore db;
 
     int row_index = -1;
 
@@ -94,6 +110,7 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
     };
 
     public void removeAt(int position) {
+        Log.d("112", position + "");
         jobs.remove(position);
         jobsFull.remove(position);
         notifyItemRemoved(position);
@@ -118,6 +135,16 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
 
         public StaticRVViewHolder(@NonNull View jobView) {
             super(jobView);
+
+            db = FirebaseFirestore.getInstance();
+            fbuser = FirebaseAuth.getInstance().getCurrentUser();
+            db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+                User u = documentSnapshot.toObject(User.class);
+
+            });
+
+
+
             isSaved = false;
             title = jobView.findViewById(R.id.job_title);
             businessLogo = jobView.findViewById(R.id.job_business_logo);
@@ -129,8 +156,40 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
                 @Override
                 public void onClick(View view) {
                     isSaved = true;
-                    removeAt(getAdapterPosition());
+                    int num = getAdapterPosition();
+                    removeAt(num);
+                    Log.d("ASDF", "" + num);
+                    JobOffer savedJob = jobsFull.get(num).getJob();
+                    db.collection("jobOffers")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            if(document.toObject(JobOffer.class).getBusinessID().equals(savedJob.getBusinessID())
+                                                    && document.toObject(JobOffer.class).getJobTitle().equals(savedJob.getJobTitle())){
+                                                db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+                                                    User u = documentSnapshot.toObject(User.class);
+                                                    u.addJobOffer(document.getId());
+                                                    db.collection("users").document(fbuser.getUid()).set(u).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("SUCCESS", "DocumentSnapshot successfully written!");
+                                                        }
+                                                    });
+
+                                                });
+                                            }
+                                        }
+                                    } else {
+
+                                    }
+                                }
+                            });
                     saveButton.setBackgroundResource(R.drawable.ic_saved);
+
+
 
                     //upload job ID to firebase
 

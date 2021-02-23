@@ -22,7 +22,9 @@ public class JobsRVModel {
     }
     public String getJobDescription() { return job.getJobDescription(); }
 
-
+    public JobOffer getJob() {
+        return job;
+    }
 
     public JobsRVModel(JobOffer job) {
         this.job = job;
