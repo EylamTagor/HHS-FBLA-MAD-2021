@@ -24,6 +24,7 @@ public class User {
     private ArrayList<String> notifIDs;
     private ArrayList<String> myBusinesses;
     private ArrayList<String> myPosts;
+    private ArrayList<String> jobOffers;
 
     /**
      * No args constructor
@@ -77,6 +78,7 @@ public class User {
         notifIDs = new ArrayList<String>();
         myBusinesses = new ArrayList<String>();
         myPosts = new ArrayList<String>();
+        jobOffers = new ArrayList<String>();
     }
 
     /**
@@ -489,5 +491,40 @@ public class User {
          }
      }
 
+    /**
+     * Returns the list of job offers saved
+     * @return the list of job offers saved
+     */
+    public ArrayList<String> getJobOffers() {
+        return jobOffers;
+    }
 
+    /**
+     * Sets a new list of job offers saved
+     * @param jobOffers the new list
+     */
+    public void setJobOffers(ArrayList<String> jobOffers) {
+        this.jobOffers = jobOffers;
+    }
+
+    /**
+     * Adds a saved offer
+     * @param ID the new offer
+     */
+    public void addJobOffer(String ID){
+         jobOffers.add(ID);
+    }
+
+    /**
+     * Removes a saved offer
+     * @param ID the ID of the offer
+     */
+    public void removeJobOffer(String ID){
+        for(int i = 0;i<this.jobOffers.size();i++){
+            if(this.jobOffers.get(i).equals(ID)){
+                this.jobOffers.remove(i);
+                break;
+            }
+        }
+    }
 }
