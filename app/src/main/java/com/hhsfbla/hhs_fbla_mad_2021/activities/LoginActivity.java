@@ -127,6 +127,9 @@ public class LoginActivity extends AppCompatActivity {
         fuser = mAuth.getCurrentUser();
     }
 
+    /**
+     * Signs the user in to the google account
+     */
     public void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN);

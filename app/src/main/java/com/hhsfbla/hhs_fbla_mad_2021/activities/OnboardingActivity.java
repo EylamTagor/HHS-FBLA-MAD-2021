@@ -79,6 +79,11 @@ public class OnboardingActivity extends AppCompatActivity {
     private Dialog educationDialog;
     private Dialog skillDialog;
 
+    /**
+     * Creates the page and initializes all page components, such as textviews, image views, buttons, and dialogs,
+     *
+     * @param savedInstanceState the save state of the activity or page
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
