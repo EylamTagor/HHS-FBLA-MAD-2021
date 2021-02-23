@@ -2,7 +2,9 @@ package com.hhsfbla.hhs_fbla_mad_2021.ui.home;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +19,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -45,6 +55,9 @@ public class HomeFragment extends Fragment {
     private View followingSelected;
     private SearchView searchView;
 
+    private User user;
+    private FirebaseUser fbuser;
+    private FirebaseFirestore db;
 
 
 
@@ -128,15 +141,30 @@ public class HomeFragment extends Fragment {
         ArrayList<PostsRVModel> followingPosts = new ArrayList<>();
         ArrayList<PostsRVModel> trendingPosts = new ArrayList<>();
 
+        db = FirebaseFirestore.getInstance();
+        fbuser = FirebaseAuth.getInstance().getCurrentUser();
+
+        ArrayList<Post> allPosts = new ArrayList<Post>();
+
+        /*db.collection("posts").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            User u = documentSnapshot.toObject(User.class);
+        });*/
+
+        db.collection("posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                allPosts.add(document.toObject(Post.class));
+                            }
+                        } else {
+
+                        }
+                    }
+                });
+
         ArrayList<String> dummyHashtags = new ArrayList<>();
         dummyHashtags.add("Sustainability");
-
-
-        ArrayList<String> dummyComments = new ArrayList<>();
-        dummyHashtags.add("you are a genius");
-        dummyHashtags.add("I agree");
-        dummyHashtags.add("WOW so cool man!");
-
 
         Post dummyPost = new Post("I planted 1,000 trees", "Yesterday I planted 1000 trees and today I planted 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!", "#sustainability");
 
