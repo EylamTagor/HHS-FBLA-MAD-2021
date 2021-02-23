@@ -32,7 +32,7 @@ public class PostsRVModel {
     public String getJobTitle(){return user.getJobTitle();}
     public String getPfp(){return user.getPfp();}
     public String getTitle(){return post.getTitle();}
-
+    public int getLikes(){return post.getLikes();}
 
     public PostsRVModel(Post post, User user) {
         this.post = post;

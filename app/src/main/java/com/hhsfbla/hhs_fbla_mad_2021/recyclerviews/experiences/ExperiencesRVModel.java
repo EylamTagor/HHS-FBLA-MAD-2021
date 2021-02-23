@@ -14,7 +14,7 @@ public class ExperiencesRVModel {
 
     public String getHeader() {
         if(experience.isCurrentlyWorking()){
-            return experience.getTitle() + " | " + experience.getStartTime() + "- Present";
+            return experience.getTitle() + " | " + experience.getStartTime() + " - Present";
         }
         return experience.getTitle() + " | " + experience.getStartTime() + " - " + experience.getEndTime();
     }

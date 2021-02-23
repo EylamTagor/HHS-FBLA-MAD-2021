@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,28 +20,27 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
+import com.facebook.CallbackManager;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVAdapter;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
-
+import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
-
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVAdapter;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClickListener {
 
     private HomeViewModel mViewModel;
     private RecyclerView followingPostsView;
@@ -57,12 +57,8 @@ public class HomeFragment extends Fragment {
     private View trendingSelected;
     private Button searchButton;
     private View followingSelected;
-
-
-
-
-
-
+    private ShareDialog shareDialog;
+    private CallbackManager callbackManager;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -74,9 +70,9 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Linking UI XML to fields
-        followingPostsView = (RecyclerView)rootView.findViewById(R.id.home_following_posts);
+        followingPostsView = (RecyclerView) rootView.findViewById(R.id.home_following_posts);
         followingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        trendingPostsView = (RecyclerView)rootView.findViewById(R.id.home_trending_posts);
+        trendingPostsView = (RecyclerView) rootView.findViewById(R.id.home_trending_posts);
         trendingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         trendingButton = rootView.findViewById(R.id.home_trending);
         followingButton = rootView.findViewById(R.id.home_following);
@@ -84,6 +80,10 @@ public class HomeFragment extends Fragment {
         trendingSelected = rootView.findViewById(R.id.home_trending_selected);
         followingSelected = rootView.findViewById(R.id.home_following_selected);
         postButton = rootView.findViewById(R.id.home_post_button);
+
+        // FB sharing inits
+        shareDialog = new ShareDialog(getActivity());
+        callbackManager = CallbackManager.Factory.create();
 
         //Firebase
         db = FirebaseFirestore.getInstance();
@@ -173,12 +173,12 @@ public class HomeFragment extends Fragment {
         trendingPosts.add(new PostsRVModel(dummyPost2, dummyUser2));
         trendingPosts.add(new PostsRVModel(dummyPost2, dummyUser2));
 
-
         followingPostsRVAdapter = new PostsRVAdapter(followingPosts);
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPosts);
         followingPostsView.setAdapter(followingPostsRVAdapter);
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
-
+        followingPostsRVAdapter.setOnItemClickListener(this);
+        trendingPostsRVAdapter.setOnItemClickListener(this);
 
         //Posting functionality
         postButton.setOnClickListener(v -> {
@@ -219,9 +219,7 @@ public class HomeFragment extends Fragment {
         });
 
         return rootView;
-
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -230,4 +228,31 @@ public class HomeFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    /**
+     * Describes what to do when a user from the attendees recycler view is clicked, in this case share the right Facebook post
+     *
+     * @param v        the View that will contain the click action
+     * @param position the numbered position of snapshot in the full item list
+     */
+    @Override
+    public void onItemClick(View v, int position) {
+        if (shareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent linkContent = new ShareLinkContent.Builder().build();
+            shareDialog.show(linkContent);
+        }
+    }
+
+    /**
+     * This method gets called after an action to get data from the user
+     * handles callback for facebook sharing
+     *
+     * @param requestCode the request code of the request
+     * @param resultCode  a code representing the state of the result of the action
+     * @param data        the data gained from the activity
+     */
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 }
