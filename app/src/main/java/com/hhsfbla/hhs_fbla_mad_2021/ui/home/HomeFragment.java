@@ -334,8 +334,8 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             post.setOnClickListener(view -> {
                 Post p = new Post(
                         title.getText().toString(),
-                        hashtag.getText().toString(),
-                        content.getText().toString(), fuser.getUid(),
+
+                        content.getText().toString(), hashtag.getText().toString(),  fuser.getUid(),
                         tsLong
                         );
 
@@ -363,7 +363,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                 db.collection("posts").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
                 db.collection("posts").document(fuser.getUid()).update("content", content.getText().toString());
                 db.collection("posts").document(fuser.getUid()).update("id", fuser.getUid());
-                db.collection("posts").document(fuser.getUid()).update("timePosted", timestamp);
+                db.collection("posts").document(fuser.getUid()).update("timePosted", tsLong);
                 postingDialog.dismiss();
             });
             postingDialog.show();
