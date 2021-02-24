@@ -328,14 +328,15 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             Button post = postingDialog.findViewById(R.id.new_post_post);
 
 
-            Time time = new Time();
-            long timestamp = time.toMillis(true);
+
+
+            Long tsLong = System.currentTimeMillis()/1000;
             post.setOnClickListener(view -> {
                 Post p = new Post(
                         title.getText().toString(),
                         hashtag.getText().toString(),
                         content.getText().toString(), fuser.getUid(),
-                        timestamp
+                        tsLong
                         );
 
                 db.collection("posts").add(p)
@@ -358,11 +359,11 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                     interruptedException.printStackTrace();
                 }
 
-                db.collection("users").document(fuser.getUid()).update("title", title.getText().toString());
-                db.collection("users").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
-                db.collection("users").document(fuser.getUid()).update("content", content.getText().toString());
-                db.collection("users").document(fuser.getUid()).update("id", fuser.getUid());
-                db.collection("users").document(fuser.getUid()).update("timePosted", timestamp);
+                db.collection("posts").document(fuser.getUid()).update("title", title.getText().toString());
+                db.collection("posts").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
+                db.collection("posts").document(fuser.getUid()).update("content", content.getText().toString());
+                db.collection("posts").document(fuser.getUid()).update("id", fuser.getUid());
+                db.collection("posts").document(fuser.getUid()).update("timePosted", tsLong);
                 postingDialog.dismiss();
             });
             postingDialog.show();
