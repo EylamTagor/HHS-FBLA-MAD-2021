@@ -68,7 +68,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
 
 
 
-        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+        db.collection("users").document(currentItem.getUserID()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
             holder.name.setText(u.getName());
             holder.jobTitle.setText(u.getJobTitle());
@@ -81,7 +81,6 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         });
 
 
-        holder.pfp.setImageResource(R.drawable.ic_followers);
         holder.description.setText(currentItem.getDescription());
 
         holder.tag1.setText(currentItem.getHashtag());
