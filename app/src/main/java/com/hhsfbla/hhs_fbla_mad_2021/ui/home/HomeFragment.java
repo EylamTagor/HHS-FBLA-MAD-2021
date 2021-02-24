@@ -166,7 +166,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
         trendingPostsRVModels = new ArrayList<>();
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
-        trendingPostsRVAdapter.sortTrendingPosts();
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
 
         trendingPostsList = new ArrayList<>();
@@ -181,6 +180,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                 trendingPostsList.add(document.toObject(Post.class));
                                 trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                 trendingPostsRVAdapter.setPosts(trendingPostsList);
+                                trendingPostsRVAdapter.sortTrendingPosts();
                                 trendingPostsRVAdapter.notifyDataSetChanged();
                             }
                             }
@@ -192,7 +192,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         //FollowingPostsRV
         followingPostsRVModels = new ArrayList<>();
         followingPostsRVAdapter = new PostsRVAdapter(followingPostsRVModels);
-        followingPostsRVAdapter.sortFollowingPosts();
         followingPostsView.setAdapter(followingPostsRVAdapter);
         followingPostsList = new ArrayList<>();
 
@@ -239,6 +238,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                             followingPostsList.add(document.toObject(Post.class));
                                             followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                             followingPostsRVAdapter.setPosts(followingPostsList);
+                                            followingPostsRVAdapter.sortFollowingPosts();
                                             followingPostsRVAdapter.notifyDataSetChanged();
                                         }
                                     }
