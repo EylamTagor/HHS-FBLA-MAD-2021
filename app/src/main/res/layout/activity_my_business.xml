@@ -266,36 +266,52 @@ at large through my initiatives. "
             app:layout_constraintVertical_bias="0" />
 
         <Button
-            android:id="@+id/my_business_mail_icon"
-            android:layout_width="35dp"
+            android:id="@+id/my_business_edit"
+            android:layout_width="70dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="25dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/ic_mail_profile"
-            android:cropToPadding="false"
+            android:text="Edit"
+            android:padding="0dp"
+            android:textSize="10sp"
+            app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.085"
+            app:layout_constraintEnd_toStartOf="@+id/my_business_delete_button"
+            app:layout_constraintHorizontal_bias=".5"
             app:layout_constraintStart_toEndOf="@+id/my_business_follower_count"
             app:layout_constraintTop_toBottomOf="@+id/my_business_website"
-            app:layout_constraintVertical_bias="0.0"
-            />
+            app:layout_constraintVertical_bias="0.0" />
+        <Button
+            android:id="@+id/my_business_follow"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Follow"
+            android:padding="0dp"
+            android:visibility="gone"
+            android:textSize="10sp"
+            android:layout_marginLeft="20dp"
+            app:cornerRadius="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias=".5"
+            app:layout_constraintStart_toEndOf="@+id/my_business_follower_count"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_website"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/my_business_follow_button"
+            android:id="@+id/my_business_delete_button"
             android:layout_width="80dp"
             android:layout_height="35dp"
             android:layout_marginLeft="35dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
-            android:text="Follow"
+            android:text="Delete"
             android:textSize="10sp"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@+id/my_business_mail_icon"
             app:layout_constraintTop_toBottomOf="@+id/my_business_website"
             app:layout_constraintVertical_bias="0" />
 
@@ -309,7 +325,7 @@ at large through my initiatives. "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_business_mail_icon"
+            app:layout_constraintTop_toBottomOf="@+id/my_business_follower_icon"
             app:layout_constraintVertical_bias="0" />
 
         <androidx.recyclerview.widget.RecyclerView
