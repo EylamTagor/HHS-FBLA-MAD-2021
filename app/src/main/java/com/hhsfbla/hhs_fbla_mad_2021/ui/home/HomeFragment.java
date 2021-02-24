@@ -329,12 +329,13 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
 
             Time time = new Time();
+            long timestamp = time.toMillis(true);
             post.setOnClickListener(view -> {
                 Post p = new Post(
                         title.getText().toString(),
                         hashtag.getText().toString(),
                         content.getText().toString(), fuser.getUid(),
-                        time.toMillis(true)
+                        timestamp
                         );
 
                 db.collection("posts").add(p)
@@ -357,10 +358,11 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                     interruptedException.printStackTrace();
                 }
 
-                db.collection("posts").document(fuser.getUid()).update("title", title.getText().toString());
-                db.collection("posts").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
-                db.collection("posts").document(fuser.getUid()).update("content", content.getText().toString());
-                db.collection("posts").document(fuser.getUid()).update("id", fuser.getUid());
+                db.collection("users").document(fuser.getUid()).update("title", title.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("content", content.getText().toString());
+                db.collection("users").document(fuser.getUid()).update("id", fuser.getUid());
+                db.collection("users").document(fuser.getUid()).update("timePosted", timestamp);
                 postingDialog.dismiss();
             });
             postingDialog.show();
