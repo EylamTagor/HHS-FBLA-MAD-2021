@@ -1,5 +1,6 @@
 package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +24,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHolder> {
     private ArrayList<PostsRVModel> posts;
@@ -61,6 +66,21 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         //holder.name.setText(user.getName());
         //holder.jobTitle.setText(user.getJobTitle());
 
+
+
+        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            User u = documentSnapshot.toObject(User.class);
+            holder.name.setText(u.getName());
+            holder.jobTitle.setText(u.getJobTitle());
+
+            if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase("")) {
+                Picasso.get().load(Uri.parse(u.getPfp())).into(holder.pfp);
+            } else {
+                Picasso.get().load(fuser.getPhotoUrl()).into(holder.pfp);
+            }
+        });
+
+
         holder.pfp.setImageResource(R.drawable.ic_followers);
         holder.description.setText(currentItem.getDescription());
 
@@ -83,7 +103,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         TextView tag1;
         Button likes;
         AppCompatButton share;
-        ImageView pfp;
+        CircleImageView pfp;
         LinearLayout postLayout;
 
         public RVViewHolder(@NonNull View postView) {
