@@ -357,10 +357,10 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                     interruptedException.printStackTrace();
                 }
 
-                db.collection("users").document(fuser.getUid()).update("title", title.getText().toString());
-                db.collection("users").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
-                db.collection("users").document(fuser.getUid()).update("content", content.getText().toString());
-                db.collection("users").document(fuser.getUid()).update("id", fuser.getUid());
+                db.collection("posts").document(fuser.getUid()).update("title", title.getText().toString());
+                db.collection("posts").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
+                db.collection("posts").document(fuser.getUid()).update("content", content.getText().toString());
+                db.collection("posts").document(fuser.getUid()).update("id", fuser.getUid());
                 postingDialog.dismiss();
             });
             postingDialog.show();
