@@ -22,7 +22,7 @@ public class Post {
      * No args constructor
      */
     public Post(){
-        this("", "", "","");
+        this("", "", "","", 0);
     }
 
     /**
@@ -31,12 +31,13 @@ public class Post {
      * @param description The description
      * @param hashtag The hashtag associated with the post
      */
-    public Post(String title, String description, String hashtag, String userPostedID){
+    public Post(String title, String description, String hashtag, String userPostedID, long timestamp){
         this.title = title;
         this.description = description;
         usersLiked = new ArrayList<String>();
         this.hashtag = hashtag;
         this.userPostedID = userPostedID;
+        timePosted = timestamp;
 
     }
 
