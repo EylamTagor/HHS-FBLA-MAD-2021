@@ -20,6 +20,7 @@ public class PostsRVModel {
     }
 
 
+    public long getTime(){return post.getTimePosted();}
     public String getDescription() { return post.getDescription(); }
     public String getHashtag() {
         return post.getHashtag();

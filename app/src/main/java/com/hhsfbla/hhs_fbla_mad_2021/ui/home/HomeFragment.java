@@ -153,9 +153,11 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
 
         // trending Posts RV
+
         trendingPostsRVModels = new ArrayList<>();
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
+        trendingPostsRVAdapter.sortTrendingPosts();
         trendingPostsList = new ArrayList<>();
 
         db.collection("posts")
@@ -168,6 +170,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                 trendingPostsList.add(document.toObject(Post.class));
                                 trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                 trendingPostsRVAdapter.setPosts(trendingPostsList);
+                                trendingPostsRVAdapter.sortTrendingPosts();
                                 trendingPostsRVAdapter.notifyDataSetChanged();
                             }
                             }
@@ -180,6 +183,8 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         followingPostsRVModels = new ArrayList<>();
         followingPostsRVAdapter = new PostsRVAdapter(followingPostsRVModels);
         followingPostsView.setAdapter(followingPostsRVAdapter);
+        followingPostsRVAdapter.sortFollowingPosts();
+
         followingPostsList = new ArrayList<>();
 
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
@@ -225,6 +230,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                             followingPostsList.add(document.toObject(Post.class));
                                             followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                             followingPostsRVAdapter.setPosts(followingPostsList);
+                                            followingPostsRVAdapter.sortFollowingPosts();
                                             followingPostsRVAdapter.notifyDataSetChanged();
                                         }
                                     }
@@ -234,6 +240,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                             followingPostsList.add(document.toObject(Post.class));
                                             followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                             followingPostsRVAdapter.setPosts(followingPostsList);
+                                            followingPostsRVAdapter.sortFollowingPosts();
                                             followingPostsRVAdapter.notifyDataSetChanged();
                                         }
                                     }
@@ -242,78 +249,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                             }
                         }
                     });
-
-            /*db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
-                User u = documentSnapshot.toObject(User.class);
-                ArrayList<String> savedOffers = u.getJobOffers();
-                db.collection("jobOffers")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        for(String ID: savedOffers){
-                                            if(document.getId().equals(ID)){
-                                                savedJobs.add(new SavedRVModel(document.toObject(JobOffer.class)));
-                                                Log.d("WORKS", "TEST");
-                                                Log.d("Array", savedJobs.toString());
-                                            }
-                                        }
-
-                                    }
-                                    savedRVAdapter = new SavedRVAdapter(savedJobs);
-                                    savedView.setAdapter(savedRVAdapter);
-                                } else {
-
-                                }
-                            }
-                        });
-
-            });*/
         });
-        /*
-        ArrayList<String> dummyHashtags = new ArrayList<>();
-        dummyHashtags.add("Sustainability");
-
-
-        ArrayList<String> dummyComments = new ArrayList<>();
-        dummyHashtags.add("you are a genius");
-        dummyHashtags.add("I agree");
-        dummyHashtags.add("WOW so cool man!");
-
-
-        Post dummyPost = new Post("I planted 1,000 trees", "Yesterday I planted 1000 trees and today I planted 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!", "#sustainability");
-
-        User dummyUser = new User("Sky Johnson", "skyngthowhing@gmail.com");
-        dummyUser.setJobTitle("UI/UX designer");
-
-        Post dummyPost2 = new Post("I ate 2,000 plants", "Yesterday I ate 2000 trees and today I ate 1000 more. It was a great experience and a privledge to be able to give back to my community in such a great way. I hope to keep up these altruistic efforts and I truly hope that you all can join me in these valiant efforts of mine. If you are interested, comment below or email me. I check my email very often and would love to get in touch to discuss logistics. Look forward to meeting with you!", "#environmentalism");
-
-        User dummyUser2 = new User("Suarez Wanderlax", "skyngthowhing@gmail.com");
-        dummyUser2.setJobTitle("CEO of Yummy");
-
-        followingPosts.add(new PostsRVModel(dummyPost, dummyUser));
-        followingPosts.add(new PostsRVModel(dummyPost, dummyUser));
-        followingPosts.add(new PostsRVModel(dummyPost, dummyUser));
-        followingPosts.add(new PostsRVModel(dummyPost, dummyUser));
-        followingPosts.add(new PostsRVModel(dummyPost, dummyUser));
-        followingPosts.add(new PostsRVModel(dummyPost, dummyUser));
-        followingPosts.add(new PostsRVModel(dummyPost, dummyUser));
-
-        trendingPosts.add(new PostsRVModel(dummyPost2, dummyUser2));
-        trendingPosts.add(new PostsRVModel(dummyPost2, dummyUser2));
-        trendingPosts.add(new PostsRVModel(dummyPost2, dummyUser2));
-        trendingPosts.add(new PostsRVModel(dummyPost2, dummyUser2));
-        trendingPosts.add(new PostsRVModel(dummyPost2, dummyUser2));
-        trendingPosts.add(new PostsRVModel(dummyPost2, dummyUser2));
-        trendingPosts.add(new PostsRVModel(dummyPost2, dummyUser2));
-
-        followingPostsRVAdapter = new PostsRVAdapter(followingPosts);
-        trendingPostsRVAdapter = new PostsRVAdapter(trendingPosts);
-        followingPostsView.setAdapter(followingPostsRVAdapter);
-        trendingPostsView.setAdapter(trendingPostsRVAdapter);
-        */
 
         followingPostsRVAdapter.setOnItemClickListener(this);
         trendingPostsRVAdapter.setOnItemClickListener(this);
@@ -346,10 +282,12 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                             followingPostsList.add(p);
                             followingPostsRVModels.add(new PostsRVModel(p));
                             followingPostsRVAdapter.setPosts(followingPostsList);
+                            followingPostsRVAdapter.sortFollowingPosts();
                             followingPostsRVAdapter.notifyDataSetChanged();
                             trendingPostsList.add(p);
                             trendingPostsRVModels.add(new PostsRVModel(p));
                             trendingPostsRVAdapter.setPosts(followingPostsList);
+                            trendingPostsRVAdapter.sortTrendingPosts();
                             trendingPostsRVAdapter.notifyDataSetChanged();
                         }).addOnFailureListener(documentReference -> Toast.makeText(getActivity(), "Invalid education. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
 
