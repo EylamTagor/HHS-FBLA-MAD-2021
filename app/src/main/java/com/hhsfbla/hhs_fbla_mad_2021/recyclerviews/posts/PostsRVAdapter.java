@@ -120,24 +120,30 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         }
     }
 
+    //Bubble sort to sort the following posts by most recent
     public void sortFollowingPosts(){
         for(int i = 0; i <posts.size() - 1; i++){
-            PostsRVModel temp;
-            if (posts.get(i).getTime() < posts.get(i+1).getTime()) {
-                        temp = posts.get(i);
-                        posts.set(i, posts.get(i+1));
-                        posts.set(i+1, temp);
+            for(int j = 0; j < posts.size() - 1 - j; i++) {
+                PostsRVModel temp;
+                if (posts.get(j).getTime() < posts.get(j + 1).getTime()) {
+                    temp = posts.get(j);
+                    posts.set(i, posts.get(j + 1));
+                    posts.set(j + 1, temp);
+                }
             }
         }
     }
 
+    //Bubble sort to sort the trending posts by most likes
     public void sortTrendingPosts(){
         for(int i = 0; i <posts.size() - 1; i++){
-            PostsRVModel temp;
-            if (posts.get(i).getLikes() < posts.get(i+1).getLikes()) {
-                temp = posts.get(i);
-                posts.set(i, posts.get(i+1));
-                posts.set(i+1, temp);
+            for(int j = 0; j < posts.size() - 1 - j; i++) {
+                PostsRVModel temp;
+                if (posts.get(j).getLikes() < posts.get(j + 1).getLikes()) {
+                    temp = posts.get(j);
+                    posts.set(i, posts.get(j + 1));
+                    posts.set(j + 1, temp);
+                }
             }
         }
     }

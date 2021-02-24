@@ -166,7 +166,9 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
         trendingPostsRVModels = new ArrayList<>();
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
+        trendingPostsRVAdapter.sortTrendingPosts();
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
+
         trendingPostsList = new ArrayList<>();
 
         db.collection("posts")
@@ -190,6 +192,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         //FollowingPostsRV
         followingPostsRVModels = new ArrayList<>();
         followingPostsRVAdapter = new PostsRVAdapter(followingPostsRVModels);
+        followingPostsRVAdapter.sortFollowingPosts();
         followingPostsView.setAdapter(followingPostsRVAdapter);
         followingPostsList = new ArrayList<>();
 
