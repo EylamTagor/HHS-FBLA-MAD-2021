@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hhsfbla.hhs_fbla_mad_2021">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HHSFBLAMAD2021">
+        <activity android:name=".activities.AddBusinessActivity"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -37,7 +40,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.OnboardingActivity" />
         <activity
             android:name=".activities.HomeActivity"
@@ -51,9 +53,7 @@
         </activity>
         <activity android:name=".activities.SearchActivity" />
         <activity android:name=".activities.OtherProfileActivity" />
-        <activity android:name=".activities.MyBusinessActivity" />
+        <activity android:name=".activities.BusinessActivity" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,14 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.login.LoginManager;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.AddBusinessActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVAdapter;
@@ -45,9 +42,10 @@ import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.util.NonScrollingLLM;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -176,7 +174,13 @@ public class MyProfileFragment extends Fragment {
 
         //Add business button
         addBusinessButton.setOnClickListener(v -> {
-
+            db.collection("businesses").add(new Business()).addOnSuccessListener(documentReference -> {
+                db.collection("users").document(fbuser.getUid()).update("myBusinesses", FieldValue.arrayUnion(documentReference.getId()));
+                Intent intent = new Intent(rootView.getContext(), AddBusinessActivity.class);
+                intent.putExtra("FROM_ACTIVITY", "HomeActivity");
+                intent.putExtra("BUSINESS_ID", documentReference.getId());
+                startActivity(intent);
+            });
         });
 
         // Experiences RV
@@ -234,7 +238,6 @@ public class MyProfileFragment extends Fragment {
         });
 
         //my Businesses RV
-
         myBusinessesList = new ArrayList<>();
         myBusinessesRVModels = new ArrayList<>();
         myBusinessesRVAdapter = new MyBusinessesRVAdapter(myBusinessesRVModels);

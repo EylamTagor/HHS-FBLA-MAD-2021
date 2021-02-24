@@ -1,7 +1,5 @@
 package com.hhsfbla.hhs_fbla_mad_2021.classes;
 
-import android.widget.ImageView;
-
 import java.util.ArrayList;
 
 //Temp stuff here so I can do profile page stuff
@@ -19,14 +17,13 @@ public class Business {
     private String about;
     private String CSRVision;
     private String CSRLink;
-    private int CSRScore;
+    private double ESGScore;
 
     /**
      * No args constructor for the Business class
      */
     public Business(){
-        name = "";
-        logo = "";
+        this("", "");
     }
 
     /**
@@ -38,6 +35,11 @@ public class Business {
         this.name = name;
         this.logo = logo;
         jobOffers = new ArrayList<String>();
+        website = "";
+        about = "";
+        CSRVision = "";
+        CSRLink = "";
+        ESGScore = -1;
     }
 
     /**
@@ -134,12 +136,12 @@ public class Business {
         this.CSRLink = CSRLink;
     }
 
-    public int getCSRScore() {
-        return CSRScore;
+    public double getESGScore() {
+        return ESGScore;
     }
 
-    public void setCSRScore(int CSRScore) {
-        this.CSRScore = CSRScore;
+    public void setESGScore(double ESGScore) {
+        this.ESGScore = ESGScore;
     }
 
 }
