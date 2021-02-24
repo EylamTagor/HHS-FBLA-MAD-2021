@@ -15,7 +15,7 @@ public class Post {
     private ArrayList<String> usersLiked;
     private String hashtag;
     private String userPostedID;
-
+    private long timePosted;
 
 
     /**
@@ -126,14 +126,39 @@ public class Post {
             }
         }
 
+    /**
+     * Returns the ID of the user who posted
+     * @return the ID of the user who posted
+     */
     public String getUserPostedID() {
         return userPostedID;
     }
 
+    /**
+     * Sets a new poster ID
+     * @param userPostedID the new ID
+     */
     public void setUserPostedID(String userPostedID) {
         this.userPostedID = userPostedID;
     }
+
+
+    /**
+     * Returns the time when the post was posted in milliseconds since 1970
+     * @return the time when the post was posted in milliseconds since 1970
+     */
+    public long getTimePosted() {
+        return timePosted;
     }
+
+    /**
+     * Sets a new time to for posted
+     * @param timePosted the new time
+     */
+    public void setTimePosted(long timePosted) {
+        this.timePosted = timePosted;
+    }
+}
 
 
 
