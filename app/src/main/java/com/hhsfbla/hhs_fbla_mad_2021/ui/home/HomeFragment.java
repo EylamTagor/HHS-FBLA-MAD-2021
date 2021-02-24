@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +37,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firestore.v1.StructuredQuery;
+import com.google.firestore.v1.StructuredQuery.Order;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
@@ -88,13 +93,15 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         //Linking UI XML to fields
         followingPostsView = (RecyclerView) rootView.findViewById(R.id.home_following_posts);
         followingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        followingButton = rootView.findViewById(R.id.home_following);
+        followingSelected = rootView.findViewById(R.id.home_following_selected);
+
         trendingPostsView = (RecyclerView) rootView.findViewById(R.id.home_trending_posts);
         trendingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         trendingButton = rootView.findViewById(R.id.home_trending);
-        followingButton = rootView.findViewById(R.id.home_following);
-        searchButton = rootView.findViewById(R.id.home_search);
         trendingSelected = rootView.findViewById(R.id.home_trending_selected);
-        followingSelected = rootView.findViewById(R.id.home_following_selected);
+
+        searchButton = rootView.findViewById(R.id.home_search);
         postButton = rootView.findViewById(R.id.home_post_button);
 
         // FB sharing inits
@@ -115,16 +122,17 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             @Override
             public void onClick(View v) {
                 trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.NORMAL);
-                followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
-                followingSelected.setVisibility(View.VISIBLE);
                 trendingSelected.setVisibility(View.INVISIBLE);
                 trendingPostsView.setVisibility(View.INVISIBLE);
+                trendingButton.setAlpha(.5f);
+                trendingButton.setTextColor(Color.parseColor("#F2F2F2"));
+
+                followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
+                followingSelected.setVisibility(View.VISIBLE);
                 followingPostsView.setVisibility(View.VISIBLE);
                 followingButton.setTextColor(Color.parseColor("#10C380"));
-                //followingButton.setTextColor(Color.parseColor("@color/Green"));
-                trendingButton.setTextColor(Color.parseColor("#F2F2F2"));
                 followingButton.setAlpha(1);
-                trendingButton.setAlpha(.5f);
+
 
             }
         });
@@ -132,15 +140,17 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             @Override
             public void onClick(View v) {
                 followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
-                trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
                 followingSelected.setVisibility(View.INVISIBLE);
+                followingPostsView.setVisibility(View.INVISIBLE);
+                followingButton.setAlpha(.5f);
+                followingButton.setTextColor(Color.parseColor("#F2F2F2"));
+
+
+                trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
                 trendingSelected.setVisibility(View.VISIBLE);
                 trendingPostsView.setVisibility(View.VISIBLE);
-                followingPostsView.setVisibility(View.INVISIBLE);
                 trendingButton.setTextColor(Color.parseColor("#10C380"));
-                followingButton.setTextColor(Color.parseColor("#F2F2F2"));
                 trendingButton.setAlpha(1);
-                followingButton.setAlpha(.5f);
 
             }
         });
@@ -157,7 +167,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         trendingPostsRVModels = new ArrayList<>();
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
-        trendingPostsRVAdapter.sortTrendingPosts();
         trendingPostsList = new ArrayList<>();
 
         db.collection("posts")
@@ -170,7 +179,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                 trendingPostsList.add(document.toObject(Post.class));
                                 trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                 trendingPostsRVAdapter.setPosts(trendingPostsList);
-                                trendingPostsRVAdapter.sortTrendingPosts();
                                 trendingPostsRVAdapter.notifyDataSetChanged();
                             }
                             }
@@ -183,8 +191,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         followingPostsRVModels = new ArrayList<>();
         followingPostsRVAdapter = new PostsRVAdapter(followingPostsRVModels);
         followingPostsView.setAdapter(followingPostsRVAdapter);
-        followingPostsRVAdapter.sortFollowingPosts();
-
         followingPostsList = new ArrayList<>();
 
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
@@ -230,17 +236,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                             followingPostsList.add(document.toObject(Post.class));
                                             followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                             followingPostsRVAdapter.setPosts(followingPostsList);
-                                            followingPostsRVAdapter.sortFollowingPosts();
-                                            followingPostsRVAdapter.notifyDataSetChanged();
-                                        }
-                                    }
-                                    for(String ID2: u.getMyPosts()){
-                                        if(document.getId().equals(ID2)){
-                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                            followingPostsList.add(document.toObject(Post.class));
-                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                            followingPostsRVAdapter.setPosts(followingPostsList);
-                                            followingPostsRVAdapter.sortFollowingPosts();
                                             followingPostsRVAdapter.notifyDataSetChanged();
                                         }
                                     }
@@ -280,15 +275,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                             db.collection("users").document(fuser.getUid()).update("myPosts", FieldValue.arrayUnion(documentReference.getId()));
                             Toast.makeText(getActivity(), "Post added.", Toast.LENGTH_SHORT).show();
                             followingPostsList.add(p);
-                            followingPostsRVModels.add(new PostsRVModel(p));
-                            followingPostsRVAdapter.setPosts(followingPostsList);
-                            followingPostsRVAdapter.sortFollowingPosts();
-                            followingPostsRVAdapter.notifyDataSetChanged();
-                            trendingPostsList.add(p);
-                            trendingPostsRVModels.add(new PostsRVModel(p));
-                            trendingPostsRVAdapter.setPosts(followingPostsList);
-                            trendingPostsRVAdapter.sortTrendingPosts();
-                            trendingPostsRVAdapter.notifyDataSetChanged();
                         }).addOnFailureListener(documentReference -> Toast.makeText(getActivity(), "Invalid education. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
 
                 try {
@@ -303,6 +289,14 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                 db.collection("posts").document(fuser.getUid()).update("id", fuser.getUid());
                 db.collection("posts").document(fuser.getUid()).update("timePosted", tsLong);
                 postingDialog.dismiss();
+
+                //Resets Fragment
+                FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false);
+                }
+                ft.detach(this).attach(this).commit();
+
             });
             postingDialog.show();
         });
