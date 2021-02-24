@@ -123,7 +123,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
     public void sortFollowingPosts(){
         for(int i = 0; i <posts.size() - 1; i++){
             PostsRVModel temp;
-            if (posts.get(i).getTime() > posts.get(i+1).getTime()) {
+            if (posts.get(i).getTime() < posts.get(i+1).getTime()) {
                         temp = posts.get(i);
                         posts.set(i, posts.get(i+1));
                         posts.set(i+1, temp);
@@ -134,7 +134,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
     public void sortTrendingPosts(){
         for(int i = 0; i <posts.size() - 1; i++){
             PostsRVModel temp;
-            if (posts.get(i).getLikes() > posts.get(i+1).getLikes()) {
+            if (posts.get(i).getLikes() < posts.get(i+1).getLikes()) {
                 temp = posts.get(i);
                 posts.set(i, posts.get(i+1));
                 posts.set(i+1, temp);
