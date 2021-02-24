@@ -328,14 +328,15 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             Button post = postingDialog.findViewById(R.id.new_post_post);
 
 
-            Time time = new Time();
-            long timestamp = time.toMillis(true);
+
+
+            Long tsLong = System.currentTimeMillis()/1000;
             post.setOnClickListener(view -> {
                 Post p = new Post(
                         title.getText().toString(),
                         hashtag.getText().toString(),
                         content.getText().toString(), fuser.getUid(),
-                        timestamp
+                        tsLong
                         );
 
                 db.collection("posts").add(p)
