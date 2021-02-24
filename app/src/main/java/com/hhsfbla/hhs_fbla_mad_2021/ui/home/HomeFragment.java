@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
     private ShareDialog shareDialog;
     private CallbackManager callbackManager;
     private ArrayList<PostsRVModel> followingPostsRVModels;
+    private ArrayList<Post> followingPostsList;
     private ArrayList<PostsRVModel> trendingPostsRVModels;
     private ArrayList<Post> trendingPostsList;
 
@@ -153,7 +154,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         trendingPostsRVModels = new ArrayList<>();
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
-
         trendingPostsList = new ArrayList<>();
 
         db.collection("posts")
@@ -163,7 +163,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.println(Log.DEBUG,"nada", "Got them posts");
                                 trendingPostsList.add(document.toObject(Post.class));
                                 trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                 trendingPostsRVAdapter.setPosts(trendingPostsList);
@@ -174,6 +173,103 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                         });
 
 
+
+        //FollowingPostsRV
+        followingPostsRVModels = new ArrayList<>();
+        followingPostsRVAdapter = new PostsRVAdapter(followingPostsRVModels);
+        followingPostsView.setAdapter(followingPostsRVAdapter);
+        followingPostsList = new ArrayList<>();
+
+        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            User u = documentSnapshot.toObject(User.class);
+            ArrayList<String> usersFollowingID = u.getFollowing();
+            ArrayList<User> usersFollowing = new ArrayList<>();
+
+            ArrayList<String> usersFollowingPostsID = new ArrayList<>();
+            db.collection("users")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    for(String ID: usersFollowingID){
+                                        if(document.getId().equals(ID)){
+                                            usersFollowing.add(document.toObject(User.class));
+                                        }
+                                    }
+
+
+                                }
+                            }
+                        }
+                    });
+            for(User user: usersFollowing){
+                for(String post: user.getMyPosts()){{
+                    usersFollowingPostsID.add(post);
+                }}
+            }
+
+            db.collection("posts")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    for(String ID: usersFollowingPostsID){
+                                        if(document.getId().equals(ID)){
+                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                            followingPostsList.add(document.toObject(Post.class));
+                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                            followingPostsRVAdapter.setPosts(followingPostsList);
+                                            followingPostsRVAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                    for(String ID2: u.getMyPosts()){
+                                        if(document.getId().equals(ID2)){
+                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                            followingPostsList.add(document.toObject(Post.class));
+                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                            followingPostsRVAdapter.setPosts(followingPostsList);
+                                            followingPostsRVAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    });
+
+            /*db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+                User u = documentSnapshot.toObject(User.class);
+                ArrayList<String> savedOffers = u.getJobOffers();
+                db.collection("jobOffers")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        for(String ID: savedOffers){
+                                            if(document.getId().equals(ID)){
+                                                savedJobs.add(new SavedRVModel(document.toObject(JobOffer.class)));
+                                                Log.d("WORKS", "TEST");
+                                                Log.d("Array", savedJobs.toString());
+                                            }
+                                        }
+
+                                    }
+                                    savedRVAdapter = new SavedRVAdapter(savedJobs);
+                                    savedView.setAdapter(savedRVAdapter);
+                                } else {
+
+                                }
+                            }
+                        });
+
+            });*/
+        });
         /*
         ArrayList<String> dummyHashtags = new ArrayList<>();
         dummyHashtags.add("Sustainability");
@@ -215,9 +311,11 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPosts);
         followingPostsView.setAdapter(followingPostsRVAdapter);
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
+        */
+
         followingPostsRVAdapter.setOnItemClickListener(this);
         trendingPostsRVAdapter.setOnItemClickListener(this);
-*/
+
         //Posting functionality
         postButton.setOnClickListener(v -> {
             postingDialog.setContentView(R.layout.posting_dialog);
@@ -240,6 +338,14 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                         .addOnSuccessListener(documentReference -> {
                             db.collection("users").document(fuser.getUid()).update("myPosts", FieldValue.arrayUnion(documentReference.getId()));
                             Toast.makeText(getActivity(), "Post added.", Toast.LENGTH_SHORT).show();
+                            followingPostsList.add(p);
+                            followingPostsRVModels.add(new PostsRVModel(p));
+                            followingPostsRVAdapter.setPosts(followingPostsList);
+                            followingPostsRVAdapter.notifyDataSetChanged();
+                            trendingPostsList.add(p);
+                            trendingPostsRVModels.add(new PostsRVModel(p));
+                            trendingPostsRVAdapter.setPosts(followingPostsList);
+                            trendingPostsRVAdapter.notifyDataSetChanged();
                         }).addOnFailureListener(documentReference -> Toast.makeText(getActivity(), "Invalid education. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
 
                 try {
@@ -252,10 +358,8 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                 db.collection("users").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
                 db.collection("users").document(fuser.getUid()).update("content", content.getText().toString());
                 db.collection("users").document(fuser.getUid()).update("id", fuser.getUid());
-
                 postingDialog.dismiss();
             });
-
             postingDialog.show();
         });
 

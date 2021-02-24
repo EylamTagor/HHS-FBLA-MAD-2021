@@ -97,7 +97,6 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
             likes = postView.findViewById(R.id.post_likes);
             title = postView.findViewById(R.id.post_header);
             share = postView.findViewById(R.id.post_share);
-
             share.setOnClickListener(v -> listener.onItemClick(share, getAdapterPosition()));
         }
     }
