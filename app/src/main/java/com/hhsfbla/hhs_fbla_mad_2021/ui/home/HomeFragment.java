@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.saved.SavedRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.saved.SavedRVModel;
+
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -326,12 +328,13 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             Button post = postingDialog.findViewById(R.id.new_post_post);
 
 
-
+            Time time = new Time();
             post.setOnClickListener(view -> {
                 Post p = new Post(
                         title.getText().toString(),
                         hashtag.getText().toString(),
-                        content.getText().toString(), fuser.getUid()
+                        content.getText().toString(), fuser.getUid(),
+                        time.toMillis(true)
                         );
 
                 db.collection("posts").add(p)
