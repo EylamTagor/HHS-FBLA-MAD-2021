@@ -157,9 +157,15 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
                 public void onClick(View view) {
                     isSaved = true;
                     int num = getAdapterPosition();
-                    removeAt(num);
+                    Log.d("ASDF", "" + num);
+
                     Log.d("ASDF", "" + num);
                     JobOffer savedJob = jobsFull.get(num).getJob();
+                    Log.d("JobNum", jobsFull.get(num).getJobTitle());
+                    for(JobsRVModel e : jobsFull){
+                        Log.d("ArrayList", e.getJobTitle());
+                    }
+                    removeAt(num);
                     db.collection("jobOffers")
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
