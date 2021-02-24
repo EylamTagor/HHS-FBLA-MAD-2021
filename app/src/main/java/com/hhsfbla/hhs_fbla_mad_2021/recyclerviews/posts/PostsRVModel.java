@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class PostsRVModel {
 
     private Post post;
-
+    private boolean isLiked;
 
 
     public void addPost(Post post) {
@@ -30,6 +30,12 @@ public class PostsRVModel {
     }
     public String getTitle(){return post.getTitle();}
     public int getLikes(){return post.getLikes();}
+    public boolean isLiked(){
+        return  isLiked;
+    }
+    public void setIsLiked(boolean b){
+        isLiked = b;
+    }
 
     public PostsRVModel(Post post) {
         this.post = post;

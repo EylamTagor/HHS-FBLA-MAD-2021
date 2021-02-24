@@ -17,15 +17,22 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.share.widget.ShareButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVModel;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs.JobsRVModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -59,13 +66,6 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
     @Override
     public void onBindViewHolder(@NonNull RVViewHolder holder, int position) {
         PostsRVModel currentItem = posts.get(position);
-        //NEED TO FIX, FIGURE OUT HOW TO SET IMAGE RESOURCE
-
-        //Get User
-
-        //holder.name.setText(user.getName());
-        //holder.jobTitle.setText(user.getJobTitle());
-
 
 
         db.collection("users").document(currentItem.getUserID()).get().addOnSuccessListener(documentSnapshot -> {
@@ -79,14 +79,36 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                 Picasso.get().load(fuser.getPhotoUrl()).into(holder.pfp);
             }
         });
+        db.collection("posts")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                for(String uid: document.toObject(Post.class).getUsersLiked()) {
+                                    if (fuser.getUid().equals(uid)) {
+                                        holder.likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filled_heart, 0, 0, 0);
+                                        posts.get(position).setIsLiked(true);
+                                    }
+                                    else{
+                                        holder.likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_no_heart, 0, 0, 0);
+                                        posts.get(position).setIsLiked(false);
+                                    }
+                                }
+                                if (document.toObject(Post.class).getTimePosted() == (posts.get(position).getTime())){
+                                    holder.likes.setText(""+document.toObject(Post.class).getLikes());
+                                }
+                            }
+                        }
+                    }
+                });
 
 
         holder.description.setText(currentItem.getDescription());
 
         holder.tag1.setText(currentItem.getHashtag());
         holder.title.setText(currentItem.getTitle());
-        Log.println(Log.DEBUG,"nada","" + currentItem.getLikes());
-//        holder.likes.setText(currentItem.getLikes());
     }
 
     @Override
@@ -117,7 +139,113 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
             title = postView.findViewById(R.id.post_header);
             share = postView.findViewById(R.id.post_share);
             share.setOnClickListener(v -> listener.onItemClick(share, getAdapterPosition()));
+
+            //Handling liking functionality
+            likes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int num = getAdapterPosition();
+                    if(!posts.get(num).isLiked()) {
+                        Log.println(Log.DEBUG, "asdasd", "bruh moment");
+                        likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filled_heart, 0, 0, 0);
+                        posts.get(num).setIsLiked(true);
+
+                        db.collection("posts")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.println(Log.DEBUG, "sad", "JOe weller");
+
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                Log.println(Log.DEBUG, "sad", "Document Time: " + document.toObject(Post.class).getTimePosted() + " post Time " + (posts.get(num).getTime()));
+
+                                                if (document.toObject(Post.class).getTimePosted() == (posts.get(num).getTime())) {
+
+                                                    db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
+                                                        Post p = documentSnapshot.toObject(Post.class);
+                                                        p.like(fuser.getUid());
+                                                        likes.setText(""+p.getLikes());
+                                                        db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d("SUCCESS", "DocumentSnapshot successfully written!");
+                                                            }
+                                                        });
+
+                                                    });
+                                                    db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+                                                        User u = documentSnapshot.toObject(User.class);
+                                                        u.likePost(document.getId());
+                                                        db.collection("users").document(fuser.getUid()).set(u).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d("SUCCESS", "DocumentSnapshot successfully written!");
+                                                            }
+                                                        });
+
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+
+
+                    }
+                    else{
+                        Log.println(Log.DEBUG, "asdasd", "chicken moment");
+                        likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_no_heart, 0, 0, 0);
+                        posts.get(num).setIsLiked(false);
+
+                        db.collection("posts")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.println(Log.DEBUG, "sad", "JOe weller");
+
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                Log.println(Log.DEBUG, "sad", "Document Time: " + document.toObject(Post.class).getTimePosted() + " post Time " + (posts.get(num).getTime()));
+
+                                                if (document.toObject(Post.class).getTimePosted() == (posts.get(num).getTime())) {
+
+                                                    db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
+                                                        Post p = documentSnapshot.toObject(Post.class);
+                                                        p.unlike(fuser.getUid());
+                                                        likes.setText(""+p.getLikes());
+                                                        db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d("SUCCESS", "DocumentSnapshot successfully written!");
+                                                            }
+                                                        });
+
+                                                    });
+                                                    db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+                                                        User u = documentSnapshot.toObject(User.class);
+                                                        u.removeLikedPost(document.getId());
+                                                        db.collection("users").document(fuser.getUid()).set(u).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d("SUCCESS", "DocumentSnapshot successfully written!");
+                                                            }
+                                                        });
+
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                    }
+
+                }
+            });
         }
+
     }
 
     //Bubble sort to sort the following posts by most recent
@@ -181,3 +309,4 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         this.listener = listener;
     }
 }
+
