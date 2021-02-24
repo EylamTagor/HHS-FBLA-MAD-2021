@@ -51,7 +51,7 @@ public class AddBusinessActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_onboarding);
+        setContentView(R.layout.activity_add_business);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -83,7 +83,9 @@ public class AddBusinessActivity extends AppCompatActivity {
             about.setText(b.getAbout());
             vision.setText(b.getCSRVision());
             csrLink.setText(b.getCSRLink());
-            esg.setText("" + b.getESGScore());
+            
+            if (b.getESGScore() != -1.0)
+                esg.setText("" + b.getESGScore());
 
             if (b.getLogo() != null)
                 Picasso.get().load(Uri.parse(b.getLogo())).into(logo);
