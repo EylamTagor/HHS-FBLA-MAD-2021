@@ -136,8 +136,6 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                             .get()
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
-                                    Log.println(Log.DEBUG, "sad", "JOe weller");
-
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Log.println(Log.DEBUG, "sad", "Document Time: " + document.toObject(Post.class).getTimePosted() + " post Time " + (posts.get(num).getTime()));
 

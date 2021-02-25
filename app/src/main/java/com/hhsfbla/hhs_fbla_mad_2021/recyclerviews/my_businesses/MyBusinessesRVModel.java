@@ -11,6 +11,22 @@ public class MyBusinessesRVModel {
     public String getLogo() {
         return business.getLogo();
     }
+    public String getName() {
+        return business.getName();
+    }
+    public String getWebsite() {
+        return business.getWebsite();
+    }
+    public boolean hasLogo(){
+        if(business.getLogo().equals("") || business.getLogo() == null ){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+
     public MyBusinessesRVModel(Business business) {
         this.business = business;
     }
