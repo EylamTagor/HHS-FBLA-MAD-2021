@@ -43,7 +43,7 @@ public class BusinessActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private Dialog createJobOfferDialog;
     private FloatingActionButton createJobButton;
-    private Button CSRReportLink, edit, delete, follow;
+    private Button CSRReportLink, edit, delete;
     private TextView name, website, about, CSRVision, followerCount, ESGScore;
     private RecyclerView jobsOfferView;
     private ArrayList<JobsRVModel> jobOffers = new ArrayList<>();
@@ -69,7 +69,6 @@ public class BusinessActivity extends AppCompatActivity {
         CSRReportLink = findViewById(R.id.business_CSR_report_link);
         edit = findViewById(R.id.business_edit);
         delete = findViewById(R.id.business_delete_button);
-        follow = findViewById(R.id.business_follow);
         createJobButton = findViewById(R.id.business_create_job);
         db = FirebaseFirestore.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -118,11 +117,9 @@ public class BusinessActivity extends AppCompatActivity {
             if (documentSnapshot.toObject(User.class).getMyBusinesses().contains(getIntent().getStringExtra("BUSINESS_ID"))) {
                 edit.setVisibility(View.VISIBLE);
                 delete.setVisibility(View.VISIBLE);
-                follow.setVisibility(View.GONE);
             } else {
                 edit.setVisibility(View.GONE);
                 delete.setVisibility(View.GONE);
-                follow.setVisibility(View.VISIBLE);
             }
         });
 

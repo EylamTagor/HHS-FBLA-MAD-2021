@@ -40,6 +40,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.StructuredQuery;
 import com.google.firestore.v1.StructuredQuery.Order;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.HomeActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.OtherProfileActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
@@ -185,10 +187,9 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                 trendingPostsRVAdapter.sortTrendingPosts();
                                 trendingPostsRVAdapter.notifyDataSetChanged();
                             }
-                            }
                         }
-                        });
-
+                    }
+                });
 
 
         //FollowingPostsRV
@@ -212,10 +213,10 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    for(String ID: usersFollowingID){
-                                        if(document.getId().equals(ID)){
+                                    for (String ID : usersFollowingID) {
+                                        if (document.getId().equals(ID)) {
                                             usersFollowing.add(document.toObject(User.class));
-                                            Log.println(Log.DEBUG, "adsd", "Following " +usersFollowing.size());
+                                            Log.println(Log.DEBUG, "adsd", "Following " + usersFollowing.size());
                                             break;
                                         }
 
@@ -224,10 +225,12 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
                                 }
                                 //Add all the IDs of the posts of the users that user follows
-                                for(User user: usersFollowing){
-                                    for(String post: user.getMyPosts()){{
-                                        usersFollowingPostsID.add(post);
-                                    }}
+                                for (User user : usersFollowing) {
+                                    for (String post : user.getMyPosts()) {
+                                        {
+                                            usersFollowingPostsID.add(post);
+                                        }
+                                    }
                                 }
                                 //match post ids of the posts of the users that the user follows to the posts
                                 db.collection("posts")
@@ -239,8 +242,8 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
                                                     for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                                        for(String ID: usersFollowingPostsID){
-                                                            if(document.getId().equals(ID)){
+                                                        for (String ID : usersFollowingPostsID) {
+                                                            if (document.getId().equals(ID)) {
                                                                 followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                                                 followingPostsList.add(document.toObject(Post.class));
                                                                 followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
@@ -259,8 +262,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                         }
                     });
 
-            Log.println(Log.DEBUG, "adsd", "Trump " +usersFollowingPostsID.size());
-
+            Log.println(Log.DEBUG, "adsd", "Trump " + usersFollowingPostsID.size());
 
 
         });
@@ -277,14 +279,14 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             TextInputEditText content = postingDialog.findViewById(R.id.new_post_content);
             Button post = postingDialog.findViewById(R.id.new_post_post);
 
-            Long tsLong = System.currentTimeMillis()/1000;
+            Long tsLong = System.currentTimeMillis() / 1000;
             post.setOnClickListener(view -> {
                 Post p = new Post(
                         title.getText().toString(),
 
-                        content.getText().toString(), hashtag.getText().toString(),  fuser.getUid(),
+                        content.getText().toString(), hashtag.getText().toString(), fuser.getUid(),
                         tsLong
-                        );
+                );
 
                 db.collection("posts").add(p)
                         .addOnSuccessListener(documentReference -> {
@@ -333,10 +335,23 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
      * @param position the numbered position of snapshot in the full item list
      */
     @Override
-    public void onItemClick(View v, int position) {
-        if (ShareDialog.canShow(ShareLinkContent.class)) {
-            ShareLinkContent linkContent = new ShareLinkContent.Builder().build();
-            shareDialog.show(linkContent);
+    public void onItemClick(View v, String userID, int position) {
+        if (userID == null || userID.equals("")) {
+            if (ShareDialog.canShow(ShareLinkContent.class)) {
+                ShareLinkContent linkContent = new ShareLinkContent.Builder().build();
+                shareDialog.show(linkContent);
+            }
+        } else {
+            if (userID.equals(fuser.getUid())) {
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                intent.putExtra("fragmentToLoad", "MyProfileFragment");
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(getContext(), OtherProfileActivity.class);
+                intent.putExtra("FROM_ACTIVITY", "HomeActivity");
+                intent.putExtra("USER_ID", userID);
+                startActivity(intent);
+            }
         }
     }
 

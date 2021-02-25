@@ -74,7 +74,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                             Log.println(Log.DEBUG, "sad", "task size: " + task.getResult().size());
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                for(String uid: document.toObject(Post.class).getUsersLiked()) {
+                                for (String uid : document.toObject(Post.class).getUsersLiked()) {
                                     if (fuser.getUid().equals(uid)) {
                                         Log.println(Log.DEBUG, "sad", "This is the post: " + document.getId());
 
@@ -83,8 +83,8 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                                         break;
                                     }
                                 }
-                                if (document.toObject(Post.class).getTimePosted() == (posts.get(position).getTime())){
-                                    holder.likes.setText(""+document.toObject(Post.class).getLikes());
+                                if (document.toObject(Post.class).getTimePosted() == (posts.get(position).getTime())) {
+                                    holder.likes.setText("" + document.toObject(Post.class).getLikes());
                                 }
                             }
                         }
@@ -126,12 +126,17 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
             likes = postView.findViewById(R.id.post_likes);
             title = postView.findViewById(R.id.post_header);
             share = postView.findViewById(R.id.post_share);
-            share.setOnClickListener(v -> listener.onItemClick(share, getAdapterPosition()));
+            share.setOnClickListener(v -> listener.onItemClick(share, "", getAdapterPosition()));
+
+            pfp.setOnClickListener(v -> {
+                if (getAdapterPosition() != RecyclerView.NO_POSITION && listener != null)
+                    listener.onItemClick(pfp, posts.get(getAdapterPosition()).getUserID(), getAdapterPosition());
+            });
 
             //Handling liking functionality
             likes.setOnClickListener(view -> {
                 int num = getAdapterPosition();
-                if(!posts.get(num).isLiked()) {
+                if (!posts.get(num).isLiked()) {
                     likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filled_heart, 0, 0, 0);
                     posts.get(num).setIsLiked(true);
 
@@ -146,7 +151,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                                             db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
                                                 Post p = documentSnapshot.toObject(Post.class);
                                                 p.like(fuser.getUid());
-                                                likes.setText(""+p.getLikes());
+                                                likes.setText("" + p.getLikes());
                                                 db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(aVoid -> Log.d("SUCCESS", "DocumentSnapshot successfully written!"));
 
                                             });
@@ -162,8 +167,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                             });
 
 
-                }
-                else{
+                } else {
                     Log.println(Log.DEBUG, "asdasd", "chicken moment");
                     likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_no_heart, 0, 0, 0);
                     posts.get(num).setIsLiked(false);
@@ -182,7 +186,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                                             db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
                                                 Post p = documentSnapshot.toObject(Post.class);
                                                 p.unlike(fuser.getUid());
-                                                likes.setText(""+p.getLikes());
+                                                likes.setText("" + p.getLikes());
                                                 db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(aVoid -> Log.d("SUCCESS", "DocumentSnapshot successfully written!"));
 
                                             });
@@ -204,10 +208,10 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
     }
 
     //Bubble sort to sort the following posts by most recent
-    public void sortFollowingPosts(){
+    public void sortFollowingPosts() {
 
-        for(int i = 0; i <posts.size() - 1; i++){
-            for(int j = 0; j < posts.size() - 1 - i; j++) {
+        for (int i = 0; i < posts.size() - 1; i++) {
+            for (int j = 0; j < posts.size() - 1 - i; j++) {
                 PostsRVModel temp;
                 if (posts.get(j).getTime() < posts.get(j + 1).getTime()) {
                     temp = posts.get(j);
@@ -219,10 +223,10 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
     }
 
     //Bubble sort to sort the trending posts by most likes
-    public void sortTrendingPosts(){
+    public void sortTrendingPosts() {
 
-        for(int i = 0; i <posts.size() - 1; i++){
-            for(int j = 0; j < posts.size() - 1 - i; j++) {
+        for (int i = 0; i < posts.size() - 1; i++) {
+            for (int j = 0; j < posts.size() - 1 - i; j++) {
                 PostsRVModel temp;
                 if (posts.get(j).getLikes() < posts.get(j + 1).getLikes()) {
                     temp = posts.get(j);
@@ -234,14 +238,13 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
 
     }
 
-
-
     public void setPosts(List<Post> posts) {
         this.posts.clear();
 
         for (Post p : posts)
             this.posts.add(new PostsRVModel(p));
     }
+
     /**
      * Used to specify action after clicking on the RecyclerView that utilizes this adapter
      */
@@ -250,9 +253,10 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
          * Specifies the action after clicking on the RecyclerView that utilizes this adapter
          *
          * @param position the numbered position of snapshot in the full item list
-         * @param v        the View that will contain the click action
+         * @param v        the view that was clicked on
+         * @param userID   the id of the user who authored this post
          */
-        void onItemClick(View v, int position);
+        void onItemClick(View v, String userID, int position);
     }
 
     /**
