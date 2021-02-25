@@ -166,18 +166,8 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
                 startActivity(new Intent(rootView.getContext(), LoginActivity.class));
             });
         });
-        copyrightInfoButton.setOnClickListener(v -> {
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                v.getContext().startActivity(intent);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1mVytYJ3PKIuxIDnuQAg4PDeZgaZE5rkHz4NipMyAZAU/edit?usp=sharing")), null);
-
-        });
-        reportBugButton.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                v.getContext().startActivity(intent);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/NbedNqwVFTSXSrRQ7")), null);
-        });
+        copyrightInfoButton.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1mVytYJ3PKIuxIDnuQAg4PDeZgaZE5rkHz4NipMyAZAU/edit?usp=sharing")), null));
+        reportBugButton.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/NbedNqwVFTSXSrRQ7")), null));
 
         // Add business button
         addBusinessButton.setOnClickListener(v -> {

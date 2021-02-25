@@ -1,5 +1,6 @@
 package com.hhsfbla.hhs_fbla_mad_2021.activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -118,12 +120,23 @@ public class OtherProfileActivity extends AppCompatActivity {
                     db.collection("users").document(fuser.getUid()).update("following", FieldValue.arrayRemove(getIntent().getStringExtra("USER_ID")));
                     follow.setText("Follow");
                 }
+
+                try {
+                    TimeUnit.MILLISECONDS.sleep(250);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+
+                db.collection("users").document(getIntent().getStringExtra("USER_ID")).get().addOnSuccessListener(documentSnapshot1 -> {
+                    followerCount.setText("" + documentSnapshot1.toObject(User.class).getFollowing().size());
+                });
+
+                finish();
+                startActivity(getIntent());
             });
         });
 
-        mail.setOnClickListener(v -> {
-            // TODO
-        });
+        mail.setOnClickListener(v -> db.collection("users").document(getIntent().getStringExtra("USER_ID")).get().addOnSuccessListener(documentSnapshot -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + documentSnapshot.toObject(User.class).getEmail())), null)));
 
         // Experiences RV
         experienceList = new ArrayList<>();
