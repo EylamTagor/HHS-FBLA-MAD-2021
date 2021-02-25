@@ -116,22 +116,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/my_profile_divider"
             app:layout_constraintVertical_bias="0" />
-        <TextView
-            android:id="@+id/my_profile_my_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:text="My Activity:"
-            android:textColor="@color/Green"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_divider2"
-            app:layout_constraintVertical_bias="0" />
+
         <TextView
             android:id="@+id/my_profile_help_center"
             android:layout_width="wrap_content"
@@ -147,31 +132,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/my_profile_divider3"
-            app:layout_constraintVertical_bias="0" />
-
-        <Button
-            android:id="@+id/my_profile_users_following"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif"
-            android:letterSpacing="-.005"
-            android:minHeight="0dp"
-            android:elevation="2dp"
-            android:textAllCaps="false"
-            android:text="Users I'm Following"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textColor="@color/DarkGrey"
-            android:textSize="12sp"
-            android:textStyle="normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_my_activity"
             app:layout_constraintVertical_bias="0" />
 
         <Button
@@ -221,30 +181,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/my_profile_help_center"
             app:layout_constraintVertical_bias="0" />
-        <Button
-            android:id="@+id/my_profile_liked_posts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:minHeight="0dp"
-            android:elevation="2dp"
-            android:textAllCaps="false"
-            android:text="Posts I've Liked"
-            android:letterSpacing="-.005"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:fontFamily="sans-serif"
-            android:textColor="@color/DarkGrey"
-            android:textSize="12sp"
-            android:textStyle="normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/my_profile_users_following"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_my_activity"
-            app:layout_constraintVertical_bias="0" />
 
         <ImageButton
             android:id="@+id/my_profile_add_business"
@@ -268,7 +204,6 @@
             android:layout_marginTop="5dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/my_profile_divider2"
             app:layout_constraintStart_toEndOf="@+id/my_profile_add_business"
             app:layout_constraintTop_toBottomOf="@+id/my_profile_my_businesses_header" />
 
@@ -477,20 +412,6 @@
             app:layout_constraintTop_toBottomOf="@+id/my_profile_skills_header" />
 
         <View
-            android:id="@+id/my_profile_divider2"
-            android:layout_width="match_parent"
-            android:layout_height="0.4dp"
-            android:layout_marginTop="10dp"
-            android:alpha=".5"
-            android:layout_marginBottom="55dp"
-            android:background="@color/Green"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_add_business"
-            app:layout_constraintVertical_bias="0" />
-
-        <View
             android:id="@+id/my_profile_divider3"
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
@@ -500,7 +421,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_profile_users_following"
+            app:layout_constraintTop_toBottomOf="@+id/my_profile_add_business"
             app:layout_constraintVertical_bias="0" />
         <View
             android:id="@+id/my_profile_divider4"
