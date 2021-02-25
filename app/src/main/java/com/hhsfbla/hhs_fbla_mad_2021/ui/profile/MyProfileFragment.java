@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,9 +22,12 @@ import com.facebook.login.LoginManager;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.AddBusinessActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.BusinessActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVModel;
@@ -49,7 +53,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyProfileFragment extends Fragment {
+public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter.OnItemClickListener {
 
     private MyProfileViewModel mViewModel;
     //private String name;
@@ -162,18 +166,8 @@ public class MyProfileFragment extends Fragment {
                 startActivity(new Intent(rootView.getContext(), LoginActivity.class));
             });
         });
-        copyrightInfoButton.setOnClickListener(v -> {
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                v.getContext().startActivity(intent);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1mVytYJ3PKIuxIDnuQAg4PDeZgaZE5rkHz4NipMyAZAU/edit?usp=sharing")), null);
-
-        });
-        reportBugButton.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                v.getContext().startActivity(intent);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/NbedNqwVFTSXSrRQ7")), null);
-        });
+        copyrightInfoButton.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1mVytYJ3PKIuxIDnuQAg4PDeZgaZE5rkHz4NipMyAZAU/edit?usp=sharing")), null));
+        reportBugButton.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/NbedNqwVFTSXSrRQ7")), null));
 
         // Add business button
         addBusinessButton.setOnClickListener(v -> {
@@ -245,6 +239,7 @@ public class MyProfileFragment extends Fragment {
         myBusinessesList = new ArrayList<>();
         myBusinessesRVModels = new ArrayList<>();
         myBusinessesRVAdapter = new MyBusinessesRVAdapter(myBusinessesRVModels);
+        myBusinessesRVAdapter.setOnItemClickListener(this);
         myBusinessesView.setAdapter(myBusinessesRVAdapter);
         db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             final User u = documentSnapshot.toObject(User.class);
@@ -252,12 +247,11 @@ public class MyProfileFragment extends Fragment {
                 db.collection("businesses").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
                     final Business b = documentSnapshot1.toObject(Business.class);
                     myBusinessesList.add(b);
-                    myBusinessesRVModels.add(new MyBusinessesRVModel(b));
-                    myBusinessesRVAdapter.setbusinesses(myBusinessesList);
+                    myBusinessesRVModels.add(new MyBusinessesRVModel(b, documentSnapshot1.getId()));
+                    myBusinessesRVAdapter.setBusinesses(myBusinessesRVModels);
                     myBusinessesRVAdapter.notifyDataSetChanged();
                 });
             }
-
         });
         return rootView;
     }
@@ -267,5 +261,13 @@ public class MyProfileFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MyProfileViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    @Override
+    public void onItemClick(DocumentSnapshot snapshot, int position) {
+        Intent intent = new Intent(getContext(), BusinessActivity.class);
+        intent.putExtra("FROM_ACTIVITY", "HomeActivity");
+        intent.putExtra("BUSINESS_ID", snapshot.getId());
+        startActivity(intent);
     }
 }

@@ -1,5 +1,6 @@
 package com.hhsfbla.hhs_fbla_mad_2021.activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
@@ -21,8 +22,6 @@ import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVModel;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.my_businesses.MyBusinessesRVAdapter;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.my_businesses.MyBusinessesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.skills.SkillsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.skills.SkillsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.util.NonScrollingLLM;
@@ -30,6 +29,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -59,6 +59,7 @@ public class OtherProfileActivity extends AppCompatActivity {
 
     /**
      * Sets the view to another profile
+     *
      * @param savedInstanceState the save state of the activity or page
      */
     @Override
@@ -100,17 +101,42 @@ public class OtherProfileActivity extends AppCompatActivity {
                 Picasso.get().load(Uri.parse(u.getPfp())).into(pfp);
         });
 
+        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.toObject(User.class).getFollowing().contains(getIntent().getStringExtra("USER_ID"))) {
+                follow.setText("Unfollow");
+            } else {
+                follow.setText("Follow");
+            }
+        });
+
         follow.setOnClickListener(v -> {
-            // TODO
+            db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+                if (!documentSnapshot.toObject(User.class).getFollowing().contains(getIntent().getStringExtra("USER_ID"))) {
+                    db.collection("users").document(getIntent().getStringExtra("USER_ID")).update("followers", FieldValue.arrayUnion(fuser.getUid()));
+                    db.collection("users").document(fuser.getUid()).update("following", FieldValue.arrayUnion(getIntent().getStringExtra("USER_ID")));
+                    follow.setText("Unfollow");
+                } else {
+                    db.collection("users").document(getIntent().getStringExtra("USER_ID")).update("followers", FieldValue.arrayRemove(fuser.getUid()));
+                    db.collection("users").document(fuser.getUid()).update("following", FieldValue.arrayRemove(getIntent().getStringExtra("USER_ID")));
+                    follow.setText("Follow");
+                }
+
+                try {
+                    TimeUnit.MILLISECONDS.sleep(250);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+
+                db.collection("users").document(getIntent().getStringExtra("USER_ID")).get().addOnSuccessListener(documentSnapshot1 -> {
+                    followerCount.setText("" + documentSnapshot1.toObject(User.class).getFollowing().size());
+                });
+
+                finish();
+                startActivity(getIntent());
+            });
         });
 
-        followersButton.setOnClickListener(v -> {
-            // TODO
-        });
-
-        mail.setOnClickListener(v -> {
-            // TODO
-        });
+        mail.setOnClickListener(v -> db.collection("users").document(getIntent().getStringExtra("USER_ID")).get().addOnSuccessListener(documentSnapshot -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + documentSnapshot.toObject(User.class).getEmail())), null)));
 
         // Experiences RV
         experienceList = new ArrayList<>();
@@ -138,7 +164,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         db.collection("users").document(getIntent().getStringExtra("USER_ID")).get().addOnSuccessListener(documentSnapshot -> {
             final User u = documentSnapshot.toObject(User.class);
 
-            if(u.getEducation() != null) {
+            if (u.getEducation() != null) {
                 for (String id : u.getEducation())
                     db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
                         final Education e = documentSnapshot1.toObject(Education.class);

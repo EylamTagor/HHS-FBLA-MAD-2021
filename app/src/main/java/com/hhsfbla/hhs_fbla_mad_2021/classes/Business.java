@@ -19,6 +19,7 @@ public class Business {
     private String CSRLink;
     private double ESGScore;
 
+
     /**
      * No args constructor for the Business class
      */
