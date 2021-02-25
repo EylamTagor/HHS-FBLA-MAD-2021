@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.squareup.picasso.Picasso;
@@ -62,8 +63,15 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
         JobsRVModel currentItem = jobs.get(position);
         holder.description.setText(currentItem.getJobDescription());
         holder.title.setText(currentItem.getJobTitle());
+
         //PLACEHOLDER, need to search to find business and get logo
         holder.businessLogo.setBackgroundResource(R.drawable.ic_followers);
+
+        db.collection("businesses").document(currentItem.getbusinessID()).get().addOnSuccessListener(documentSnapshot -> {
+            Business u = documentSnapshot.toObject(Business.class);
+            holder.businessName.setText(u.getName());
+
+        });
 
     }
 
