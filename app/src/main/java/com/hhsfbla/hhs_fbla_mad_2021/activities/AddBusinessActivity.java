@@ -198,11 +198,13 @@ public class AddBusinessActivity extends AppCompatActivity {
             db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).update("logo", uri.toString()).addOnSuccessListener(aVoid -> {
                 Intent intent = new Intent(AddBusinessActivity.this, BusinessActivity.class);
                 intent.putExtra("BUSINESS_ID", getIntent().getStringExtra("BUSINESS_ID"));
+                intent.putExtra("FROM_ACTIVITY", "AddBusinessActivity");
                 startActivity(intent);
             });
         else {
             Intent intent = new Intent(AddBusinessActivity.this, BusinessActivity.class);
             intent.putExtra("BUSINESS_ID", getIntent().getStringExtra("BUSINESS_ID"));
+            intent.putExtra("FROM_ACTIVITY", "AddBusinessActivity");
             startActivity(intent);
         }
     }

@@ -66,4 +66,14 @@ public class BusinessActivity extends AppCompatActivity {
 
         //Will have to post
     }
+
+    @Override
+    public void onBackPressed() {
+        if (getIntent().getStringExtra("FROM_ACTIVITY") != null & getIntent().getStringExtra("FROM_ACTIVITY").equals("AddBusinessActivity")) {
+            Intent intent = new Intent(BusinessActivity.this, HomeActivity.class);
+            intent.putExtra("fragmentToLoad", "MyProfileActivity");
+            startActivity(intent);
+        } else
+            super.onBackPressed();
+    }
 }
