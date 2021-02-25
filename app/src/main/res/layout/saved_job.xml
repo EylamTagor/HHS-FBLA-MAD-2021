@@ -15,7 +15,7 @@
 >
         <!-- staticText--> the UI for an individual saved job. All individual elements are identifiable by their ID.
 
-        <Button
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_marginTop="15dp"
             android:id="@+id/saved_business_logo"
             android:layout_width="60dp"

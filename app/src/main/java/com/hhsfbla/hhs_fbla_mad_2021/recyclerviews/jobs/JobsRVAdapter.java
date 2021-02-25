@@ -30,6 +30,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVViewHolder> implements Filterable {
     private ArrayList<JobsRVModel> jobs;
     private ArrayList<JobsRVModel> jobsFull;
@@ -65,11 +67,15 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
         holder.title.setText(currentItem.getJobTitle());
 
         //PLACEHOLDER, need to search to find business and get logo
-        holder.businessLogo.setBackgroundResource(R.drawable.ic_followers);
+
 
         db.collection("businesses").document(currentItem.getbusinessID()).get().addOnSuccessListener(documentSnapshot -> {
-            Business u = documentSnapshot.toObject(Business.class);
-            holder.businessName.setText(u.getName());
+            Business biz = documentSnapshot.toObject(Business.class);
+            holder.businessName.setText(biz.getName());
+            if (biz.getLogo() != null && !biz.getLogo().equalsIgnoreCase("")) {
+                Picasso.get().load(Uri.parse(biz.getLogo())).into(holder.businessLogo);
+            }
+
 
         });
 
@@ -129,7 +135,7 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
     }
 
     public class StaticRVViewHolder extends RecyclerView.ViewHolder{
-        Button businessLogo;
+        CircleImageView businessLogo;
         TextView title;
 
         //have to sort to find

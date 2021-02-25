@@ -14,7 +14,7 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/job_bg">
 
-        <Button
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_marginTop="15dp"
             android:id="@+id/job_business_logo"
             android:layout_width="60dp"
