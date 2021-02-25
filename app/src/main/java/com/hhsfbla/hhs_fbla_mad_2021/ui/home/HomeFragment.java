@@ -93,12 +93,12 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Linking UI XML to fields
-        followingPostsView = (RecyclerView) rootView.findViewById(R.id.home_following_posts);
+        followingPostsView = rootView.findViewById(R.id.home_following_posts);
         followingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         followingButton = rootView.findViewById(R.id.home_following);
         followingSelected = rootView.findViewById(R.id.home_following_selected);
 
-        trendingPostsView = (RecyclerView) rootView.findViewById(R.id.home_trending_posts);
+        trendingPostsView = rootView.findViewById(R.id.home_trending_posts);
         trendingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         trendingButton = rootView.findViewById(R.id.home_trending);
         trendingSelected = rootView.findViewById(R.id.home_trending_selected);
@@ -122,41 +122,35 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
         //Tabs
 
-        followingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.NORMAL);
-                trendingSelected.setVisibility(View.INVISIBLE);
-                trendingPostsView.setVisibility(View.INVISIBLE);
-                trendingButton.setAlpha(.5f);
-                trendingButton.setTextColor(Color.parseColor("#F2F2F2"));
+        followingButton.setOnClickListener(v -> {
+            trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.NORMAL);
+            trendingSelected.setVisibility(View.INVISIBLE);
+            trendingPostsView.setVisibility(View.INVISIBLE);
+            trendingButton.setAlpha(.5f);
+            trendingButton.setTextColor(Color.parseColor("#F2F2F2"));
 
-                followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
-                followingSelected.setVisibility(View.VISIBLE);
-                followingPostsView.setVisibility(View.VISIBLE);
-                followingButton.setTextColor(Color.parseColor("#10C380"));
-                followingButton.setAlpha(1);
+            followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
+            followingSelected.setVisibility(View.VISIBLE);
+            followingPostsView.setVisibility(View.VISIBLE);
+            followingButton.setTextColor(Color.parseColor("#10C380"));
+            followingButton.setAlpha(1);
 
 
-            }
         });
-        trendingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
-                followingSelected.setVisibility(View.INVISIBLE);
-                followingPostsView.setVisibility(View.INVISIBLE);
-                followingButton.setAlpha(.5f);
-                followingButton.setTextColor(Color.parseColor("#F2F2F2"));
+        trendingButton.setOnClickListener(v -> {
+            followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
+            followingSelected.setVisibility(View.INVISIBLE);
+            followingPostsView.setVisibility(View.INVISIBLE);
+            followingButton.setAlpha(.5f);
+            followingButton.setTextColor(Color.parseColor("#F2F2F2"));
 
 
-                trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
-                trendingSelected.setVisibility(View.VISIBLE);
-                trendingPostsView.setVisibility(View.VISIBLE);
-                trendingButton.setTextColor(Color.parseColor("#10C380"));
-                trendingButton.setAlpha(1);
+            trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
+            trendingSelected.setVisibility(View.VISIBLE);
+            trendingPostsView.setVisibility(View.VISIBLE);
+            trendingButton.setTextColor(Color.parseColor("#10C380"));
+            trendingButton.setAlpha(1);
 
-            }
         });
 
         searchButton.setOnClickListener(v -> {
@@ -176,17 +170,14 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
         db.collection("posts")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                trendingPostsList.add(document.toObject(Post.class));
-                                trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                trendingPostsRVAdapter.setPosts(trendingPostsList);
-                                trendingPostsRVAdapter.sortTrendingPosts();
-                                trendingPostsRVAdapter.notifyDataSetChanged();
-                            }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            trendingPostsList.add(document.toObject(Post.class));
+                            trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                            trendingPostsRVAdapter.setPosts(trendingPostsList);
+                            trendingPostsRVAdapter.sortTrendingPosts();
+                            trendingPostsRVAdapter.notifyDataSetChanged();
                         }
                     }
                 });
@@ -208,57 +199,54 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             //Get users that user follow
             db.collection("users")
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    for (String ID : usersFollowingID) {
-                                        if (document.getId().equals(ID)) {
-                                            usersFollowing.add(document.toObject(User.class));
-                                            Log.println(Log.DEBUG, "adsd", "Following " + usersFollowing.size());
-                                            break;
-                                        }
-
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                for (String ID : usersFollowingID) {
+                                    if (document.getId().equals(ID)) {
+                                        usersFollowing.add(document.toObject(User.class));
+                                        Log.println(Log.DEBUG, "adsd", "Following " + usersFollowing.size());
+                                        break;
                                     }
 
-
                                 }
-                                //Add all the IDs of the posts of the users that user follows
-                                for (User user : usersFollowing) {
-                                    for (String post : user.getMyPosts()) {
-                                        {
-                                            usersFollowingPostsID.add(post);
-                                        }
+
+
+                            }
+                            //Add all the IDs of the posts of the users that user follows
+                            for (User user : usersFollowing) {
+                                for (String post : user.getMyPosts()) {
+                                    {
+                                        usersFollowingPostsID.add(post);
                                     }
                                 }
-                                //match post ids of the posts of the users that the user follows to the posts
-                                db.collection("posts")
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful()) {
+                            }
+                            //match post ids of the posts of the users that the user follows to the posts
+                            db.collection("posts")
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
 
-                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                                for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                                        for (String ID : usersFollowingPostsID) {
-                                                            if (document.getId().equals(ID)) {
-                                                                followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                                                followingPostsList.add(document.toObject(Post.class));
-                                                                followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                                                Log.println(Log.DEBUG, "adsd", "Loading following posts");
-                                                                followingPostsRVAdapter.setPosts(followingPostsList);
-                                                                followingPostsRVAdapter.sortFollowingPosts();
-                                                                followingPostsRVAdapter.notifyDataSetChanged();
-                                                            }
+                                                    for (String ID : usersFollowingPostsID) {
+                                                        if (document.getId().equals(ID)) {
+                                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                                            followingPostsList.add(document.toObject(Post.class));
+                                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                                            Log.println(Log.DEBUG, "adsd", "Loading following posts");
+                                                            followingPostsRVAdapter.setPosts(followingPostsList);
+                                                            followingPostsRVAdapter.sortFollowingPosts();
+                                                            followingPostsRVAdapter.notifyDataSetChanged();
                                                         }
-
                                                     }
+
                                                 }
                                             }
-                                        });
-                            }
+                                        }
+                                    });
                         }
                     });
 
