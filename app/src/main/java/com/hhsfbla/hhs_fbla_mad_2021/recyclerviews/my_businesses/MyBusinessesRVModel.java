@@ -7,6 +7,7 @@ import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
 public class MyBusinessesRVModel {
 
     private Business business;
+    private String id;
 
     public String getLogo() {
         return business.getLogo();
@@ -17,6 +18,10 @@ public class MyBusinessesRVModel {
     public String getWebsite() {
         return business.getWebsite();
     }
+    public String getId() {
+        return id;
+    }
+
     public boolean hasLogo(){
         if(business.getLogo().equals("") || business.getLogo() == null ){
             return false;
@@ -26,8 +31,8 @@ public class MyBusinessesRVModel {
         }
     }
 
-
-    public MyBusinessesRVModel(Business business) {
+    public MyBusinessesRVModel(Business business, String id) {
         this.business = business;
+        this.id = id;
     }
 }
