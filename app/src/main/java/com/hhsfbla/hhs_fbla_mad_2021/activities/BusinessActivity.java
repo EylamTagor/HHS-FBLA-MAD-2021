@@ -3,14 +3,13 @@ package com.hhsfbla.hhs_fbla_mad_2021.activities;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,7 +20,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs.JobsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs.JobsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.util.NonScrollingLLM;
@@ -36,7 +35,7 @@ public class BusinessActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private Dialog createJobOfferDialog;
     private FloatingActionButton createJobButton;
-    private Button CSRReportLink, edit;
+    private Button CSRReportLink, edit, delete, follow;
     private TextView name, website, about, CSRVision, followerCount, ESGScore;
     private RecyclerView jobsOfferView;
     private ArrayList<JobsRVModel> jobOffers = new ArrayList<>();
@@ -61,14 +60,37 @@ public class BusinessActivity extends AppCompatActivity {
         followerCount = findViewById(R.id.business_follower_count);
         CSRReportLink = findViewById(R.id.business_CSR_report_link);
         edit = findViewById(R.id.business_edit);
+        delete = findViewById(R.id.business_delete_button);
+        follow = findViewById(R.id.business_follow);
         createJobButton = findViewById(R.id.business_create_job);
         db = FirebaseFirestore.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
+
+        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.toObject(User.class).getMyBusinesses().contains(getIntent().getStringExtra("BUSINESS_ID"))) {
+                edit.setVisibility(View.VISIBLE);
+                delete.setVisibility(View.VISIBLE);
+                follow.setVisibility(View.GONE);
+            } else {
+                edit.setVisibility(View.GONE);
+                delete.setVisibility(View.GONE);
+                follow.setVisibility(View.VISIBLE);
+            }
+        });
 
         edit.setOnClickListener(v -> {
             Intent intent = new Intent(BusinessActivity.this, AddBusinessActivity.class);
             intent.putExtra("FROM_ACTIVITY", "BusinessActivity");
             intent.putExtra("BUSINESS_ID", getIntent().getStringExtra("BUSINESS_ID"));
+            startActivity(intent);
+        });
+
+        delete.setOnClickListener(v -> {
+            db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).delete();
+            db.collection("users").document(fuser.getUid()).update("myBusinesses", FieldValue.arrayRemove(getIntent().getStringExtra("BUSINESS_ID")));
+
+            Intent intent = new Intent(BusinessActivity.this, HomeActivity.class);
+            intent.putExtra("fragmentToLoad", "MyProfileActivity");
             startActivity(intent);
         });
 
@@ -90,7 +112,7 @@ public class BusinessActivity extends AppCompatActivity {
             Button createJobOffer = createJobOfferDialog.findViewById(R.id.create_job_offer_post);
 
 
-            Long tsLong = System.currentTimeMillis()/1000;
+            Long tsLong = System.currentTimeMillis() / 1000;
             createJobOffer.setOnClickListener(view -> {
                 JobOffer j = new JobOffer(
                         getIntent().getStringExtra("BUSINESS_ID"), position.getText().toString(),
@@ -111,7 +133,7 @@ public class BusinessActivity extends AppCompatActivity {
                 }
 
                 db.collection("jobOffers").document(fuser.getUid()).update("businessID", getIntent().getStringExtra("BUSINESS_ID"));
-                db.collection("jobOffers").document(fuser.getUid()).update("jobTitle",  position.getText().toString());
+                db.collection("jobOffers").document(fuser.getUid()).update("jobTitle", position.getText().toString());
                 db.collection("jobOffers").document(fuser.getUid()).update("jobDescription", description.getText().toString());
                 db.collection("jobOffers").document(fuser.getUid()).update("link", link.getText().toString());
                 createJobOfferDialog.dismiss();
