@@ -12,35 +12,37 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
-import com.hhsfbla.hhs_fbla_mad_2021.activities.OtherProfileActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.StaticRVViewHolder> implements Filterable {
+public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVViewHolder> implements Filterable {
     private List<SearchRVModel> searches;
     private ArrayList<SearchRVModel> searchesFull;
+    private SearchRVAdapter.OnItemClickListener listener;
+    private FirebaseFirestore db;
 
     int row_index = -1;
 
     public SearchRVAdapter(ArrayList<SearchRVModel> items) {
         this.searches = items;
         searchesFull = new ArrayList<>(items);
+        db = FirebaseFirestore.getInstance();
     }
 
     @NonNull
     @Override
-    public StaticRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_item, parent,false);
-        StaticRVViewHolder staticRVViewHolder = new StaticRVViewHolder(view);
-        return staticRVViewHolder;
+    public RVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_item, parent, false);
+        RVViewHolder rvViewHolder = new RVViewHolder(view);
+        return rvViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StaticRVViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RVViewHolder holder, int position) {
         SearchRVModel currentItem = searches.get(position);
         holder.name.setText(currentItem.getName());
         holder.header.setText(currentItem.getHeader());
@@ -70,20 +72,19 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.Static
         return searchesFilter;
     }
 
-    private Filter searchesFilter = new Filter(){
+    private Filter searchesFilter = new Filter() {
 
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<SearchRVModel> filteredList = new ArrayList<>();
 
-            if(charSequence == null || charSequence.length() == 0){
+            if (charSequence == null || charSequence.length() == 0) {
                 filteredList.addAll(searchesFull);
-            }
-            else{
+            } else {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
 
-                for(SearchRVModel item : searchesFull){
-                    if(item.getName().toLowerCase().contains(filterPattern)){
+                for (SearchRVModel item : searchesFull) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
@@ -96,30 +97,51 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.Static
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             searches.clear();
-            searches.addAll((List)filterResults.values);
+            searches.addAll((List) filterResults.values);
             notifyDataSetChanged();
         }
     };
 
-    public static class StaticRVViewHolder extends RecyclerView.ViewHolder{
+    public class RVViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private TextView header;
         private Button pfp;
 
-        public StaticRVViewHolder(@NonNull View searchView) {
+        public RVViewHolder(@NonNull View searchView) {
             super(searchView);
             name = searchView.findViewById(R.id.search_item_name);
             pfp = searchView.findViewById(R.id.search_item_pfp);
             header = searchView.findViewById(R.id.search_item_header);
 
-            searchView.setOnClickListener(view -> {
-                view.getContext().startActivity(new Intent(view.getContext(), OtherProfileActivity.class));
-
-                //upload job ID to firebase
-
-                //Delete this after we get firebase working
-                // savedJobs.add(new JobOffer(jobs.get(getAdapterPosition()).getbusinessID(),jobs.get(getAdapterPosition()).getJobTitle(),jobs.get(getAdapterPosition()).getLink(), jobs.get(getAdapterPosition()).getJobDescription() ));
+            searchView.setOnClickListener(v -> {
+                if (getAdapterPosition() != RecyclerView.NO_POSITION && listener != null) {
+                    if (searches.get(getAdapterPosition()).isUser())
+                        db.collection("users").document(searches.get(getAdapterPosition()).getId()).get().addOnSuccessListener(documentSnapshot -> listener.onItemClick(documentSnapshot, getAdapterPosition(), true));
+                    else
+                        db.collection("businesses").document(searches.get(getAdapterPosition()).getId()).get().addOnSuccessListener(documentSnapshot -> listener.onItemClick(documentSnapshot, getAdapterPosition(), false));
+                }
             });
         }
+    }
+
+    /**
+     * Used to specify action after clicking on the RecyclerView that utilizes this adapter
+     */
+    public interface OnItemClickListener {
+        /**
+         * Specifies the action after clicking on the RecyclerView that utilizes this adapter
+         *
+         * @param snapshot the user or business pulled from Firebase Firestore, formatted as a DocumentSnapshot
+         */
+        void onItemClick(DocumentSnapshot snapshot, int position, boolean isUser);
+    }
+
+    /**
+     * Determines the object to listen to and manage clicking actions on the RecyclerView that utilizes this adapter
+     *
+     * @param listener the object to listen to and manage clicking actions on the RecyclerView that utilizes this adapter
+     */
+    public void setOnItemClickListener(SearchRVAdapter.OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

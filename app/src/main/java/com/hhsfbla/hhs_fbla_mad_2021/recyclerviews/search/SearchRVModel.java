@@ -31,8 +31,12 @@ public class SearchRVModel {
         return business.getLogo();
     }
 
-    private String getId() {
+    public String getId() {
         return id;
+    }
+
+    public boolean isUser() {
+        return isUser;
     }
 
     public SearchRVModel(User user, String id) {

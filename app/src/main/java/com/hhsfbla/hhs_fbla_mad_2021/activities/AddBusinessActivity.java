@@ -3,6 +3,7 @@ package com.hhsfbla.hhs_fbla_mad_2021.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.InetAddresses;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -107,12 +108,25 @@ public class AddBusinessActivity extends AppCompatActivity {
         });
 
         cancelButton.setOnClickListener(v -> {
-            db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).delete();
-            db.collection("users").document(fuser.getUid()).update("myBusinesses", FieldValue.arrayRemove(getIntent().getStringExtra("BUSINESS_ID")));
+            if (getIntent().getStringExtra("NEW_BUSINESS") != null) {
+                db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).delete();
+                db.collection("users").document(fuser.getUid()).update("myBusinesses", FieldValue.arrayRemove(getIntent().getStringExtra("BUSINESS_ID")));
+            }
 
-            Intent intent = new Intent(AddBusinessActivity.this, HomeActivity.class);
-            intent.putExtra("fragmentToLoad", "MyProfileFragment");
-            startActivity(intent);
+            if (getIntent().getStringExtra("FROM_ACTIVITY").equals("HomeActivity")) {
+                Intent intent = new Intent(AddBusinessActivity.this, HomeActivity.class);
+                intent.putExtra("fragmentToLoad", "MyProfileFragment");
+                startActivity(intent);
+            } else if (getIntent().getStringExtra("FROM_ACTIVITY").equals("BusinessActivity")) {
+                Intent intent = new Intent(AddBusinessActivity.this, BusinessActivity.class);
+                intent.putExtra("FROM_ACTIVITY", "AddBusinessActivity");
+                intent.putExtra("BUSINESS_ID", getIntent().getStringExtra("BUSINESS_ID"));
+                startActivity(intent);
+            } else if (getIntent().getStringExtra("FROM_ACTIVITY").equals("SearchActivity")) {
+                Intent intent = new Intent(AddBusinessActivity.this, SearchActivity.class);
+                intent.putExtra("FROM_ACTIVITY", "AddBusinessActivity");
+                startActivity(intent);
+            }
         });
     }
 
