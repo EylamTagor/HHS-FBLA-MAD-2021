@@ -95,7 +95,7 @@ public class OtherProfileActivity extends AppCompatActivity {
             header.setText(u.getJobTitle());
             about.setText(u.getDescription());
             vision.setText(u.getSocialVision());
-            followerCount.setText("" + u.getFollowers().size());
+            followerCount.setText("" + (u.getFollowers().size() - 1));
 
             if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase(""))
                 Picasso.get().load(Uri.parse(u.getPfp())).into(pfp);
