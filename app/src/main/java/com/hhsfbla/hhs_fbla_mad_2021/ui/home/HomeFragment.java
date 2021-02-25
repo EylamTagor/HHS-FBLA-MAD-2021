@@ -84,7 +84,8 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
     private ArrayList<Post> followingPostsList;
     private ArrayList<PostsRVModel> trendingPostsRVModels;
     private ArrayList<Post> trendingPostsList;
-    ArrayList<String> usersFollowingID;
+    private ArrayList<String> usersFollowingID;
+    private ArrayList<String> usersFollowingPostsID;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -109,6 +110,8 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
         searchButton = rootView.findViewById(R.id.home_search);
         postButton = rootView.findViewById(R.id.home_post_button);
+
+        notFollowingMessage.setVisibility(View.GONE);
 
         // FB sharing inits
         shareDialog = new ShareDialog(getActivity());
@@ -138,7 +141,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             followingPostsView.setVisibility(View.VISIBLE);
             followingButton.setTextColor(Color.parseColor("#10C380"));
             followingButton.setAlpha(1);
-            if(usersFollowingID.size() <= 1){
+            if(usersFollowingPostsID.size() == 0){
                 notFollowingMessage.setVisibility(View.VISIBLE);
             }
             else{
@@ -204,15 +207,9 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
             usersFollowingID = u.getFollowing();
-            if(u.getFollowing().size() <= 1){
-                notFollowingMessage.setVisibility(View.VISIBLE);
-            }
-            else{
-                notFollowingMessage.setVisibility(View.GONE);
 
-            }
             ArrayList<User> usersFollowing = new ArrayList<>();
-            ArrayList<String> usersFollowingPostsID = new ArrayList<>();
+            usersFollowingPostsID = new ArrayList<>();
 
             //Get users that user follow
             db.collection("users")
@@ -238,6 +235,13 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                         usersFollowingPostsID.add(post);
                                     }
                                 }
+                            }
+                            if(usersFollowingPostsID.size() == 0){
+                                notFollowingMessage.setVisibility(View.VISIBLE);
+                            }
+                            else{
+                                notFollowingMessage.setVisibility(View.GONE);
+
                             }
                             //match post ids of the posts of the users that the user follows to the posts
                             db.collection("posts")

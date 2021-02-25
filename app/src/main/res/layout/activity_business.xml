@@ -306,13 +306,13 @@ at large through my initiatives. "
                 android:id="@+id/business_divider"
                 android:layout_width="match_parent"
                 android:layout_height="0.4dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:alpha=".5"
                 android:background="@color/Green"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/business_follower_icon"
+                app:layout_constraintTop_toBottomOf="@+id/business_profile_picture"
                 app:layout_constraintVertical_bias="0" />
 
             <androidx.recyclerview.widget.RecyclerView
