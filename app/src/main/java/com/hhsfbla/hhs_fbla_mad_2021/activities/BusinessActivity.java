@@ -41,6 +41,7 @@ public class BusinessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business);
+
         jobsOfferView = findViewById(R.id.business_job_openings);
         jobsOfferView.setLayoutManager(new NonScrollingLLM(this));
         website = findViewById(R.id.business_website);

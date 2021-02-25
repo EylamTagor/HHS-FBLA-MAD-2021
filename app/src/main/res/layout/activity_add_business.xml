@@ -156,8 +156,19 @@
                 android:id="@+id/add_biz_done"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/job_bg"
                 android:text="Save" />
+
+            <Button
+                android:id="@+id/add_biz_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/cancel_button_border"
+                android:text="Cancel"
+                android:textColor="@color/LightGrey" />
 
         </LinearLayout>
     </ScrollView>

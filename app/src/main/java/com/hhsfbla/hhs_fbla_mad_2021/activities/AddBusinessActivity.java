@@ -12,15 +12,20 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.util.ImageRotator;
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +36,7 @@ public class AddBusinessActivity extends AppCompatActivity {
     private FirebaseUser fuser;
     private FirebaseFirestore db;
     private CircleImageView logo;
-    private Button doneButton;
+    private Button doneButton, cancelButton;
     private TextInputEditText name, website, about, vision, csrLink, esg;
     private ProgressDialog progressDialog;
 
@@ -67,6 +72,7 @@ public class AddBusinessActivity extends AppCompatActivity {
         // pairing objects with their views
         logo = findViewById(R.id.add_biz_logo);
         doneButton = findViewById(R.id.add_biz_done);
+        cancelButton = findViewById(R.id.add_biz_cancel);
         name = findViewById(R.id.add_biz_name);
         website = findViewById(R.id.add_biz_website);
         about = findViewById(R.id.add_biz_about);
@@ -83,7 +89,7 @@ public class AddBusinessActivity extends AppCompatActivity {
             about.setText(b.getAbout());
             vision.setText(b.getCSRVision());
             csrLink.setText(b.getCSRLink());
-            
+
             if (b.getESGScore() != -1.0)
                 esg.setText("" + b.getESGScore());
 
@@ -98,6 +104,15 @@ public class AddBusinessActivity extends AppCompatActivity {
                 Toast.makeText(AddBusinessActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
             else
                 uploadFile(fuser.getUid());
+        });
+
+        cancelButton.setOnClickListener(v -> {
+            db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).delete();
+            db.collection("users").document(fuser.getUid()).update("myBusinesses", FieldValue.arrayRemove(getIntent().getStringExtra("BUSINESS_ID")));
+
+            Intent intent = new Intent(AddBusinessActivity.this, HomeActivity.class);
+            intent.putExtra("fragmentToLoad", "MyProfileFragment");
+            startActivity(intent);
         });
     }
 
@@ -160,30 +175,21 @@ public class AddBusinessActivity extends AppCompatActivity {
         db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).update("about", about.getText().toString());
         db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).update("CSRVision", vision.getText().toString());
         db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).update("CSRLink", csrLink.getText().toString());
-        db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).update("ESGScore", Double.parseDouble(esg.getText().toString()));
+        if (esg.getText().toString() == null || esg.getText().toString().equals(""))
+            db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).update("ESGScore", -1.0);
+        else
+            db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).update("ESGScore", Double.parseDouble(esg.getText().toString()));
 
         if (uri != null)
             db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).update("logo", uri.toString()).addOnSuccessListener(aVoid -> {
-                if (getIntent().getStringExtra("FROM_ACTIVITY") != null && getIntent().getStringExtra("FROM_ACTIVITY").equals("HomeActivity")) {
-                    Intent intent = new Intent(AddBusinessActivity.this, HomeActivity.class);
-                    intent.putExtra("fragmentToLoad", "MyProfileFragment");
-                    startActivity(intent);
-                } else if (getIntent().getStringExtra("FROM_ACTIVITY") != null && getIntent().getStringExtra("FROM_ACTIVITY").equals("BusinessActivity")) {
-                    Intent intent = new Intent(AddBusinessActivity.this, BusinessActivity.class);
-                    intent.putExtra("BUSINESS_ID", getIntent().getStringExtra("BUSINESS_ID"));
-                    startActivity(intent);
-                }
-            });
-        else {
-            if (getIntent().getStringExtra("FROM_ACTIVITY") != null && getIntent().getStringExtra("FROM_ACTIVITY").equals("HomeActivity")) {
-                Intent intent = new Intent(AddBusinessActivity.this, HomeActivity.class);
-                intent.putExtra("fragmentToLoad", "MyProfileFragment");
-                startActivity(intent);
-            } else if (getIntent().getStringExtra("FROM_ACTIVITY") != null && getIntent().getStringExtra("FROM_ACTIVITY").equals("BusinessActivity")) {
                 Intent intent = new Intent(AddBusinessActivity.this, BusinessActivity.class);
                 intent.putExtra("BUSINESS_ID", getIntent().getStringExtra("BUSINESS_ID"));
                 startActivity(intent);
-            }
+            });
+        else {
+            Intent intent = new Intent(AddBusinessActivity.this, BusinessActivity.class);
+            intent.putExtra("BUSINESS_ID", getIntent().getStringExtra("BUSINESS_ID"));
+            startActivity(intent);
         }
     }
 }
