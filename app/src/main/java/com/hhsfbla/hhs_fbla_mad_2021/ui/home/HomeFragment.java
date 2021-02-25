@@ -118,6 +118,9 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         progressDialog.setCanceledOnTouchOutside(false);
         postingDialog = new Dialog(getActivity());
 
+
+        //Tabs
+
         followingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
