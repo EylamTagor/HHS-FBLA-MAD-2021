@@ -19,7 +19,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/my_business_item_logo"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             android:scaleType="centerCrop" />

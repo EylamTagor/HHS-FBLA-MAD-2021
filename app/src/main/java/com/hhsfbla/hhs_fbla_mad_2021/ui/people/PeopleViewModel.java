@@ -1,14 +1,14 @@
-package com.hhsfbla.hhs_fbla_mad_2021.ui.notifications;
+package com.hhsfbla.hhs_fbla_mad_2021.ui.people;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class PeopleViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public PeopleViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is notifications fragment");
     }

@@ -67,7 +67,6 @@ public class MyBusinessesRVAdapter extends RecyclerView.Adapter<MyBusinessesRVAd
                                     if (document.toObject(Business.class).getLogo() != null && !document.toObject(Business.class).getLogo().equalsIgnoreCase("")) {
                                         Picasso.get().load(Uri.parse(document.toObject(Business.class).getLogo())).into(holder.logo);
                                         Log.println(Log.DEBUG, "sadsd", "huge dub");
-
                                     }
                                 }
                             }

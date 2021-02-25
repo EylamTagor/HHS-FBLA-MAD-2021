@@ -16,9 +16,9 @@
         android:icon="@drawable/ic_save_bottom_black"
         android:title="@string/title_saved_jobs" />
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_people"
+        android:icon="@drawable/ic_people"
+        android:title="@string/title_people" />
 
     <item
         android:id="@+id/navigation_profile"

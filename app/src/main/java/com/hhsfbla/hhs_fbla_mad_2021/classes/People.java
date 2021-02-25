@@ -3,7 +3,7 @@ package com.hhsfbla.hhs_fbla_mad_2021.classes;
 /**
  * This class represents a notification
  */
-public class Notification {
+public class People {
 
     //1 = someone liked your post
     //2 = someone followed you
@@ -15,7 +15,7 @@ public class Notification {
     /**
      * No args constructor
      */
-    public Notification(){
+    public People(){
         this("", "", "");
     }
 
@@ -25,7 +25,7 @@ public class Notification {
      * @param userID The firebase ID of the user involved in the notification
      */
     //Follow
-    public Notification(String hostID, String userID){
+    public People(String hostID, String userID){
         this.type = 2;
         this.hostID = hostID;
         this.userID = userID;
@@ -43,7 +43,7 @@ public class Notification {
      * @param postID The firebase ID of the post liked
      */
     //Like
-    public Notification(String hostID, String userID, String postID){
+    public People(String hostID, String userID, String postID){
         this.type = 1;
         this.hostID = hostID;
         this.userID = userID;

@@ -28,10 +28,10 @@
         tools:layout="@layout/fragment_jobs" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_people"
+        android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.people.PeopleFragment"
+        android:label="@string/title_people"
+        tools:layout="@layout/fragment_people" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.hhsfbla.hhs_fbla_mad_2021.ui.profile.MyProfileFragment"
