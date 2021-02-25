@@ -290,7 +290,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                         .addOnSuccessListener(documentReference -> {
                             db.collection("users").document(fuser.getUid()).update("myPosts", FieldValue.arrayUnion(documentReference.getId()));
                             Toast.makeText(getActivity(), "Post added.", Toast.LENGTH_SHORT).show();
-                            followingPostsList.add(p);
                         }).addOnFailureListener(documentReference -> Toast.makeText(getActivity(), "Invalid education. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
 
                 try {

@@ -65,28 +65,32 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
             } else {
                 Picasso.get().load(fuser.getPhotoUrl()).into(holder.pfp);
             }
-        });
-        db.collection("posts")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            for(String uid: document.toObject(Post.class).getUsersLiked()) {
-                                if (fuser.getUid().equals(uid)) {
-                                    holder.likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filled_heart, 0, 0, 0);
-                                    posts.get(position).setIsLiked(true);
+            db.collection("posts")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            holder.likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_no_heart, 0, 0, 0);
+                            posts.get(position).setIsLiked(false);
+                            Log.println(Log.DEBUG, "sad", "task size: " + task.getResult().size());
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                for(String uid: document.toObject(Post.class).getUsersLiked()) {
+                                    if (fuser.getUid().equals(uid)) {
+                                        Log.println(Log.DEBUG, "sad", "This is the post: " + document.getId());
+
+                                        holder.likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filled_heart, 0, 0, 0);
+                                        posts.get(position).setIsLiked(true);
+                                        break;
+                                    }
                                 }
-                                else{
-                                    holder.likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_no_heart, 0, 0, 0);
-                                    posts.get(position).setIsLiked(false);
+                                if (document.toObject(Post.class).getTimePosted() == (posts.get(position).getTime())){
+                                    holder.likes.setText(""+document.toObject(Post.class).getLikes());
                                 }
-                            }
-                            if (document.toObject(Post.class).getTimePosted() == (posts.get(position).getTime())){
-                                holder.likes.setText(""+document.toObject(Post.class).getLikes());
                             }
                         }
-                    }
-                });
+                    });
+
+        });
 
 
         holder.description.setText(currentItem.getDescription());
@@ -128,7 +132,6 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
             likes.setOnClickListener(view -> {
                 int num = getAdapterPosition();
                 if(!posts.get(num).isLiked()) {
-                    Log.println(Log.DEBUG, "asdasd", "bruh moment");
                     likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filled_heart, 0, 0, 0);
                     posts.get(num).setIsLiked(true);
 
@@ -137,7 +140,6 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.println(Log.DEBUG, "sad", "Document Time: " + document.toObject(Post.class).getTimePosted() + " post Time " + (posts.get(num).getTime()));
 
                                         if (document.toObject(Post.class).getTimePosted() == (posts.get(num).getTime())) {
 
