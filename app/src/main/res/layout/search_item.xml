@@ -15,7 +15,7 @@
         >
         <!-- staticText--> the UI for an individual searched item that appears when you search for a user or business. All individual elements are identifiable by their ID.
 
-        <Button
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_marginTop="15dp"
             android:id="@+id/search_item_pfp"
             android:layout_width="60dp"
