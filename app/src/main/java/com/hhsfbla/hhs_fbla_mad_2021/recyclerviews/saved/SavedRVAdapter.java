@@ -16,8 +16,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
@@ -57,13 +60,14 @@ public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRV
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
         //placeholder, need to sort to find name of business given ID of the holder.
         db.collection("businesses").document(currentItem.getbusinessID()).get().addOnSuccessListener(documentSnapshot -> {
-            Business u = documentSnapshot.toObject(Business.class);
-            holder.businessName.setText(u.getName());
-
+            Business biz = documentSnapshot.toObject(Business.class);
+            holder.businessName.setText(biz.getName());
+            if (biz.getLogo() != null && !biz.getLogo().equalsIgnoreCase("")) {
+                Picasso.get().load(Uri.parse(biz.getLogo())).into(holder.businessLogo);
+            }
         });
 
         //PLACEHOLDER, need to search to find business and get logo
-        holder.businessLogo.setBackgroundResource(R.drawable.ic_followers);
 
 
 
@@ -76,7 +80,7 @@ public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRV
     }
 
     public static class StaticRVViewHolder extends RecyclerView.ViewHolder {
-        Button businessLogo;
+        CircleImageView businessLogo;
         TextView title;
         Button apply;
         //have to sort to find

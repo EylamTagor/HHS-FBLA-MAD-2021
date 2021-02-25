@@ -2,20 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/saved_job_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/fui_transparent"
-    android:id="@+id/saved_job_layout"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
->
-        <!-- staticText--> the UI for an individual saved job. All individual elements are identifiable by their ID.
+        android:layout_marginBottom="10dp">
+        <!-- staticText--> the UI for an individual saved job. All individual elements are
+        identifiable by their ID.
 
-        <Button
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/saved_business_logo"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -79,6 +79,7 @@
             app:layout_constraintStart_toEndOf="@id/saved_title"
             app:layout_constraintTop_toBottomOf="@id/saved_divider"
             app:layout_constraintVertical_bias="1" />
+
         <View
             android:id="@+id/saved_divider"
             android:layout_width="match_parent"
@@ -87,8 +88,7 @@
             android:background="@color/LightGrey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
