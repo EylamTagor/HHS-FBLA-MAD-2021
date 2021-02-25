@@ -220,6 +220,8 @@ public class LoginActivity extends AppCompatActivity {
         fuser = mAuth.getCurrentUser();
         User user = new User(fuser.getDisplayName(), fuser.getEmail());
         user.setPfp(fuser.getPhotoUrl().toString());
+        user.addFollower(fuser.getUid());
+        user.addFollowing(fuser.getUid());
         db.collection("users").document(fuser.getUid()).set(user);
         Intent intent = new Intent(LoginActivity.this, OnboardingActivity.class);
         startActivity(intent);
