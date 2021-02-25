@@ -36,12 +36,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class BusinessActivity extends AppCompatActivity {
 
     private FirebaseUser fuser;
     private FirebaseFirestore db;
     private ProgressDialog progressDialog;
     private Dialog createJobOfferDialog;
+    private CircleImageView logo;
     private FloatingActionButton createJobButton;
     private Button CSRReportLink, edit, delete;
     private TextView name, website, about, CSRVision, followerCount, ESGScore;
@@ -70,6 +73,7 @@ public class BusinessActivity extends AppCompatActivity {
         edit = findViewById(R.id.business_edit);
         delete = findViewById(R.id.business_delete_button);
         createJobButton = findViewById(R.id.business_create_job);
+        logo = findViewById(R.id.business_logo);
         db = FirebaseFirestore.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -82,6 +86,13 @@ public class BusinessActivity extends AppCompatActivity {
                 about.setText(biz.getAbout());
                 CSRVision.setText(biz.getCSRVision());
                 ESGScore.setText("" + biz.getESGScore());
+
+
+                if(biz != null){
+                    if (biz.getLogo() != null && !biz.getLogo().equalsIgnoreCase("")) {
+                        Picasso.get().load(Uri.parse(biz.getLogo())).into(logo);
+                    }
+                }
                 CSRReportLink.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(biz.getCSRLink())), null));
 
                 db.collection("jobOffers").get().addOnCompleteListener(task -> {
