@@ -63,7 +63,7 @@ public class JobsFragment extends Fragment {
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
 
 
-        jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer1", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
+ /*       jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer1", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
         jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer2", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
         jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer3", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
         jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer4", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
@@ -133,7 +133,7 @@ public class JobsFragment extends Fragment {
                         Log.d("tag", "DocumentSnapshot written with ID: " + documentReference.getId());
                     }
                 });
-
+*/
 
         jobsRVAdapter = new JobsRVAdapter(jobs);
         jobsView.setAdapter(jobsRVAdapter);

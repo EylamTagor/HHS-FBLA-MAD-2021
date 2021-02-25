@@ -117,35 +117,44 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         progressDialog.setCanceledOnTouchOutside(false);
         postingDialog = new Dialog(getActivity());
 
-        followingButton.setOnClickListener(v -> {
-            trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.NORMAL);
-            trendingSelected.setVisibility(View.INVISIBLE);
-            trendingPostsView.setVisibility(View.INVISIBLE);
-            trendingButton.setAlpha(.5f);
-            trendingButton.setTextColor(Color.parseColor("#F2F2F2"));
 
-            followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
-            followingSelected.setVisibility(View.VISIBLE);
-            followingPostsView.setVisibility(View.VISIBLE);
-            followingButton.setTextColor(Color.parseColor("#10C380"));
-            followingButton.setAlpha(1);
+        //Tabs
+
+        followingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.NORMAL);
+                trendingSelected.setVisibility(View.INVISIBLE);
+                trendingPostsView.setVisibility(View.INVISIBLE);
+                trendingButton.setAlpha(.5f);
+                trendingButton.setTextColor(Color.parseColor("#F2F2F2"));
+
+                followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
+                followingSelected.setVisibility(View.VISIBLE);
+                followingPostsView.setVisibility(View.VISIBLE);
+                followingButton.setTextColor(Color.parseColor("#10C380"));
+                followingButton.setAlpha(1);
 
 
+            }
         });
-        trendingButton.setOnClickListener(v -> {
-            followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
-            followingSelected.setVisibility(View.INVISIBLE);
-            followingPostsView.setVisibility(View.INVISIBLE);
-            followingButton.setAlpha(.5f);
-            followingButton.setTextColor(Color.parseColor("#F2F2F2"));
+        trendingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
+                followingSelected.setVisibility(View.INVISIBLE);
+                followingPostsView.setVisibility(View.INVISIBLE);
+                followingButton.setAlpha(.5f);
+                followingButton.setTextColor(Color.parseColor("#F2F2F2"));
 
 
-            trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
-            trendingSelected.setVisibility(View.VISIBLE);
-            trendingPostsView.setVisibility(View.VISIBLE);
-            trendingButton.setTextColor(Color.parseColor("#10C380"));
-            trendingButton.setAlpha(1);
+                trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
+                trendingSelected.setVisibility(View.VISIBLE);
+                trendingPostsView.setVisibility(View.VISIBLE);
+                trendingButton.setTextColor(Color.parseColor("#10C380"));
+                trendingButton.setAlpha(1);
 
+            }
         });
 
         searchButton.setOnClickListener(v -> {
@@ -154,25 +163,33 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
         followingPostsRVModels = new ArrayList<>();
 
+
         // trending Posts RV
+
         trendingPostsRVModels = new ArrayList<>();
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
+
         trendingPostsList = new ArrayList<>();
 
         db.collection("posts")
                 .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            trendingPostsList.add(document.toObject(Post.class));
-                            trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                            trendingPostsRVAdapter.setPosts(trendingPostsList);
-                            trendingPostsRVAdapter.sortTrendingPosts();
-                            trendingPostsRVAdapter.notifyDataSetChanged();
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                trendingPostsList.add(document.toObject(Post.class));
+                                trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                trendingPostsRVAdapter.setPosts(trendingPostsList);
+                                trendingPostsRVAdapter.sortTrendingPosts();
+                                trendingPostsRVAdapter.notifyDataSetChanged();
+                            }
+                            }
                         }
-                        }
-                    });
+                        });
+
+
 
         //FollowingPostsRV
         followingPostsRVModels = new ArrayList<>();
@@ -188,16 +205,19 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             ArrayList<String> usersFollowingPostsID = new ArrayList<>();
             db.collection("users")
                     .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                for(String ID: usersFollowingID){
-                                    if(document.getId().equals(ID)){
-                                        usersFollowing.add(document.toObject(User.class));
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    for(String ID: usersFollowingID){
+                                        if(document.getId().equals(ID)){
+                                            usersFollowing.add(document.toObject(User.class));
+                                        }
                                     }
+
+
                                 }
-
-
                             }
                         }
                     });
@@ -209,20 +229,23 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
             db.collection("posts")
                     .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                for(String ID: usersFollowingPostsID){
-                                    if(document.getId().equals(ID)){
-                                        followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                        followingPostsList.add(document.toObject(Post.class));
-                                        followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                        followingPostsRVAdapter.setPosts(followingPostsList);
-                                        followingPostsRVAdapter.sortFollowingPosts();
-                                        followingPostsRVAdapter.notifyDataSetChanged();
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    for(String ID: usersFollowingPostsID){
+                                        if(document.getId().equals(ID)){
+                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                            followingPostsList.add(document.toObject(Post.class));
+                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                            followingPostsRVAdapter.setPosts(followingPostsList);
+                                            followingPostsRVAdapter.sortFollowingPosts();
+                                            followingPostsRVAdapter.notifyDataSetChanged();
+                                        }
                                     }
-                                }
 
+                                }
                             }
                         }
                     });
@@ -239,6 +262,9 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             TextInputEditText hashtag = postingDialog.findViewById(R.id.new_post_hashtag);
             TextInputEditText content = postingDialog.findViewById(R.id.new_post_content);
             Button post = postingDialog.findViewById(R.id.new_post_post);
+
+
+
 
             Long tsLong = System.currentTimeMillis()/1000;
             post.setOnClickListener(view -> {

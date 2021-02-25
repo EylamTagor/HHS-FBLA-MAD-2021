@@ -11,12 +11,14 @@ public class JobOffer {
     private String jobTitle;
     private String link;
     private String jobDescription;
+    private long timePosted;
+
 
     /**
      * No args constructor
      */
     public JobOffer(){
-        this("", "", "", "");
+        this("", "", "", "",-1);
     }
 
     /**
@@ -26,11 +28,12 @@ public class JobOffer {
      * @param link the link to the job application
      * @param jobDescription the description of the job
      */
-    public JobOffer(String businessID, String jobTitle, String link, String jobDescription){
+    public JobOffer(String businessID, String jobTitle, String link, String jobDescription, long timePosted){
         this.businessID = businessID;
         this.jobTitle = jobTitle;
         this.link = link;
         this.jobDescription = jobDescription;
+        this.timePosted = timePosted;
     }
 
     /**
@@ -95,5 +98,13 @@ public class JobOffer {
      */
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public long getTimePosted() {
+        return timePosted;
+    }
+
+    public void setTimePosted(long timePosted) {
+        this.timePosted = timePosted;
     }
 }

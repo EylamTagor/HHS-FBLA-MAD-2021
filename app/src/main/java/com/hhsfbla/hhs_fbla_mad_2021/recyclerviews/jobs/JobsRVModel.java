@@ -10,7 +10,7 @@ public class JobsRVModel {
     public void addJob(JobOffer jobOffer) {
         this.job = job;
     }
-
+    public long getTime(){return job.getTimePosted();}
     public String getJobTitle() {
         return job.getJobTitle();
     }
