@@ -108,7 +108,7 @@ public class AddBusinessActivity extends AppCompatActivity {
         });
 
         cancelButton.setOnClickListener(v -> {
-            if (getIntent().getStringExtra("NEW_BUSINESS") != null) {
+            if (getIntent().getStringExtra("IS_NEW_BUSINESS") != null && getIntent().getStringExtra("IS_NEW_BUSINESS").equals("TRUE")) {
                 db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).delete();
                 db.collection("users").document(fuser.getUid()).update("myBusinesses", FieldValue.arrayRemove(getIntent().getStringExtra("BUSINESS_ID")));
             }
