@@ -3,27 +3,35 @@ package com.hhsfbla.hhs_fbla_mad_2021.activities;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs.JobsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs.JobsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.util.NonScrollingLLM;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -67,6 +75,46 @@ public class BusinessActivity extends AppCompatActivity {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            User u = documentSnapshot.toObject(User.class);
+            db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).get().addOnSuccessListener(documentSnapshot1 -> {
+                Business biz = documentSnapshot1.toObject(Business.class);
+                website.setText(biz.getWebsite());
+                name.setText(biz.getName());
+                about.setText(biz.getAbout());
+                CSRVision.setText(biz.getCSRVision());
+                ESGScore.setText("" + biz.getESGScore());
+                CSRReportLink.setOnClickListener(v -> {
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    v.getContext().startActivity(intent);
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(biz.getCSRLink())), null);
+
+                });
+                db.collection("jobOffers")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        if(document.toObject(JobOffer.class).getBusinessID().equals(getIntent().getStringExtra("BUSINESS_ID"))){
+                                            jobOffers.add(new JobsRVModel(document.toObject(JobOffer.class)));
+                                        }
+                                    }
+                                    jobsRVAdapter = new JobsRVAdapter(jobOffers);
+                                    jobsOfferView.setAdapter(jobsRVAdapter);
+
+                                } else {
+
+                                }
+                            }
+                        });
+
+            });
+        });
+
+
+        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.toObject(User.class).getMyBusinesses().contains(getIntent().getStringExtra("BUSINESS_ID"))) {
                 edit.setVisibility(View.VISIBLE);
                 delete.setVisibility(View.VISIBLE);
@@ -95,8 +143,7 @@ public class BusinessActivity extends AppCompatActivity {
         });
 
         //Set adapter to recycler view
-        jobsRVAdapter = new JobsRVAdapter(jobOffers);
-        jobsOfferView.setAdapter(jobsRVAdapter);
+
 
         //Will have to post
         progressDialog = new ProgressDialog(this);
