@@ -78,12 +78,12 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
         View rootView = inflater.inflate(R.layout.fragment_people, container, false);
 
         //Linking UI XML to fields
-        followersPeopleView = (RecyclerView) rootView.findViewById(R.id.people_followers_recyclerview);
+        followersPeopleView = rootView.findViewById(R.id.people_followers_recyclerview);
         followersPeopleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         followersButton = rootView.findViewById(R.id.people_followers);
         followersSelected = rootView.findViewById(R.id.people_followers_selected);
 
-        followingPeopleView = (RecyclerView) rootView.findViewById(R.id.people_following_recyclerview);
+        followingPeopleView = rootView.findViewById(R.id.people_following_recyclerview);
         followingPeopleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         followingButton = rootView.findViewById(R.id.people_following);
         followingSelected = rootView.findViewById(R.id.people_following_selected);
@@ -94,63 +94,47 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
 
         //Tabs
 
-        followersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
-                followingSelected.setVisibility(View.INVISIBLE);
-                followingPeopleView.setVisibility(View.INVISIBLE);
-                followingButton.setAlpha(.5f);
-                followingButton.setTextColor(Color.parseColor("#F2F2F2"));
+        followersButton.setOnClickListener(v -> {
+            followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
+            followingSelected.setVisibility(View.INVISIBLE);
+            followingPeopleView.setVisibility(View.INVISIBLE);
+            followingButton.setAlpha(.5f);
+            followingButton.setTextColor(Color.parseColor("#F2F2F2"));
 
-                followersButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
-                followersSelected.setVisibility(View.VISIBLE);
-                followersPeopleView.setVisibility(View.VISIBLE);
-                followersButton.setTextColor(Color.parseColor("#10C380"));
-                followersButton.setAlpha(1);
+            followersButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
+            followersSelected.setVisibility(View.VISIBLE);
+            followersPeopleView.setVisibility(View.VISIBLE);
+            followersButton.setTextColor(Color.parseColor("#10C380"));
+            followersButton.setAlpha(1);
 
 
-            }
         });
-        followingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                followersButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
-                followersSelected.setVisibility(View.INVISIBLE);
-                followersPeopleView.setVisibility(View.INVISIBLE);
-                followersButton.setAlpha(.5f);
-                followersButton.setTextColor(Color.parseColor("#F2F2F2"));
+        followingButton.setOnClickListener(v -> {
+            followersButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
+            followersSelected.setVisibility(View.INVISIBLE);
+            followersPeopleView.setVisibility(View.INVISIBLE);
+            followersButton.setAlpha(.5f);
+            followersButton.setTextColor(Color.parseColor("#F2F2F2"));
 
+            followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
+            followingSelected.setVisibility(View.VISIBLE);
+            followingPeopleView.setVisibility(View.VISIBLE);
+            followingButton.setTextColor(Color.parseColor("#10C380"));
+            followingButton.setAlpha(1);
 
-                followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
-                followingSelected.setVisibility(View.VISIBLE);
-                followingPeopleView.setVisibility(View.VISIBLE);
-                followingButton.setTextColor(Color.parseColor("#10C380"));
-                followingButton.setAlpha(1);
-
-            }
         });
-
 
         // Following People RV
-
         followingRVModel = new ArrayList<>();
         followingRVAdapter = new PeopleRVAdapter(followingRVModel);
         followingPeopleView.setAdapter(followingRVAdapter);
-
         followingPeopleList = new ArrayList<>();
-
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                followingPeopleList.add(document.toObject(User.class));
-                                followingRVModel.add(new PeopleRVModel(document.toObject(User.class), document.getId()));
-                                followingRVAdapter.notifyDataSetChanged();
-                            }
+        db.collection("users").get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            followingPeopleList.add(document.toObject(User.class));
+                            followingRVModel.add(new PeopleRVModel(document.toObject(User.class), document.getId()));
+                            followingRVAdapter.notifyDataSetChanged();
                         }
                     }
                 });
@@ -166,18 +150,15 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
 
             db.collection("users")
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                            followersPeopleList.add(document.toObject(User.class));
-                                            followersRVModel.add(new PeopleRVModel(document.toObject(User.class), document.getId()));
-                                            followersRVAdapter.notifyDataSetChanged();
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                        followersPeopleList.add(document.toObject(User.class));
+                                        followersRVModel.add(new PeopleRVModel(document.toObject(User.class), document.getId()));
+                                        followersRVAdapter.notifyDataSetChanged();
 
 
 
-                                }
                             }
                         }
                     });
