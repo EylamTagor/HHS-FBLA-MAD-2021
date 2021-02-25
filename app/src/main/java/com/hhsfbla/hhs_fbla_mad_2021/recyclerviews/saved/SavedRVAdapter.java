@@ -11,7 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 
 import java.util.ArrayList;
 
@@ -20,6 +24,8 @@ import static androidx.core.content.ContextCompat.startActivity;
 public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRVViewHolder> {
     private ArrayList<SavedRVModel> savedJobs;
     int row_index = -1;
+    private FirebaseUser fbuser;
+    private FirebaseFirestore db;
 
     public SavedRVAdapter(ArrayList<SavedRVModel> items) {
         this.savedJobs = items;
@@ -47,12 +53,18 @@ public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRV
         SavedRVModel currentItem = savedJobs.get(position);
         holder.link = currentItem.getLink();
         holder.title.setText(currentItem.getJobTitle());
-
+        db = FirebaseFirestore.getInstance();
+        fbuser = FirebaseAuth.getInstance().getCurrentUser();
         //placeholder, need to sort to find name of business given ID of the holder.
-        holder.businessName.setText("Google LLC");
+        db.collection("businesses").document(currentItem.getbusinessID()).get().addOnSuccessListener(documentSnapshot -> {
+            Business u = documentSnapshot.toObject(Business.class);
+            holder.businessName.setText(u.getName());
+
+        });
 
         //PLACEHOLDER, need to search to find business and get logo
         holder.businessLogo.setBackgroundResource(R.drawable.ic_followers);
+
 
 
     }
