@@ -229,39 +229,40 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                         usersFollowingPostsID.add(post);
                                     }}
                                 }
+                                //match post ids of the posts of the users that the user follows to the posts
+                                db.collection("posts")
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+
+                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                        for(String ID: usersFollowingPostsID){
+                                                            if(document.getId().equals(ID)){
+                                                                followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                                                followingPostsList.add(document.toObject(Post.class));
+                                                                followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                                                Log.println(Log.DEBUG, "adsd", "Loading following posts");
+                                                                followingPostsRVAdapter.setPosts(followingPostsList);
+                                                                followingPostsRVAdapter.sortFollowingPosts();
+                                                                followingPostsRVAdapter.notifyDataSetChanged();
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+                                        });
                             }
                         }
                     });
 
-            Log.println(Log.DEBUG, "adsd", "This should come after " +usersFollowing.size());
+            Log.println(Log.DEBUG, "adsd", "Trump " +usersFollowingPostsID.size());
 
 
-            //match post ids of the posts of the users that the user follows to the posts
-            db.collection("posts")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
 
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                    for(String ID: usersFollowingPostsID){
-                                        if(document.getId().equals(ID)){
-                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                            followingPostsList.add(document.toObject(Post.class));
-                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                            Log.println(Log.DEBUG, "adsd", "Loading following posts");
-                                            followingPostsRVAdapter.setPosts(followingPostsList);
-                                            followingPostsRVAdapter.sortFollowingPosts();
-                                            followingPostsRVAdapter.notifyDataSetChanged();
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-                    });
         });
 
         followingPostsRVAdapter.setOnItemClickListener(this);
