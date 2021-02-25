@@ -197,16 +197,14 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         followingPostsView.setAdapter(followingPostsRVAdapter);
         followingPostsList = new ArrayList<>();
 
-        //Get user
+        //Get the list of people that the user is following
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
             ArrayList<String> usersFollowingID = u.getFollowing();
             ArrayList<User> usersFollowing = new ArrayList<>();
-
             ArrayList<String> usersFollowingPostsID = new ArrayList<>();
 
-
-            //Get people that users follow
+            //Get users that user follow
             db.collection("users")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -215,14 +213,21 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     for(String ID: usersFollowingID){
-                                        Log.println(Log.DEBUG, "adsd", "Following " +usersFollowing.size());
                                         if(document.getId().equals(ID)){
                                             usersFollowing.add(document.toObject(User.class));
+                                            Log.println(Log.DEBUG, "adsd", "Following " +usersFollowing.size());
+                                            break;
                                         }
 
                                     }
 
 
+                                }
+                                //Add all the IDs of the posts of the users that user follows
+                                for(User user: usersFollowing){
+                                    for(String post: user.getMyPosts()){{
+                                        usersFollowingPostsID.add(post);
+                                    }}
                                 }
                             }
                         }
@@ -230,12 +235,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
             Log.println(Log.DEBUG, "adsd", "This should come after " +usersFollowing.size());
 
-            //Add all the IDs of the posts of the users that user follows
-            for(User user: usersFollowing){
-                for(String post: user.getMyPosts()){{
-                    usersFollowingPostsID.add(post);
-                }}
-            }
+
             //match post ids of the posts of the users that the user follows to the posts
             db.collection("posts")
                     .get()
