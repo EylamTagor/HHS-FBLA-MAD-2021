@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -61,6 +62,8 @@ public class BusinessActivity extends AppCompatActivity {
         CSRReportLink = findViewById(R.id.business_CSR_report_link);
         edit = findViewById(R.id.business_edit);
         createJobButton = findViewById(R.id.business_create_job);
+        db = FirebaseFirestore.getInstance();
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         edit.setOnClickListener(v -> {
             Intent intent = new Intent(BusinessActivity.this, AddBusinessActivity.class);
@@ -84,22 +87,22 @@ public class BusinessActivity extends AppCompatActivity {
             TextInputEditText position = createJobOfferDialog.findViewById(R.id.create_job_offer_position);
             TextInputEditText link = createJobOfferDialog.findViewById(R.id.create_job_offer_link);
             TextInputEditText description = createJobOfferDialog.findViewById(R.id.create_job_offer_description);
-            Button post = createJobOfferDialog.findViewById(R.id.new_post_post);
+            Button createJobOffer = createJobOfferDialog.findViewById(R.id.create_job_offer_post);
 
 
             Long tsLong = System.currentTimeMillis()/1000;
-            post.setOnClickListener(view -> {
+            createJobOffer.setOnClickListener(view -> {
                 JobOffer j = new JobOffer(
-                        position.getText().toString(), getIntent().getStringExtra("BUSINESS_ID"),
-                        description.getText().toString(), link.getText().toString(),
+                        getIntent().getStringExtra("BUSINESS_ID"), position.getText().toString(),
+                        link.getText().toString(), description.getText().toString(),
                         tsLong
                 );
 
                 db.collection("jobOffers").add(j)
                         .addOnSuccessListener(documentReference -> {
                             db.collection("users").document(fuser.getUid()).update("myPosts", FieldValue.arrayUnion(documentReference.getId()));
-                            Toast.makeText(this, "Post added.", Toast.LENGTH_SHORT).show();
-                        }).addOnFailureListener(documentReference -> Toast.makeText(this, "Invalid education. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
+                            Toast.makeText(this, "JobOffer added.", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(documentReference -> Toast.makeText(this, "Invalid Job Offer. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
 
                 try {
                     TimeUnit.MILLISECONDS.sleep(250);
