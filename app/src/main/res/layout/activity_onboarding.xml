@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,8 +62,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 app:boxBackgroundColor="@color/DarkGrey"
                 app:boxStrokeColor="@color/white"
                 app:boxStrokeWidth="6sp">
@@ -81,8 +81,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 app:boxBackgroundColor="@color/DarkGrey"
                 app:boxStrokeColor="@color/white"
                 app:boxStrokeWidth="6sp">
@@ -100,8 +100,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 app:boxBackgroundColor="@color/DarkGrey"
                 app:boxStrokeColor="@color/white"
                 app:boxStrokeWidth="6sp">
@@ -118,9 +118,9 @@
                 android:id="@+id/ob_divider1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:alpha=".25"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:alpha=".25"
                 android:background="@color/LightGrey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -158,17 +158,17 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ob_experiences"
                 android:layout_width="match_parent"
-                android:layout_marginTop = "10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"/>
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp" />
 
             <View
                 android:id="@+id/ob_divider2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:alpha=".25"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:alpha=".25"
                 android:background="@color/LightGrey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -206,17 +206,17 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ob_education"
                 android:layout_width="match_parent"
-                android:layout_marginTop = "10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"/>
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp" />
 
             <View
                 android:id="@+id/ob_divider3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:alpha=".25"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:alpha=".25"
                 android:background="@color/LightGrey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -253,18 +253,18 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ob_skills"
-                android:layout_marginTop = "10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"/>
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp" />
 
             <View
                 android:id="@+id/ob_divider4"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:alpha=".25"
-                android:layout_marginTop="16dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:alpha=".25"
                 android:background="@color/LightGrey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

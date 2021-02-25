@@ -82,32 +82,17 @@ public class BusinessActivity extends AppCompatActivity {
                 about.setText(biz.getAbout());
                 CSRVision.setText(biz.getCSRVision());
                 ESGScore.setText("" + biz.getESGScore());
-                CSRReportLink.setOnClickListener(v -> {
+                CSRReportLink.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(biz.getCSRLink())), null));
 
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    v.getContext().startActivity(intent);
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(biz.getCSRLink())), null);
-
+                db.collection("jobOffers").get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult())
+                            if (document.toObject(JobOffer.class).getBusinessID().equals(getIntent().getStringExtra("BUSINESS_ID")))
+                                jobOffers.add(new JobsRVModel(document.toObject(JobOffer.class)));
+                        jobsRVAdapter = new JobsRVAdapter(jobOffers);
+                        jobsOfferView.setAdapter(jobsRVAdapter);
+                    }
                 });
-                db.collection("jobOffers")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        if(document.toObject(JobOffer.class).getBusinessID().equals(getIntent().getStringExtra("BUSINESS_ID"))){
-                                            jobOffers.add(new JobsRVModel(document.toObject(JobOffer.class)));
-                                        }
-                                    }
-                                    jobsRVAdapter = new JobsRVAdapter(jobOffers);
-                                    jobsOfferView.setAdapter(jobsRVAdapter);
-
-                                } else {
-
-                                }
-                            }
-                        });
 
             });
         });
@@ -139,8 +124,6 @@ public class BusinessActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        //Set adapter to recycler view
-
 
         //Will have to post
         progressDialog = new ProgressDialog(this);
@@ -155,7 +138,6 @@ public class BusinessActivity extends AppCompatActivity {
             TextInputEditText description = createJobOfferDialog.findViewById(R.id.create_job_offer_description);
             Button createJobOffer = createJobOfferDialog.findViewById(R.id.create_job_offer_post);
 
-
             Long tsLong = System.currentTimeMillis() / 1000;
             createJobOffer.setOnClickListener(view -> {
                 JobOffer j = new JobOffer(
@@ -164,11 +146,10 @@ public class BusinessActivity extends AppCompatActivity {
                         tsLong
                 );
 
-                db.collection("jobOffers").add(j)
-                        .addOnSuccessListener(documentReference -> {
-                            db.collection("users").document(fuser.getUid()).update("myPosts", FieldValue.arrayUnion(documentReference.getId()));
-                            Toast.makeText(this, "JobOffer added.", Toast.LENGTH_SHORT).show();
-                        }).addOnFailureListener(documentReference -> Toast.makeText(this, "Invalid Job Offer. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
+                db.collection("jobOffers").add(j).addOnSuccessListener(documentReference -> {
+                    db.collection("businesses").document(getIntent().getStringExtra("BUSINESS_ID")).update("jobOffers", FieldValue.arrayUnion(documentReference.getId()));
+                    Toast.makeText(this, "JobOffer added.", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(documentReference -> Toast.makeText(this, "Invalid Job Offer. If this is a mistake, report this as a bug.", Toast.LENGTH_SHORT).show());
 
                 try {
                     TimeUnit.MILLISECONDS.sleep(250);
@@ -176,12 +157,9 @@ public class BusinessActivity extends AppCompatActivity {
                     interruptedException.printStackTrace();
                 }
 
-                db.collection("jobOffers").document(fuser.getUid()).update("businessID", getIntent().getStringExtra("BUSINESS_ID"));
-                db.collection("jobOffers").document(fuser.getUid()).update("jobTitle", position.getText().toString());
-                db.collection("jobOffers").document(fuser.getUid()).update("jobDescription", description.getText().toString());
-                db.collection("jobOffers").document(fuser.getUid()).update("link", link.getText().toString());
                 createJobOfferDialog.dismiss();
-
+                finish();
+                startActivity(getIntent());
             });
             createJobOfferDialog.show();
         });

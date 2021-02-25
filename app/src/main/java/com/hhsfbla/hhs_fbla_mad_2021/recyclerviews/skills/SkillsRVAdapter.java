@@ -63,7 +63,6 @@ public class SkillsRVAdapter extends RecyclerView.Adapter<SkillsRVAdapter.Static
             super(skillView);
             skillName = skillView.findViewById(R.id.skill_skill_name);
             skillLayout =  skillView.findViewById(R.id.skill_layout);
-
         }
     }
 }
