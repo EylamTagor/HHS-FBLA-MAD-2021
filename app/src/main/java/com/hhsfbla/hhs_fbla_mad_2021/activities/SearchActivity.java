@@ -4,31 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.notifs.NotificationsRVAdapter;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.notifs.NotificationsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.search.SearchRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.search.SearchRVModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
+public class SearchActivity extends AppCompatActivity implements SearchRVAdapter.OnItemClickListener {
     private FirebaseFirestore db;
 
     private RecyclerView searchResults;
@@ -57,6 +52,7 @@ public class SearchActivity extends AppCompatActivity {
         businessList = new ArrayList<>();
         searchResults.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         searchRVAdapter = new SearchRVAdapter(searches);
+        searchRVAdapter.setOnItemClickListener(this);
         searchResults.setAdapter(searchRVAdapter);
 
         // adding users
@@ -81,19 +77,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-//        searches.add(new SearchRVModel(new User("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new Business("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new User("Ayush S", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new Business("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new User("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new Business("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new User("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new Business("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new User("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new Business("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new User("Joe mama", "joemama@gmail.com")));
-//        searches.add(new SearchRVModel(new Business("Joe mama", "joemama@gmail.com")));
-
         //Back button functionality, go back to home page.
         backButton = findViewById(R.id.search_back);
         backButton.setOnClickListener(v -> {
@@ -115,5 +98,27 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    /**
+     * Specifies the action after clicking on the RecyclerView that utilizes this adapter
+     *
+     * @param snapshot the user or business pulled from Firebase Firestore, formatted as a DocumentSnapshot
+     */
+    @Override
+    public void onItemClick(DocumentSnapshot snapshot, int position, boolean isUser) {
+        if (isUser) {
+            Intent intent = new Intent(SearchActivity.this, OtherProfileActivity.class);
+            intent.putExtra("FROM_ACTIVITY", "SearchActivity");
+            intent.putExtra("USER_ID", snapshot.getId());
+            Toast.makeText(this, "UserID: " + snapshot.getId(), Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(SearchActivity.this, BusinessActivity.class);
+            intent.putExtra("FROM_ACTIVITY", "SearchActivity");
+            intent.putExtra("BUSINESS_ID", snapshot.getId());
+            Toast.makeText(this, "BusinessID: " + snapshot.getId(), Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+        }
     }
 }

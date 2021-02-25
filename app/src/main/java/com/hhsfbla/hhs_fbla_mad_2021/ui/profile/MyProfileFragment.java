@@ -178,6 +178,7 @@ public class MyProfileFragment extends Fragment {
                 db.collection("users").document(fbuser.getUid()).update("myBusinesses", FieldValue.arrayUnion(documentReference.getId()));
                 Intent intent = new Intent(rootView.getContext(), AddBusinessActivity.class);
                 intent.putExtra("FROM_ACTIVITY", "HomeActivity");
+                intent.putExtra("NEW_BUSINESS", true);
                 intent.putExtra("BUSINESS_ID", documentReference.getId());
                 startActivity(intent);
             });

@@ -112,7 +112,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         db = FirebaseFirestore.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
-
         //Posting button
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
