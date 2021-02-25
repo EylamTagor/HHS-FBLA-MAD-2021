@@ -163,13 +163,13 @@ public class MyProfileFragment extends Fragment {
 
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 v.getContext().startActivity(intent);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/NbedNqwVFTSXSrRQ7")), null);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1mVytYJ3PKIuxIDnuQAg4PDeZgaZE5rkHz4NipMyAZAU/edit?usp=sharing")), null);
 
         });
         reportBugButton.setOnClickListener(v -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 v.getContext().startActivity(intent);
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/document/d/1mVytYJ3PKIuxIDnuQAg4PDeZgaZE5rkHz4NipMyAZAU/edit?usp=sharing")), null);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/NbedNqwVFTSXSrRQ7")), null);
         });
 
         //Add business button
