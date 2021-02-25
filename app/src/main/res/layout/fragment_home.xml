@@ -160,4 +160,22 @@
         app:layout_constraintTop_toBottomOf="@+id/home_following_selected"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/home_not_following_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textColor="@color/Green"
+        android:textStyle="italic"
+        android:text="Looks like you're not following anybody! Press the search icon to find users"
+        android:textSize="18dp"
+        android:lineSpacingExtra="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/home_following_posts" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

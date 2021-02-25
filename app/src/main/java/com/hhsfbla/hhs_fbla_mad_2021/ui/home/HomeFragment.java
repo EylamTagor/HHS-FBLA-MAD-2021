@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -68,6 +69,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
     private PostsRVAdapter trendingPostsRVAdapter;
     private Button followingButton;
     private Button trendingButton;
+    private TextView notFollowingMessage;
     private FirebaseUser fuser;
     private FirebaseFirestore db;
     private ProgressDialog progressDialog;
@@ -82,6 +84,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
     private ArrayList<Post> followingPostsList;
     private ArrayList<PostsRVModel> trendingPostsRVModels;
     private ArrayList<Post> trendingPostsList;
+    ArrayList<String> usersFollowingID;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -93,6 +96,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Linking UI XML to fields
+        notFollowingMessage = rootView.findViewById(R.id.home_not_following_message);
         followingPostsView = rootView.findViewById(R.id.home_following_posts);
         followingPostsView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         followingButton = rootView.findViewById(R.id.home_following);
@@ -123,29 +127,36 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         //Tabs
 
         followingButton.setOnClickListener(v -> {
-            trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.NORMAL);
+            trendingButton.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
             trendingSelected.setVisibility(View.INVISIBLE);
             trendingPostsView.setVisibility(View.INVISIBLE);
             trendingButton.setAlpha(.5f);
             trendingButton.setTextColor(Color.parseColor("#F2F2F2"));
 
-            followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
+            followingButton.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             followingSelected.setVisibility(View.VISIBLE);
             followingPostsView.setVisibility(View.VISIBLE);
             followingButton.setTextColor(Color.parseColor("#10C380"));
             followingButton.setAlpha(1);
+            if(usersFollowingID.size() <= 1){
+                notFollowingMessage.setVisibility(View.VISIBLE);
+            }
+            else{
+                notFollowingMessage.setVisibility(View.GONE);
 
+            }
 
         });
         trendingButton.setOnClickListener(v -> {
-            followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
+            followingButton.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
             followingSelected.setVisibility(View.INVISIBLE);
             followingPostsView.setVisibility(View.INVISIBLE);
             followingButton.setAlpha(.5f);
             followingButton.setTextColor(Color.parseColor("#F2F2F2"));
+            notFollowingMessage.setVisibility(View.GONE);
 
 
-            trendingButton.setTypeface(trendingButton.getTypeface(), Typeface.BOLD);
+            trendingButton.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             trendingSelected.setVisibility(View.VISIBLE);
             trendingPostsView.setVisibility(View.VISIBLE);
             trendingButton.setTextColor(Color.parseColor("#10C380"));
@@ -192,7 +203,14 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         //Get the list of people that the user is following
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
-            ArrayList<String> usersFollowingID = u.getFollowing();
+            usersFollowingID = u.getFollowing();
+            if(u.getFollowing().size() <= 1){
+                notFollowingMessage.setVisibility(View.VISIBLE);
+            }
+            else{
+                notFollowingMessage.setVisibility(View.GONE);
+
+            }
             ArrayList<User> usersFollowing = new ArrayList<>();
             ArrayList<String> usersFollowingPostsID = new ArrayList<>();
 
@@ -205,7 +223,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                 for (String ID : usersFollowingID) {
                                     if (document.getId().equals(ID)) {
                                         usersFollowing.add(document.toObject(User.class));
-                                        Log.println(Log.DEBUG, "adsd", "Following " + usersFollowing.size());
                                         break;
                                     }
 
@@ -213,6 +230,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
 
                             }
+
                             //Add all the IDs of the posts of the users that user follows
                             for (User user : usersFollowing) {
                                 for (String post : user.getMyPosts()) {
