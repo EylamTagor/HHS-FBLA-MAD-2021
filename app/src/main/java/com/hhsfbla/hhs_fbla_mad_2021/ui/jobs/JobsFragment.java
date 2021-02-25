@@ -15,11 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs.JobsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs.JobsRVModel;
@@ -30,6 +32,8 @@ import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
 
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class JobsFragment extends Fragment {
 
@@ -61,6 +65,33 @@ public class JobsFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+
+
+
+
+        db.collection("jobOffers")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                jobs.add(new JobsRVModel(document.toObject(JobOffer.class)));
+                            }
+                            jobsRVAdapter = new JobsRVAdapter(jobs);
+                            jobsView.setAdapter(jobsRVAdapter);
+                        } else {
+
+                        }
+                    }
+                });
+
+
+
+
+
 
 
  /*       jobs.add(new JobsRVModel(new JobOffer("112343211dds", "Backend Developer1", "https://jobs.apple.com/en-us/details/200200942/ios-macos-developer", "- Will design app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n - Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n - Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%")));
@@ -135,8 +166,7 @@ public class JobsFragment extends Fragment {
                 });
 */
 
-        jobsRVAdapter = new JobsRVAdapter(jobs);
-        jobsView.setAdapter(jobsRVAdapter);
+
         searchView = rootView.findViewById(R.id.jobs_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

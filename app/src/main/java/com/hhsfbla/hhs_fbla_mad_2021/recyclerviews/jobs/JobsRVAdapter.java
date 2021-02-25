@@ -57,7 +57,6 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull StaticRVViewHolder holder, int position) {
         JobsRVModel currentItem = jobs.get(position);
