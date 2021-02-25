@@ -16,10 +16,10 @@
         <!-- staticText--> the UI for an individual saved job. All individual elements are identifiable by their ID.
 
         <Button
-            android:layout_marginTop="15dp"
             android:id="@+id/saved_business_logo"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,16 +27,16 @@
 
         <TextView
             android:id="@+id/saved_title"
-            android:layout_width="150dp"
-            android:autoSizeTextType="uniform"
+            android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:autoSizeTextType="none"
             android:text="Software Engineer"
             android:textColor="@color/LightGrey"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/saved_business_logo"
             app:layout_constraintTop_toBottomOf="@id/saved_divider"
             app:layout_constraintVertical_bias="0" />
@@ -45,49 +45,40 @@
             android:id="@+id/saved_business_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
             android:text="Google Inc"
             android:textColor="@color/LightGrey"
             android:textSize="17sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
 
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/saved_business_logo"
             app:layout_constraintTop_toBottomOf="@id/saved_title"
             app:layout_constraintVertical_bias="0" />
 
         <Button
             android:id="@+id/job_save_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/saved_title"
-            app:layout_constraintTop_toBottomOf="@id/saved_divider"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/ic_saved"/>
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_saved"
+            app:layout_constraintEnd_toStartOf="@+id/saved_apply_button"
+            app:layout_constraintTop_toBottomOf="@id/saved_divider" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/saved_apply_button"
-            android:layout_marginTop="10dp"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/apply_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toEndOf="@id/saved_title"
             app:layout_constraintTop_toBottomOf="@id/saved_divider"
-            app:layout_constraintVertical_bias="1"
-             />
+            app:layout_constraintVertical_bias="1" />
         <View
             android:id="@+id/saved_divider"
             android:layout_width="match_parent"
