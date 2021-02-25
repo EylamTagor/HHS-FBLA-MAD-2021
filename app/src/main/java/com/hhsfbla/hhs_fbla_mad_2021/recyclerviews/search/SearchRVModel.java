@@ -7,6 +7,7 @@ import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 
 public class SearchRVModel {
 
+    private String id;
     private User user;
     private Business business;
     private boolean isUser;
@@ -17,25 +18,32 @@ public class SearchRVModel {
             return user.getName();
         return business.getName();
     }
+
     public String getHeader() {
         if(isUser)
             return user.getName();
         return "Business";
     }
+
     public String getPfp() {
         if(isUser)
             return user.getPfp();
         return business.getLogo();
     }
 
-
-
-    public SearchRVModel(User user) {
-        this.user = user;
-        isUser = true;
+    private String getId() {
+        return id;
     }
-    public SearchRVModel(Business business) {
+
+    public SearchRVModel(User user, String id) {
+        isUser = true;
+        this.user = user;
+        this.id = id;
+    }
+
+    public SearchRVModel(Business business, String id) {
         isUser = false;
         this.business = business;
+        this.id = id;
     }
 }
