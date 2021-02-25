@@ -18,6 +18,7 @@ import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
+import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.search.SearchRVModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,14 @@ public class PeopleRVAdapter extends RecyclerView.Adapter<PeopleRVAdapter.RVView
         return people.size();
     }
 
+    /**
+     * Updates the list of users using a new list
+     *
+     * @param people new list to replace the old search list
+     */
+    public void setSearches(List<PeopleRVModel> people) {
+        this.people = people;
+    }
 
     public class RVViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
