@@ -99,6 +99,9 @@ public class MyProfileFragment extends Fragment {
     private Button copyrightInfoButton;
     private Button reportBugButton;
 
+    public MyProfileFragment() {
+    }
+
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
     }
@@ -172,7 +175,7 @@ public class MyProfileFragment extends Fragment {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/NbedNqwVFTSXSrRQ7")), null);
         });
 
-        //Add business button
+        // Add business button
         addBusinessButton.setOnClickListener(v -> {
             db.collection("businesses").add(new Business()).addOnSuccessListener(documentReference -> {
                 db.collection("users").document(fbuser.getUid()).update("myBusinesses", FieldValue.arrayUnion(documentReference.getId()));

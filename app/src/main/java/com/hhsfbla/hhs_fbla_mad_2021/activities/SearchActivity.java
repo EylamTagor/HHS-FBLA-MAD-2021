@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
@@ -25,6 +27,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class SearchActivity extends AppCompatActivity implements SearchRVAdapter.OnItemClickListener {
     private FirebaseFirestore db;
+    private FirebaseUser fuser;
 
     private RecyclerView searchResults;
     private Button backButton;
@@ -44,6 +47,7 @@ public class SearchActivity extends AppCompatActivity implements SearchRVAdapter
         setContentView(R.layout.activity_search);
 
         db = FirebaseFirestore.getInstance();
+        fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         //Setting up the searches recycler view. Repeats search after search in rows.
         searchResults = findViewById(R.id.search_results);
@@ -108,16 +112,20 @@ public class SearchActivity extends AppCompatActivity implements SearchRVAdapter
     @Override
     public void onItemClick(DocumentSnapshot snapshot, int position, boolean isUser) {
         if (isUser) {
-            Intent intent = new Intent(SearchActivity.this, OtherProfileActivity.class);
-            intent.putExtra("FROM_ACTIVITY", "SearchActivity");
-            intent.putExtra("USER_ID", snapshot.getId());
-            Toast.makeText(this, "UserID: " + snapshot.getId(), Toast.LENGTH_SHORT).show();
-            startActivity(intent);
+            if (snapshot.getId().equals(fuser.getUid())) {
+                Intent intent = new Intent(SearchActivity.this, HomeActivity.class);
+                intent.putExtra("fragmentToLoad", "MyProfileFragment");
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(SearchActivity.this, OtherProfileActivity.class);
+                intent.putExtra("FROM_ACTIVITY", "SearchActivity");
+                intent.putExtra("USER_ID", snapshot.getId());
+                startActivity(intent);
+            }
         } else {
             Intent intent = new Intent(SearchActivity.this, BusinessActivity.class);
             intent.putExtra("FROM_ACTIVITY", "SearchActivity");
             intent.putExtra("BUSINESS_ID", snapshot.getId());
-            Toast.makeText(this, "BusinessID: " + snapshot.getId(), Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }
     }
