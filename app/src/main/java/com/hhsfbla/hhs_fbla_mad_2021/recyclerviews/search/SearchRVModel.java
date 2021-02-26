@@ -21,8 +21,8 @@ public class SearchRVModel {
 
     public String getHeader() {
         if(isUser)
-            return user.getName();
-        return "Business";
+            return user.getJobTitle();
+        return business.getWebsite();
     }
 
     public String getPfp() {
