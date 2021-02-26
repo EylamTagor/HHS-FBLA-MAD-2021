@@ -53,10 +53,21 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
     private ArrayList<PeopleRVModel> followersRVModels;
     private List<User> followersPeopleList;
 
+    /**
+     * Returns a new Instance of the PeopleFragment
+     * @return a new Instance of the PeopleFragment
+     */
     public static PeopleFragment newInstance() {
         return new PeopleFragment();
     }
 
+    /**
+     * Initializations when the View is first created. connects UI to backend.
+     * @param inflater The LayoutInflater
+     * @param container The ViewGroup
+     * @param savedInstanceState The Bundle passed into this fragment
+     * @return Returns the View
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -149,7 +160,10 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
 
         return rootView;
     }
-
+    /**
+     * Runs when the activity is created
+     * @param savedInstanceState The Bundle passed into this fragment
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -161,7 +175,7 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
      * Specifies the action after clicking on the RecyclerView that utilizes this adapter
      *
      * @param snapshot the user or business pulled from Firebase Firestore, formatted as a DocumentSnapshot
-     * @param position
+     * @param position the position of the clicked item
      */
     @Override
     public void onItemClick(DocumentSnapshot snapshot, int position) {
