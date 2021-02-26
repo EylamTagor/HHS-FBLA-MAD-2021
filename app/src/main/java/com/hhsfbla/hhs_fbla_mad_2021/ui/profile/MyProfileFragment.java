@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,73 +24,54 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.AddBusinessActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.BusinessActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.LoginActivity;
+import com.hhsfbla.hhs_fbla_mad_2021.activities.OnboardingActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Business;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
+import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVModel;
-import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.my_businesses.MyBusinessesRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.my_businesses.MyBusinessesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.skills.SkillsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.skills.SkillsRVModel;
-import com.hhsfbla.hhs_fbla_mad_2021.activities.LoginActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.activities.OnboardingActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Experience;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.util.NonScrollingLLM;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter.OnItemClickListener {
-
     private MyProfileViewModel mViewModel;
-    //private String name;
-    //private String header;
-    //private int followerCount;
-    //private int followingCount;
-    //private ArrayList<Education> educations;
     private ArrayList<String> skills;
     private ArrayList<String> achievements;
-
     private RecyclerView experiencesView;
     private RecyclerView educationView;
     private RecyclerView skillsView;
     private RecyclerView myBusinessesView;
-
-
     private ExperiencesRVAdapter experiencesRVAdapter;
     private List<Experience> experienceList;
     private ArrayList<ExperiencesRVModel> experienceRVModels;
-
     private EducationRVAdapter educationRVAdapter;
     private List<Education> educationList;
     private ArrayList<EducationRVModel> educationRVModels;
-
-
     private SkillsRVAdapter skillsRVAdapter;
     private List<String> skillList;
     private ArrayList<SkillsRVModel> skillsRVModels;
-
     private MyBusinessesRVAdapter myBusinessesRVAdapter;
     private List<Business> myBusinessesList;
     private ArrayList<MyBusinessesRVModel> myBusinessesRVModels;
-
-
     private User user;
     private FirebaseUser fbuser;
     private FirebaseFirestore db;
-
     private CircleImageView pfp;
     private TextView name, header, about, vision, followerCount;
 
@@ -109,8 +89,9 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
     public MyProfileFragment() {
     }
 
-     /**
+    /**
      * Returns a new Instance of the ProfileFragment
+     *
      * @return a new Instance of the ProfileFragment
      */
     public static MyProfileFragment newInstance() {
@@ -119,8 +100,9 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
 
     /**
      * Initializations when the View is first created. connects UI to backend.
-     * @param inflater The LayoutInflater
-     * @param container The ViewGroup
+     *
+     * @param inflater           The LayoutInflater
+     * @param container          The ViewGroup
      * @param savedInstanceState The Bundle passed into this fragment
      * @return Returns the View
      */
@@ -128,6 +110,8 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.my_profile_fragment, container, false);
+
+        //inits
         experiencesView = rootView.findViewById(R.id.my_profile_experiences);
         experiencesView.setLayoutManager(new NonScrollingLLM(getActivity()));
         skillsView = rootView.findViewById(R.id.my_profile_skills);
@@ -136,10 +120,8 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
         myBusinessesView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         educationView = rootView.findViewById(R.id.my_profile_education);
         educationView.setLayoutManager(new NonScrollingLLM(getActivity()));
-
         copyrightInfoButton = rootView.findViewById(R.id.my_profile_view_copyright);
         reportBugButton = rootView.findViewById(R.id.my_profile_report_bug);
-
         pfp = rootView.findViewById(R.id.pfpImage);
         name = rootView.findViewById(R.id.my_profile_name);
         header = rootView.findViewById(R.id.my_profile_header);
@@ -150,6 +132,7 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
 
         db = FirebaseFirestore.getInstance();
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
+        //get pfp from firebase
         db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
             name.setText(u.getName());
@@ -157,7 +140,6 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
             about.setText(u.getDescription());
             vision.setText(u.getSocialVision());
             followerCount.setText("" + (u.getFollowers().size() - 1));
-
             if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase("")) {
                 Picasso.get().load(Uri.parse(u.getPfp())).into(pfp);
             } else {
@@ -165,6 +147,7 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
             }
         });
 
+        //edit button functionality, take to onboarding for editing
         editButton = rootView.findViewById(R.id.my_profile_edit);
         editButton.setOnClickListener(v -> {
             Intent intent = new Intent(rootView.getContext(), OnboardingActivity.class);
@@ -172,6 +155,7 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
             getContext().startActivity(intent);
         });
 
+        //signs user out
         signOutButton = rootView.findViewById(R.id.my_profile_sign_out);
         signOutButton.setOnClickListener(v -> {
             AuthUI.getInstance().signOut(getContext()).addOnCompleteListener(task -> {
@@ -195,7 +179,7 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
             });
         });
 
-        // Experiences RV
+        //init Experiences RV
         experienceList = new ArrayList<>();
         experienceRVModels = new ArrayList<>();
         experiencesRVAdapter = new ExperiencesRVAdapter(experienceRVModels);
@@ -213,7 +197,7 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
                 });
         });
 
-        // Education RV
+        //init Education RV
         educationList = new ArrayList<>();
         educationRVModels = new ArrayList<>();
         educationRVAdapter = new EducationRVAdapter(educationRVModels);
@@ -221,7 +205,7 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
         db.collection("users").document(fbuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             final User u = documentSnapshot.toObject(User.class);
 
-            if(u.getEducation() != null) {
+            if (u.getEducation() != null) {
                 for (String id : u.getEducation())
                     db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
                         final Education e = documentSnapshot1.toObject(Education.class);
@@ -233,7 +217,7 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
             }
         });
 
-        // Skills RV
+        //init Skills RV
         skillList = new ArrayList<>();
         skillsRVModels = new ArrayList<>();
         skillsRVAdapter = new SkillsRVAdapter(skillsRVModels);
@@ -249,7 +233,7 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
             }
         });
 
-        //my Businesses RV
+        //init my Businesses RV
         myBusinessesList = new ArrayList<>();
         myBusinessesRVModels = new ArrayList<>();
         myBusinessesRVAdapter = new MyBusinessesRVAdapter(myBusinessesRVModels);
@@ -272,6 +256,7 @@ public class MyProfileFragment extends Fragment implements MyBusinessesRVAdapter
 
     /**
      * Runs when the activity is created
+     *
      * @param savedInstanceState The Bundle passed into this fragment
      */
     @Override

@@ -27,6 +27,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * Responsible for displaying the search items in the search view. It also handles the filtering based on user inputted text.
+ */
 public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVViewHolder> implements Filterable {
     private List<SearchRVModel> searches;
     private ArrayList<SearchRVModel> searchesFull;
@@ -36,6 +39,10 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVView
 
     int row_index = -1;
 
+    /**
+     * Initializes the fields in the adapter. Constructor
+     * @param items the search items passed in that need to be displayed.
+     */
     public SearchRVAdapter(ArrayList<SearchRVModel> items) {
         this.searches = items;
         searchesFull = new ArrayList<>(items);
@@ -73,6 +80,7 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVView
         db = FirebaseFirestore.getInstance();
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
 
+        //Get the profile pic of the users in the search
         db.collection("users").document(currentItem.getId()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
 
@@ -82,7 +90,7 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVView
             }
 
         });
-
+        //Get the profile pic of the businesses in the search
         db.collection("businesses").document(currentItem.getId()).get().addOnSuccessListener(documentSnapshot -> {
             Business u = documentSnapshot.toObject(Business.class);
 
@@ -91,10 +99,7 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVView
                     Picasso.get().load(Uri.parse(u.getLogo())).into(holder.pfp);
                 }
             }
-
-
         });
-
     }
 
     @Override
@@ -125,6 +130,11 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVView
     //Creates the search filter
     private Filter searchesFilter = new Filter() {
 
+        /**
+         * Filters the search results based on the inputted text
+         * @param charSequence the text that the user inputs, the constraint used to filter the data
+         * @return the filtered results from the operation
+         */
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<SearchRVModel> filteredList = new ArrayList<>();
@@ -147,7 +157,7 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVView
 
         /**
          * publishes the filter results, updates the list of the search results.
-         * @param charSequence
+         * @param charSequence the constraint used to filter the data
          * @param filterResults the results of the filter.
          */
         @Override
@@ -159,19 +169,27 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVView
     };
 
     /**
-     * The ViewHolder will be used to display items. Links the holder to the XML file
+     * The ViewHolder will be used to display items.
      */
     public class RVViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private TextView header;
         private CircleImageView pfp;
 
+        /**
+         *
+         * Initalizes the recyclerview view holder. Links XML.
+         *
+         * @param searchView The view type to be used. View type references search item XML.
+         * @return the view holder to be used
+         */
         public RVViewHolder(@NonNull View searchView) {
             super(searchView);
             name = searchView.findViewById(R.id.search_item_name);
             pfp = searchView.findViewById(R.id.search_item_pfp);
             header = searchView.findViewById(R.id.search_item_header);
 
+            //Handling transition to respective user/biz page when clicked
             searchView.setOnClickListener(v -> {
                 if (getAdapterPosition() != RecyclerView.NO_POSITION && listener != null) {
                     if (searches.get(getAdapterPosition()).isUser())

@@ -19,13 +19,18 @@ public class SkillsRVAdapter extends RecyclerView.Adapter<SkillsRVAdapter.Static
     private ArrayList<SkillsRVModel> skills;
     int row_index = -1;
 
+    /**
+     * Constructor: takes in the skills models to be displayed and initializes field
+     * @param items skills items to be displayed
+     */
     public SkillsRVAdapter(ArrayList<SkillsRVModel> items) {
         this.skills = items;
     }
 
+
     /**
      *
-     * The ViewHolder will be used to display items of the adapter using onBindViewHolder.
+     * Creates the  View holder to be used. The ViewHolder will be used to display items of the adapter using onBindViewHolder.
      *
      * @param parent The ViewGroup into which the new View will be added after it is bound to an adapter position.
      * @param viewType  The view type of the new View.
@@ -54,8 +59,6 @@ public class SkillsRVAdapter extends RecyclerView.Adapter<SkillsRVAdapter.Static
     }
 
     /**
-     *
-     *
      * @return The size of the list of skill models
      */
     @Override
@@ -82,6 +85,13 @@ public class SkillsRVAdapter extends RecyclerView.Adapter<SkillsRVAdapter.Static
         TextView skillName;
         LinearLayout skillLayout;
 
+        /**
+         *
+         * The ViewHolder will be used to display items of the adapter using onBindViewHolder.
+         *
+         * @param skillView The view type to be used. View type references skill XML.
+         * @return the view holder to be used
+         */
         public StaticRVViewHolder(@NonNull View skillView) {
             super(skillView);
             skillName = skillView.findViewById(R.id.skill_skill_name);

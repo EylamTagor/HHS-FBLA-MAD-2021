@@ -4,10 +4,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,8 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.CallbackManager;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,25 +32,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1.StructuredQuery;
-import com.google.firestore.v1.StructuredQuery.Order;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.HomeActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.OtherProfileActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.Education;
-import com.hhsfbla.hhs_fbla_mad_2021.classes.JobOffer;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVAdapter;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.education.EducationRVModel;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.experiences.ExperiencesRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.saved.SavedRVAdapter;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.saved.SavedRVModel;
-
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -89,6 +73,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
     /**
      * Returns a new Instance of the HomeFragment
+     *
      * @return a new Instance of the HomeFragment
      */
     public static HomeFragment newInstance() {
@@ -97,8 +82,9 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
     /**
      * Initializations when the View is first created. connects UI to backend.
-     * @param inflater The LayoutInflater
-     * @param container The ViewGroup
+     *
+     * @param inflater           The LayoutInflater
+     * @param container          The ViewGroup
      * @param savedInstanceState The Bundle passed into this fragment
      * @return Returns the View
      */
@@ -138,7 +124,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         postingDialog = new Dialog(getActivity());
 
 
-        //Tabs
+        //Transition to following tab
 
         followingButton.setOnClickListener(v -> {
             initFollowing();
@@ -158,6 +144,8 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                 followingPostsRVModels = new ArrayList<>();
             }
         });
+
+        //Transition to trending tab
         trendingButton.setOnClickListener(v -> {
             initTrending();
             followingSelected.setVisibility(View.INVISIBLE);
@@ -185,6 +173,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         postButton.setOnClickListener(v -> {
             postingDialog.setContentView(R.layout.posting_dialog);
 
+            //linking inputted text to post
             TextInputEditText title = postingDialog.findViewById(R.id.new_post_title);
             TextInputEditText hashtag = postingDialog.findViewById(R.id.new_post_hashtag);
             TextInputEditText content = postingDialog.findViewById(R.id.new_post_content);
@@ -210,7 +199,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
                 }
-
+                //updating firebase database
                 db.collection("posts").document(fuser.getUid()).update("title", title.getText().toString());
                 db.collection("posts").document(fuser.getUid()).update("hashtag", hashtag.getText().toString());
                 db.collection("posts").document(fuser.getUid()).update("content", content.getText().toString());
@@ -234,6 +223,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
     /**
      * Runs when the activity is created
+     *
      * @param savedInstanceState The Bundle passed into this fragment
      */
     @Override
@@ -285,7 +275,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
     }
 
     private void initFollowing() {
-        //FollowingPostsRV
+        //FollowingPostsRV init
         followingPostsRVModels = new ArrayList<>();
         followingPostsRVAdapter = new PostsRVAdapter(followingPostsRVModels);
         followingPostsView.setAdapter(followingPostsRVAdapter);
@@ -363,24 +353,24 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
     }
 
     private void initTrending() {
-        // trending Posts RV
 
+        // trending Posts RV init
         trendingPostsRVModels = new ArrayList<>();
         trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
         trendingPostsView.setAdapter(trendingPostsRVAdapter);
-
         trendingPostsList = new ArrayList<>();
 
+        //getting the posts from firebase
         db.collection("posts").get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            trendingPostsList.add(document.toObject(Post.class));
-                            trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                            trendingPostsRVAdapter.setPosts(trendingPostsList);
-                            trendingPostsRVAdapter.sortTrendingPosts();
-                            trendingPostsRVAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    trendingPostsList.add(document.toObject(Post.class));
+                    trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                    trendingPostsRVAdapter.setPosts(trendingPostsList);
+                    trendingPostsRVAdapter.sortTrendingPosts();
+                    trendingPostsRVAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 }

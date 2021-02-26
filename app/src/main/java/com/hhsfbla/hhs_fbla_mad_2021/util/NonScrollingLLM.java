@@ -11,6 +11,7 @@ public class NonScrollingLLM extends LinearLayoutManager {
 
     /**
      * Creates a new instance of this class with the following paramete, to be attaced to a RecyclerView
+     *
      * @param context the activity or fragment that contains the RecyclerView
      */
     public NonScrollingLLM(Context context) {
@@ -18,7 +19,6 @@ public class NonScrollingLLM extends LinearLayoutManager {
     }
 
     /**
-     *
      * @return true if scrolling is enabled within the attached RecyclerView, otherwise false
      */
     @Override

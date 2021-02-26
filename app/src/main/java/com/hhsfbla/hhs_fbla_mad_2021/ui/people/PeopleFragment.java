@@ -20,17 +20,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
-import com.hhsfbla.hhs_fbla_mad_2021.activities.BusinessActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.activities.HomeActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.activities.OtherProfileActivity;
-import com.hhsfbla.hhs_fbla_mad_2021.activities.SearchActivity;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.people.PeopleRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.people.PeopleRVModel;
-import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.search.SearchRVModel;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +49,7 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
 
     /**
      * Returns a new Instance of the PeopleFragment
+     *
      * @return a new Instance of the PeopleFragment
      */
     public static PeopleFragment newInstance() {
@@ -63,8 +58,9 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
 
     /**
      * Initializations when the View is first created. connects UI to backend.
-     * @param inflater The LayoutInflater
-     * @param container The ViewGroup
+     *
+     * @param inflater           The LayoutInflater
+     * @param container          The ViewGroup
      * @param savedInstanceState The Bundle passed into this fragment
      * @return Returns the View
      */
@@ -88,7 +84,7 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
         db = FirebaseFirestore.getInstance();
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //Tabs
+        //transition to followers tab
         followersButton.setOnClickListener(v -> {
             followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
             followingSelected.setVisibility(View.INVISIBLE);
@@ -102,7 +98,7 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
             followersButton.setTextColor(Color.parseColor("#10C380"));
             followersButton.setAlpha(1);
         });
-
+        //transition to following tab
         followingButton.setOnClickListener(v -> {
             followersButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
             followersSelected.setVisibility(View.INVISIBLE);
@@ -160,8 +156,10 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
 
         return rootView;
     }
+
     /**
      * Runs when the activity is created
+     *
      * @param savedInstanceState The Bundle passed into this fragment
      */
     @Override

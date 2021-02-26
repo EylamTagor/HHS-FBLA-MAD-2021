@@ -137,7 +137,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         pfp.setOnClickListener(v -> openFileChooser());
 
-        // dialogs
+        // creating the experience dialog to create experience
         addExperience.setOnClickListener(v -> {
             experienceDialog.setContentView(R.layout.add_experience_dialog);
 
@@ -192,6 +192,7 @@ public class OnboardingActivity extends AppCompatActivity {
             experienceDialog.show();
         });
 
+        //creating education dialog to create education
         addEducation.setOnClickListener(v -> {
             educationDialog.setContentView(R.layout.add_education_dialog);
 
@@ -281,7 +282,7 @@ public class OnboardingActivity extends AppCompatActivity {
                 uploadFile(fuser.getUid());
         });
 
-        // recyclerview stuff
+        // recyclerview for experience
         experienceList = new ArrayList<>();
         experienceRVModels = new ArrayList<>();
         experiences.setLayoutManager(new NonScrollingLLM(this));

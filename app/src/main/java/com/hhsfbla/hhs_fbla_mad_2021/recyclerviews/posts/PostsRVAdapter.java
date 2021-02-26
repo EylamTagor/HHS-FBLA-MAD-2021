@@ -30,18 +30,28 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHolder> {
     private ArrayList<PostsRVModel> posts;
     private PostsRVAdapter.OnItemClickListener listener;
-
     private FirebaseUser fuser;
     private FirebaseFirestore db;
 
-    int row_index = -1;
-
+    /**
+     * Constructor: initializes fields needed to display the models.
+     * @param items post models to be displayed
+     */
     public PostsRVAdapter(ArrayList<PostsRVModel> items) {
         posts = items;
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
     }
 
+
+    /**
+     *
+     * The ViewHolder will be used to display items of the adapter using onBindViewHolder.
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to an adapter position.
+     * @param viewType  The view type of the new View.
+     * @return the view holder to be used
+     */
     @NonNull
     @Override
     public RVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,26 +60,32 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         return RVViewHolder;
     }
 
+    /**
+     *Called by RecyclerView to display the data at the specified position.
+     *This method should update the contents of the RecyclerView.ViewHolder.itemView to reflect the item at the given position.
+     *
+     * @param holder The ViewHolder which should be updated to represent the contents of the item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull RVViewHolder holder, int position) {
         PostsRVModel currentItem = posts.get(position);
 
-
+        //retrieving the data of the post from firebase
         db.collection("users").document(currentItem.getUserID()).get().addOnSuccessListener(documentSnapshot -> {
             User u = documentSnapshot.toObject(User.class);
             holder.name.setText(u.getName());
             holder.jobTitle.setText(u.getJobTitle());
 
+            //getting the profile page
             if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase("")) {
                 Picasso.get().load(Uri.parse(u.getPfp())).into(holder.pfp);
             } else {
                 Picasso.get().load(fuser.getPhotoUrl()).into(holder.pfp);
             }
+
+            // setting initial state of like button (liked vs not liked)
             posts.get(position).setIsLiked(false);
-
-
-            //When one post is liked, others stay filled in, meaning their setIsLiked is gettinf screwed up.
-
             db.collection("posts")
                     .get()
                     .addOnCompleteListener(task -> {
@@ -100,11 +116,20 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         holder.title.setText(currentItem.getTitle());
     }
 
+    /**
+     * gets the size of the list of post models
+     * @return the size of the list of post models
+     */
     @Override
     public int getItemCount() {
         return posts.size();
     }
 
+    /**
+     *
+     * The ViewHolder will be used to display items of the adapter using onBindViewHolder.
+     *
+     */
     public class RVViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView jobTitle;
@@ -116,6 +141,13 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         CircleImageView pfp;
         LinearLayout postLayout;
 
+        /**
+         *
+         * Creates the viewholder and sets the layout to the XML post layout
+         *
+         *
+         * @param postView The post xml layout to be used.
+         */
         public RVViewHolder(@NonNull View postView) {
             super(postView);
             name = postView.findViewById(R.id.post_name);
@@ -137,6 +169,8 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
             //Handling liking functionality
             likes.setOnClickListener(view -> {
                 int num = getAdapterPosition();
+
+                //If the post is not currently liked.
                 if (!posts.get(num).isLiked()) {
                     likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filled_heart, 0, 0, 0);
                     posts.get(num).setIsLiked(true);
@@ -146,16 +180,16 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-
+                                        //verify that we are referencing the right post
                                         if (document.toObject(Post.class).getTimePosted() == (posts.get(num).getTime())) {
-
+                                            //Updating the post in the firebase database
                                             db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
                                                 Post p = documentSnapshot.toObject(Post.class);
                                                 p.like(fuser.getUid());
                                                 likes.setText("" + p.getLikes());
                                                 db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(aVoid -> Log.d("SUCCESS", "DocumentSnapshot successfully written!"));
-
                                             });
+                                            //Updating the user in the firebase database
                                             db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
                                                 User u = documentSnapshot.toObject(User.class);
                                                 u.likePost(document.getId());
@@ -168,22 +202,18 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                             });
 
 
+                    //If the post is currently liked, we need to unlike
                 } else {
-                    Log.println(Log.DEBUG, "asdasd", "chicken moment");
                     likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_no_heart, 0, 0, 0);
                     posts.get(num).setIsLiked(false);
-
                     db.collection("posts")
                             .get()
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
-                                    Log.println(Log.DEBUG, "sad", "JOe weller");
-
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.println(Log.DEBUG, "sad", "Document Time: " + document.toObject(Post.class).getTimePosted() + " post Time " + (posts.get(num).getTime()));
-
+                                        //verify that we are referencing the right post
                                         if (document.toObject(Post.class).getTimePosted() == (posts.get(num).getTime())) {
-
+                                            //Updating the post in the firebase database
                                             db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
                                                 Post p = documentSnapshot.toObject(Post.class);
                                                 p.unlike(fuser.getUid());
@@ -191,6 +221,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                                                 db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(aVoid -> Log.d("SUCCESS", "DocumentSnapshot successfully written!"));
 
                                             });
+                                            //Updating the user in the firebase database
                                             db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
                                                 User u = documentSnapshot.toObject(User.class);
                                                 u.removeLikedPost(document.getId());
@@ -208,7 +239,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
 
     }
 
-    //Bubble sort to sort the following posts by most recent
+    //Bubble sort algorithm to sort the following posts by most recent
     public void sortFollowingPosts() {
 
         for (int i = 0; i < posts.size() - 1; i++) {
@@ -223,7 +254,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
         }
     }
 
-    //Bubble sort to sort the trending posts by most likes
+    //Bubble sort algorithm to sort the trending posts by most likes
     public void sortTrendingPosts() {
 
         for (int i = 0; i < posts.size() - 1; i++) {
@@ -239,6 +270,10 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
 
     }
 
+    /**
+     * Sets the list of posts to what is pulled from firebase
+     * @param posts the posts that are in the list to be displayed in the home fragment
+     */
     public void setPosts(List<Post> posts) {
         this.posts.clear();
 
