@@ -1,4 +1,5 @@
 package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.jobs;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,8 +89,10 @@ public class JobsRVAdapter extends RecyclerView.Adapter<JobsRVAdapter.StaticRVVi
             if (biz.getLogo() != null && !biz.getLogo().equalsIgnoreCase("")) {
                 Picasso.get().load(Uri.parse(biz.getLogo())).into(holder.businessLogo);
             }
+            else{
+                holder.businessLogo.setImageResource(R.drawable.ic_no_business_logo);
+            }
         });
-
     }
 
 

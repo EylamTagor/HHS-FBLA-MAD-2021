@@ -97,6 +97,9 @@ public class BusinessActivity extends AppCompatActivity {
                     if (biz.getLogo() != null && !biz.getLogo().equalsIgnoreCase("")) {
                         Picasso.get().load(Uri.parse(biz.getLogo())).into(logo);
                     }
+                    else {
+                        logo.setImageResource(R.drawable.ic_no_business_logo);
+                    }
                 }
 
                 if (biz.getCSRLink().equals("")) {

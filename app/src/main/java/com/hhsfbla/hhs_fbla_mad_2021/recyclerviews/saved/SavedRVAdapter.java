@@ -30,10 +30,17 @@ public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRV
     private FirebaseUser fbuser;
     private FirebaseFirestore db;
 
+    /**
+     * Initializes the fields in the adapter. Constructor
+     * @param items the savedJobs items passed in that need to be displayed.
+     */
     public SavedRVAdapter(ArrayList<SavedRVModel> items) {
         this.savedJobs = items;
     }
 
+    /**
+     * Interface that handles and coordinates clicking
+     */
     public interface ClickListener {
 
         void onPositionClicked(int position);
@@ -42,6 +49,14 @@ public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRV
     }
 
 
+    /**
+     *
+     * The ViewHolder will be used to display items of the adapter using onBindViewHolder.
+     *
+     * @param parent The ViewGroup into which the new View will be added after it is bound to an adapter position.
+     * @param viewType  The view type of the new View.
+     * @return the view holder to be used
+     */
     @NonNull
     @Override
     public StaticRVViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,7 +65,13 @@ public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRV
         return staticRVViewHolder;
     }
 
-
+    /**
+     *Called by RecyclerView to display the data at the specified position.
+     *This method should update the contents of the RecyclerView.ViewHolder.itemView to reflect the item at the given position.
+     *
+     * @param holder The ViewHolder which should be updated to represent the contents of the item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull StaticRVViewHolder holder, int position) {
         SavedRVModel currentItem = savedJobs.get(position);
@@ -65,20 +86,25 @@ public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRV
             if (biz.getLogo() != null && !biz.getLogo().equalsIgnoreCase("")) {
                 Picasso.get().load(Uri.parse(biz.getLogo())).into(holder.businessLogo);
             }
+            else{
+                holder.businessLogo.setImageResource(R.drawable.ic_no_business_logo);
+            }
         });
-
-        //PLACEHOLDER, need to search to find business and get logo
-
-
-
     }
 
-
+    /**
+     *
+     * @return the amount of savedjob models.
+     */
     @Override
     public int getItemCount() {
         return savedJobs.size();
     }
 
+
+    /**
+     * The ViewHolder will be used to display items.
+     */
     public static class StaticRVViewHolder extends RecyclerView.ViewHolder {
         CircleImageView businessLogo;
         TextView title;
@@ -87,7 +113,13 @@ public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRV
         TextView businessName;
         LinearLayout savedJobLayout;
         String link;
-
+        /**
+         *
+         * Initalizes the recyclerview view holder. Links XML.
+         *
+         * @param savedJobView The view type to be used. View type references savedJobs item XML.
+         * @return the view holder to be used
+         */
         public StaticRVViewHolder(@NonNull View savedJobView) {
             super(savedJobView);
             apply = savedJobView.findViewById(R.id.saved_apply_button);

@@ -9,7 +9,6 @@ public class PeopleRVModel {
 
     private String id;
     private User user;
-    private Business business;
     private boolean isUser;
 
     /**
@@ -17,9 +16,7 @@ public class PeopleRVModel {
      * @return the name
      */
     public String getName() {
-        if(isUser)
-            return user.getName();
-        return business.getName();
+        return user.getName();
     }
 
     /**
@@ -27,9 +24,7 @@ public class PeopleRVModel {
      * @return the header
      */
     public String getHeader() {
-        if(isUser)
-            return user.getJobTitle();
-        return business.getWebsite();
+        return user.getJobTitle();
     }
 
     /**
@@ -37,9 +32,7 @@ public class PeopleRVModel {
      * @return the profile picture
      */
     public String getPfp() {
-        if(isUser)
-            return user.getPfp();
-        return business.getLogo();
+        return user.getPfp();
     }
 
     /**
