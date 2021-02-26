@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HHS-FBLA-MAD-2021</string>
+    <string name="app_name">Collar</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
     <string name="title_jobs">Jobs</string>
