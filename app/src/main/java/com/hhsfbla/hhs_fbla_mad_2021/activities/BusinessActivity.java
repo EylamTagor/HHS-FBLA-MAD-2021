@@ -99,9 +99,12 @@ public class BusinessActivity extends AppCompatActivity {
                     }
                 }
 
-//                CSRReportLink.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(biz.getCSRLink())), null));
-                CSRReportLink.setText(Html.fromHtml("<a href='" + biz.getCSRLink() + "'>CSR Report Link</androidx.constraintlayout.widget.ConstraintLayout</a>"));
-                CSRReportLink.setMovementMethod(LinkMovementMethod.getInstance());
+                if (biz.getCSRLink().equals("")) {
+                    CSRReportLink.setText("CSR Report Unavailable");
+                } else {
+                    CSRReportLink.setText(Html.fromHtml("<a href='" + biz.getCSRLink() + "'>CSR Report Link</androidx.constraintlayout.widget.ConstraintLayout</a>"));
+                    CSRReportLink.setMovementMethod(LinkMovementMethod.getInstance());
+                }
 
                 db.collection("jobOffers").get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
