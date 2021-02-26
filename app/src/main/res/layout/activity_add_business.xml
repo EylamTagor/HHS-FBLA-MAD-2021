@@ -133,6 +133,17 @@
                     android:textSize="18sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:text='Include the full link (e.g. "https://www.google.com/")'
+                android:textAlignment="viewStart"
+                android:textColor="@color/Green"
+                android:textStyle="italic" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/add_biz_esg_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -169,7 +180,6 @@
                 android:background="@drawable/cancel_button_border"
                 android:text="Cancel"
                 android:textColor="@color/LightGrey" />
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
