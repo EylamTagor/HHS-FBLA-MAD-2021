@@ -6,31 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".activities.LoginActivity">
 
-    <Button
-        android:id="@+id/testButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go home son"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.gms.common.SignInButton
         android:id="@+id/loginGoogleBtn"
-        android:layout_width="264dp"
+        android:layout_width="256dp"
         android:layout_height="64dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:contextClickable="false"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/testButton" />
+        app:layout_constraintBottom_toTopOf="@+id/loginFacebookButton"
+        app:layout_constraintEnd_toEndOf="@+id/loginFacebookButton"
+        app:layout_constraintStart_toStartOf="@+id/loginFacebookButton" />
 
 
     <com.facebook.login.widget.LoginButton
@@ -39,21 +25,32 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginGoogleBtn" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-<!--    <Button-->
-<!--        android:id="@+id/obbtn"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:text="OB Test"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/testButton"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/login_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_collar_tie" />
+
+    <TextView
+        android:id="@+id/login_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:text="Collar"
+        android:textColor="@color/Green"
+        android:textSize="64dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/loginGoogleBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
