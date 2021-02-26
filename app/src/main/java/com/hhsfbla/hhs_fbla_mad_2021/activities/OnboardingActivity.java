@@ -309,7 +309,7 @@ public class OnboardingActivity extends AppCompatActivity {
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             final User u = documentSnapshot.toObject(User.class);
 
-            if(u.getEducation() != null) {
+            if (u.getEducation() != null) {
                 for (String id : u.getEducation())
                     db.collection("educations").document(id).get().addOnSuccessListener(documentSnapshot1 -> {
                         final Education e = documentSnapshot1.toObject(Education.class);
@@ -361,6 +361,9 @@ public class OnboardingActivity extends AppCompatActivity {
             bitmap = rotator.getImageBitmap(imageUri);
             pfp.setImageBitmap(bitmap);
             hasImageChanged = true;
+            final StorageReference fileRef = storageReference.child(fuser.getUid());
+            byte[] file = rotator.getBytesFromBitmap(bitmap);
+            uploadTask = fileRef.putBytes(file).addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl().addOnSuccessListener(uri -> db.collection("users").document(fuser.getUid()).update("pfp", uri.toString())));
         }
     }
 

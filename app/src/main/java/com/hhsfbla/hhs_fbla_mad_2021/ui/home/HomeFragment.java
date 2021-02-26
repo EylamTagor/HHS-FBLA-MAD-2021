@@ -29,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -42,6 +43,7 @@ import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVAdapter;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClickListener {
@@ -65,11 +67,13 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
     private ShareDialog shareDialog;
     private CallbackManager callbackManager;
     private ArrayList<PostsRVModel> followingPostsRVModels;
-    private ArrayList<Post> followingPostsList;
+    private List<Post> followingPostsList;
     private ArrayList<PostsRVModel> trendingPostsRVModels;
-    private ArrayList<Post> trendingPostsList;
+    private List<Post> trendingPostsList;
     private ArrayList<String> usersFollowingID;
     private ArrayList<String> usersFollowingPostsID;
+    private ArrayList<String> usersTrendingID;
+    private ArrayList<String> usersTrendingPostsID;
 
     /**
      * Returns a new Instance of the HomeFragment
@@ -126,10 +130,11 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
         //Transition to following tab
 
+
         followingButton.setOnClickListener(v -> {
             initFollowing();
             trendingSelected.setVisibility(View.INVISIBLE);
-            trendingPostsView.setVisibility(View.INVISIBLE);
+            trendingPostsView.setVisibility(View.GONE);
             trendingButton.setAlpha(.5f);
             trendingButton.setTextColor(Color.parseColor("#F2F2F2"));
 
@@ -149,11 +154,10 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         trendingButton.setOnClickListener(v -> {
             initTrending();
             followingSelected.setVisibility(View.INVISIBLE);
-            followingPostsView.setVisibility(View.INVISIBLE);
+            followingPostsView.setVisibility(View.GONE);
             followingButton.setAlpha(.5f);
             followingButton.setTextColor(Color.parseColor("#F2F2F2"));
             notFollowingMessage.setVisibility(View.GONE);
-
 
             trendingSelected.setVisibility(View.VISIBLE);
             trendingPostsView.setVisibility(View.VISIBLE);
@@ -274,12 +278,33 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void initTrending() {
+        // trending Posts RV init
+        trendingPostsRVModels = new ArrayList<>();
+        trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
+        trendingPostsView.setAdapter(trendingPostsRVAdapter);
+        trendingPostsList = new ArrayList<>();
+        trendingPostsRVAdapter.setOnItemClickListener(this);
+
+        db.collection("posts").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                trendingPostsRVModels.add(new PostsRVModel(snapshot.toObject(Post.class)));
+                trendingPostsList.add(snapshot.toObject(Post.class));
+                trendingPostsRVModels.add(new PostsRVModel(snapshot.toObject(Post.class)));
+                trendingPostsRVAdapter.setPosts(trendingPostsList);
+                trendingPostsRVAdapter.sortTrendingPosts();
+                trendingPostsRVAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
     private void initFollowing() {
         //FollowingPostsRV init
         followingPostsRVModels = new ArrayList<>();
         followingPostsRVAdapter = new PostsRVAdapter(followingPostsRVModels);
         followingPostsView.setAdapter(followingPostsRVAdapter);
         followingPostsList = new ArrayList<>();
+        followingPostsRVAdapter.setOnItemClickListener(this);
 
         //Get the list of people that the user is following
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
@@ -333,7 +358,7 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                                                         followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
                                                         followingPostsList.add(document.toObject(Post.class));
                                                         followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                                        Log.println(Log.DEBUG, "adsd", "Loading following posts");
+//                                                        Log.println(Log.DEBUG, "adsd", "Loading following posts");
                                                         followingPostsRVAdapter.setPosts(followingPostsList);
                                                         followingPostsRVAdapter.sortFollowingPosts();
                                                         followingPostsRVAdapter.notifyDataSetChanged();
@@ -346,31 +371,9 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
                         }
                     });
 
-            Log.println(Log.DEBUG, "adsd", "Trump " + usersFollowingPostsID.size());
+//            Log.println(Log.DEBUG, "adsd", "Test " + usersFollowingPostsID.size());
 
 
-        });
-    }
-
-    private void initTrending() {
-
-        // trending Posts RV init
-        trendingPostsRVModels = new ArrayList<>();
-        trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
-        trendingPostsView.setAdapter(trendingPostsRVAdapter);
-        trendingPostsList = new ArrayList<>();
-
-        //getting the posts from firebase
-        db.collection("posts").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    trendingPostsList.add(document.toObject(Post.class));
-                    trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                    trendingPostsRVAdapter.setPosts(trendingPostsList);
-                    trendingPostsRVAdapter.sortTrendingPosts();
-                    trendingPostsRVAdapter.notifyDataSetChanged();
-                }
-            }
         });
     }
 }
