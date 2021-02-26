@@ -68,7 +68,6 @@ public class BusinessActivity extends AppCompatActivity {
         about = findViewById(R.id.business_about);
         CSRVision = findViewById(R.id.business_csr_vision);
         ESGScore = findViewById(R.id.business_ESG_score);
-        followerCount = findViewById(R.id.business_follower_count);
         CSRReportLink = findViewById(R.id.business_CSR_report_link);
         edit = findViewById(R.id.business_edit);
         delete = findViewById(R.id.business_delete_button);

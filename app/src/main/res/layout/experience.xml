@@ -20,7 +20,7 @@
         android:id="@+id/experience_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Apple Inc."
+        android:text="no business specified"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:id="@+id/experience_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Data Analyst | May 2020 - Present"
+        android:text="not specified"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,9 +51,7 @@
         android:id="@+id/experience_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="- Designed app pages in AdobeXD w/ an emphasis on user experience through divergent and convergent experimentation\n
-- Conceptualized and implemented app features in Swift UIKit and Java Android Studio to increase user retention\n
-- Coordinated interviews with Autism podcasts and blogs, increased social media engagement by 4100%"
+        android:text="Not specified"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
