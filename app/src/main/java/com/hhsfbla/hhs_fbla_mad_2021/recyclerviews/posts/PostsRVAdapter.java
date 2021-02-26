@@ -86,7 +86,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
 
                                 }
                                 if (document.toObject(Post.class).getTimePosted() == (posts.get(position).getTime())) {
-                                    holder.likes.setText("" + document.toObject(Post.class).getLikes() + " Likes");
+                                    holder.likes.setText("" + document.toObject(Post.class).getLikes());
                                 }
                             }
                         }
@@ -152,7 +152,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                                             db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
                                                 Post p = documentSnapshot.toObject(Post.class);
                                                 p.like(fuser.getUid());
-                                                likes.setText("" + p.getLikes() +" Likes");
+                                                likes.setText("" + p.getLikes());
                                                 db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(aVoid -> Log.d("SUCCESS", "DocumentSnapshot successfully written!"));
 
                                             });
@@ -187,7 +187,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                                             db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
                                                 Post p = documentSnapshot.toObject(Post.class);
                                                 p.unlike(fuser.getUid());
-                                                likes.setText("" + p.getLikes() + " Likes");
+                                                likes.setText("" + p.getLikes());
                                                 db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(aVoid -> Log.d("SUCCESS", "DocumentSnapshot successfully written!"));
 
                                             });
