@@ -85,10 +85,14 @@ public class BusinessActivity extends AppCompatActivity {
                 name.setText(biz.getName());
                 about.setText(biz.getAbout());
                 CSRVision.setText(biz.getCSRVision());
-                ESGScore.setText("" + biz.getESGScore());
+
+                if (biz.getESGScore() == -1.0)
+                    ESGScore.setText("N/A");
+                else
+                    ESGScore.setText("" + biz.getESGScore());
 
 
-                if(biz != null){
+                if (biz != null) {
                     if (biz.getLogo() != null && !biz.getLogo().equalsIgnoreCase("")) {
                         Picasso.get().load(Uri.parse(biz.getLogo())).into(logo);
                     }
