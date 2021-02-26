@@ -87,10 +87,21 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
     private ArrayList<String> usersFollowingID;
     private ArrayList<String> usersFollowingPostsID;
 
+    /**
+     * Returns a new Instance of the HomeFragment
+     * @return a new Instance of the HomeFragment
+     */
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
 
+    /**
+     * Initializations when the View is first created. connects UI to backend.
+     * @param inflater The LayoutInflater
+     * @param container The ViewGroup
+     * @param savedInstanceState The Bundle passed into this fragment
+     * @return Returns the View
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -221,6 +232,10 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         return rootView;
     }
 
+    /**
+     * Runs when the activity is created
+     * @param savedInstanceState The Bundle passed into this fragment
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

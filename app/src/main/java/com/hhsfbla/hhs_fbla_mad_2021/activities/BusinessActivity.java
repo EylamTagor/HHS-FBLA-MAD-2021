@@ -183,6 +183,9 @@ public class BusinessActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Runs when the back button is pressed and redirects the user to myProfile
+     */
     @Override
     public void onBackPressed() {
         if (getIntent().getStringExtra("FROM_ACTIVITY") != null & getIntent().getStringExtra("FROM_ACTIVITY").equals("AddBusinessActivity")) {
