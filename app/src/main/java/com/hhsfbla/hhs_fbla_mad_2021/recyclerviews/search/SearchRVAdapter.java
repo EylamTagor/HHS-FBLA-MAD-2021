@@ -64,13 +64,9 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVView
             User u = documentSnapshot.toObject(User.class);
 
             if(u != null){
-                if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase("")) {
+                if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase(""))
                     Picasso.get().load(Uri.parse(u.getPfp())).into(holder.pfp);
-                } else {
-                    Picasso.get().load(fbuser.getPhotoUrl()).into(holder.pfp);
-                }
             }
-
 
         });
 

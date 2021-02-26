@@ -1,6 +1,7 @@
 package com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.people;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.hhsfbla.hhs_fbla_mad_2021.R;
@@ -19,11 +22,14 @@ import com.hhsfbla.hhs_fbla_mad_2021.classes.Post;
 import com.hhsfbla.hhs_fbla_mad_2021.classes.User;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.posts.PostsRVModel;
 import com.hhsfbla.hhs_fbla_mad_2021.recyclerviews.search.SearchRVModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PeopleRVAdapter extends RecyclerView.Adapter<PeopleRVAdapter.RVViewHolder>{
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class PeopleRVAdapter extends RecyclerView.Adapter<PeopleRVAdapter.RVViewHolder> {
     private List<PeopleRVModel> people;
     private PeopleRVAdapter.OnItemClickListener listener;
     private FirebaseFirestore db;
@@ -50,7 +56,14 @@ public class PeopleRVAdapter extends RecyclerView.Adapter<PeopleRVAdapter.RVView
         holder.header.setText(currentItem.getHeader());
 
         //BACKEND GET PFP THIS IS A PLACEHOLDER
-        holder.pfp.setBackgroundResource(R.drawable.apply_button);
+//        holder.pfp.setBackgroundResource(R.drawable.apply_button);
+        db.collection("users").document(currentItem.getId()).get().addOnSuccessListener(documentSnapshot -> {
+            User u = documentSnapshot.toObject(User.class);
+
+            if (u != null)
+                if (u.getPfp() != null && !u.getPfp().equalsIgnoreCase(""))
+                    Picasso.get().load(Uri.parse(u.getPfp())).into(holder.pfp);
+        });
     }
 
     @Override
@@ -70,7 +83,7 @@ public class PeopleRVAdapter extends RecyclerView.Adapter<PeopleRVAdapter.RVView
     public class RVViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private TextView header;
-        private Button pfp;
+        private CircleImageView pfp;
 
         public RVViewHolder(@NonNull View peopleView) {
             super(peopleView);
@@ -80,7 +93,7 @@ public class PeopleRVAdapter extends RecyclerView.Adapter<PeopleRVAdapter.RVView
 
             peopleView.setOnClickListener(v -> {
                 if (getAdapterPosition() != RecyclerView.NO_POSITION && listener != null) {
-                        db.collection("users").document(people.get(getAdapterPosition()).getId()).get().addOnSuccessListener(documentSnapshot -> listener.onItemClick(documentSnapshot, getAdapterPosition()));
+                    db.collection("users").document(people.get(getAdapterPosition()).getId()).get().addOnSuccessListener(documentSnapshot -> listener.onItemClick(documentSnapshot, getAdapterPosition()));
                 }
             });
         }
