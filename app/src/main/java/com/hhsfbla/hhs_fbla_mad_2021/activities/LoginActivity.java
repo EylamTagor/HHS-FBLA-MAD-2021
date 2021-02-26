@@ -2,6 +2,7 @@ package com.hhsfbla.hhs_fbla_mad_2021.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private CallbackManager callbackManager;
     private LoginButton loginFacebookBtn;
+    private Button reportBug;
 
     private static final int GOOGLE_SIGN_IN = 123;
 
@@ -64,6 +66,10 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.show();
             doesUserExist();
         }
+
+        // Bug reporting
+        reportBug = findViewById(R.id.login_report_bug);
+        reportBug.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/NbedNqwVFTSXSrRQ7")), null));
 
         // FB
         callbackManager = CallbackManager.Factory.create();
