@@ -43,17 +43,27 @@ public class JobsFragment extends Fragment {
     private RecyclerView jobsView;
     private JobsRVAdapter jobsRVAdapter;
     private SearchView searchView;
-
     private User user;
     private FirebaseUser fbuser;
     private FirebaseFirestore db;
 
-
+    /**
+     * Returns a new Instance of the JobsFragment
+     * @return a new Instance of the JobsFragment
+     */
     public static JobsFragment newInstance() {
         return new JobsFragment();
     }
 
-    // Initializations when the View is first created. connects UI to backend.
+
+
+    /**
+     * Initializations when the View is first created. connects UI to backend.
+     * @param inflater The LayoutInflater
+     * @param container The ViewGroup
+     * @param savedInstanceState The Bundle passed into this fragment
+     * @return Returns the View
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -183,6 +193,10 @@ public class JobsFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Runs when the activity is created
+     * @param savedInstanceState The Bundle passed into this fragment
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

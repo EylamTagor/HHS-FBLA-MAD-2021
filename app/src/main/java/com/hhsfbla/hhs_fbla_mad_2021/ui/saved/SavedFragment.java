@@ -46,11 +46,21 @@ public class SavedFragment extends Fragment {
     private FirebaseFirestore db;
 
 
-
+    /**
+     * Returns a new Instance of the SavedFragment
+     * @return a new Instance of the SavedFragment
+     */
     public static SavedFragment newInstance() {
         return new SavedFragment();
     }
 
+    /**
+     * Initializations when the View is first created. connects UI to backend.
+     * @param inflater The LayoutInflater
+     * @param container The ViewGroup
+     * @param savedInstanceState The Bundle passed into this fragment
+     * @return Returns the View
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -119,12 +129,17 @@ public class SavedFragment extends Fragment {
 
     }
 
+    /**
+     * Adds a jobOffer
+     * @param jobOffer the job offer to be added
+     */
     public void addSavedJob(JobOffer jobOffer){
         savedJobs.add(new SavedRVModel(jobOffer));
     }
 
     /**
-     * @param savedInstanceState
+     * Runs when the activity is created
+     * @param savedInstanceState The Bundle passed into this fragment
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
