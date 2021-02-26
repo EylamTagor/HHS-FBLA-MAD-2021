@@ -105,42 +105,82 @@ public class Business {
         }
     }
 
+    /**
+     * Returns the website link
+     * @return the website link
+     */
     public String getWebsite() {
         return website;
     }
 
+    /**
+     * Sets a new website link
+     * @param website the new website link
+     */
     public void setWebsite(String website) {
         this.website = website;
     }
 
+    /**
+     * Returns the about description
+     * @return the about description
+     */
     public String getAbout() {
         return about;
     }
 
+    /**
+     * Sets a new description
+     * @param about the new description
+     */
     public void setAbout(String about) {
         this.about = about;
     }
 
+    /**
+     * Returns the CSR Vision
+     * @return the CSR Vision
+     */
     public String getCSRVision() {
         return CSRVision;
     }
 
+    /**
+     * Sets a new CSR Vision
+     * @param CSRVision the new vision
+     */
     public void setCSRVision(String CSRVision) {
         this.CSRVision = CSRVision;
     }
 
+    /**
+     * Returns the CSR Link
+     * @return the CSR Link
+     */
     public String getCSRLink() {
         return CSRLink;
     }
 
+    /**
+     * Sets a new CSR Link
+     * @param CSRLink the new CSR link
+     */
     public void setCSRLink(String CSRLink) {
         this.CSRLink = CSRLink;
     }
 
+    /**
+     * Returns the ESG score
+     * @return the ESG score
+     */
     public double getESGScore() {
         return ESGScore;
     }
 
+    /**
+     * Sets a new ESG score
+     * @param ESGScore the new ESG score
+     */
     public void setESGScore(double ESGScore) {
         this.ESGScore = ESGScore;
     }
