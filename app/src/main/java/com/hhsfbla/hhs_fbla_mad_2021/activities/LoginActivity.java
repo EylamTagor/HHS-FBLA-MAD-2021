@@ -65,14 +65,6 @@ public class LoginActivity extends AppCompatActivity {
             doesUserExist();
         }
 
-        // Go Home Son stuff, delete later
-        Button test = findViewById(R.id.testButton);
-        test.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, HomeActivity.class)));
-
-//        // OB test, delete later
-//        Button obTest = findViewById(R.id.obbtn);
-//        obTest.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, OnboardingActivity.class)));
-
         // FB
         callbackManager = CallbackManager.Factory.create();
 
@@ -171,18 +163,16 @@ public class LoginActivity extends AppCompatActivity {
      * @param token the token used to get credentials for login
      */
     private void handleFacebookAccessToken(AccessToken token) {
-
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        fuser = mAuth.getCurrentUser();
-                        doesUserExist();
-                    } else {
-                        progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "A user with this email exists already", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()) {
+                fuser = mAuth.getCurrentUser();
+                doesUserExist();
+            } else {
+                progressDialog.dismiss();
+                Toast.makeText(LoginActivity.this, "A user with this email exists already", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -260,7 +250,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (v instanceof TextView) {
                 TextView tv = (TextView) v;
-                tv.setTextSize(24);
+                tv.setTextSize(28);
                 return;
             }
         }
