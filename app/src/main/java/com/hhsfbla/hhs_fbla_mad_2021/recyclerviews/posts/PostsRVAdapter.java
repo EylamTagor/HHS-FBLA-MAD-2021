@@ -65,26 +65,28 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
             } else {
                 Picasso.get().load(fuser.getPhotoUrl()).into(holder.pfp);
             }
+            posts.get(position).setIsLiked(false);
+
+
+            //When one post is liked, others stay filled in, meaning their setIsLiked is gettinf screwed up.
+
             db.collection("posts")
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             holder.likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_no_heart, 0, 0, 0);
-                            posts.get(position).setIsLiked(false);
-                            Log.println(Log.DEBUG, "sad", "task size: " + task.getResult().size());
-
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 for (String uid : document.toObject(Post.class).getUsersLiked()) {
-                                    if (fuser.getUid().equals(uid)) {
-                                        Log.println(Log.DEBUG, "sad", "This is the post: " + document.getId());
-
+                                    if (fuser.getUid().equals(uid) && posts.get(position).getTime() == document.toObject(Post.class).getTimePosted()) {
                                         holder.likes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filled_heart, 0, 0, 0);
                                         posts.get(position).setIsLiked(true);
                                         break;
                                     }
+                                    Log.println(Log.DEBUG, "sad", "This is the post2: " + document.getId());
+
                                 }
                                 if (document.toObject(Post.class).getTimePosted() == (posts.get(position).getTime())) {
-                                    holder.likes.setText("" + document.toObject(Post.class).getLikes());
+                                    holder.likes.setText("" + document.toObject(Post.class).getLikes() + " Likes");
                                 }
                             }
                         }
@@ -94,7 +96,6 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
 
 
         holder.description.setText(currentItem.getDescription());
-
         holder.tag1.setText(currentItem.getHashtag());
         holder.title.setText(currentItem.getTitle());
     }
@@ -151,7 +152,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                                             db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
                                                 Post p = documentSnapshot.toObject(Post.class);
                                                 p.like(fuser.getUid());
-                                                likes.setText("" + p.getLikes());
+                                                likes.setText("" + p.getLikes() +" Likes");
                                                 db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(aVoid -> Log.d("SUCCESS", "DocumentSnapshot successfully written!"));
 
                                             });
@@ -186,7 +187,7 @@ public class PostsRVAdapter extends RecyclerView.Adapter<PostsRVAdapter.RVViewHo
                                             db.collection("posts").document(document.getId()).get().addOnSuccessListener(documentSnapshot -> {
                                                 Post p = documentSnapshot.toObject(Post.class);
                                                 p.unlike(fuser.getUid());
-                                                likes.setText("" + p.getLikes());
+                                                likes.setText("" + p.getLikes() + " Likes");
                                                 db.collection("posts").document(document.getId()).set(p).addOnSuccessListener(aVoid -> Log.d("SUCCESS", "DocumentSnapshot successfully written!"));
 
                                             });
