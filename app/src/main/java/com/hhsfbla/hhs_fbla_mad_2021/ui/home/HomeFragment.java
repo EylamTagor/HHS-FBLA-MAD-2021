@@ -131,14 +131,11 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
 
         followingButton.setOnClickListener(v -> {
             initFollowing();
-
-            trendingButton.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
             trendingSelected.setVisibility(View.INVISIBLE);
             trendingPostsView.setVisibility(View.INVISIBLE);
             trendingButton.setAlpha(.5f);
             trendingButton.setTextColor(Color.parseColor("#F2F2F2"));
 
-            followingButton.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             followingSelected.setVisibility(View.VISIBLE);
             followingPostsView.setVisibility(View.VISIBLE);
             followingButton.setTextColor(Color.parseColor("#10C380"));
@@ -152,8 +149,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         });
         trendingButton.setOnClickListener(v -> {
             initTrending();
-
-            followingButton.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
             followingSelected.setVisibility(View.INVISIBLE);
             followingPostsView.setVisibility(View.INVISIBLE);
             followingButton.setAlpha(.5f);
@@ -161,7 +156,6 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             notFollowingMessage.setVisibility(View.GONE);
 
 
-            trendingButton.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             trendingSelected.setVisibility(View.VISIBLE);
             trendingPostsView.setVisibility(View.VISIBLE);
             trendingButton.setTextColor(Color.parseColor("#10C380"));

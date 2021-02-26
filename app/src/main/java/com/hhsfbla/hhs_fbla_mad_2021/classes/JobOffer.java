@@ -100,10 +100,18 @@ public class JobOffer {
         this.link = link;
     }
 
+    /**
+     * Returns the time posted
+     * @return the time posted
+     */
     public long getTimePosted() {
         return timePosted;
     }
 
+    /**
+     * Sets a new time posted
+     * @param timePosted the new post time
+     */
     public void setTimePosted(long timePosted) {
         this.timePosted = timePosted;
     }

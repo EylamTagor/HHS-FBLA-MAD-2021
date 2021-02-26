@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="PetCode"
+                android:text="No name specified"
                 android:textColor="@color/LightGrey"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -79,7 +79,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:linksClickable="true"
-                android:text="www.petcodeusa.com"
+                android:text="No website specified"
                 android:textColor="@color/LightGrey"
                 android:textSize="14sp"
                 android:textStyle="normal"
@@ -88,39 +88,6 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/business_profile_picture"
                 app:layout_constraintTop_toBottomOf="@+id/business_name"
-                app:layout_constraintVertical_bias="0" />
-
-            <Button
-                android:id="@+id/business_follower_icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/ic_followers"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toEndOf="@+id/business_profile_picture"
-                app:layout_constraintTop_toBottomOf="@+id/business_website"
-                app:layout_constraintVertical_bias="0" />
-
-            <TextView
-                android:id="@+id/business_follower_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp"
-                android:text="4100"
-                android:textColor="@color/LightGrey"
-                android:textSize="13sp"
-                android:textStyle="normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/business_follower_icon"
-                app:layout_constraintTop_toBottomOf="@+id/business_website"
                 app:layout_constraintVertical_bias="0" />
 
 
@@ -214,7 +181,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
                 android:lineSpacingExtra="3dp"
-                android:text="High School Application Developer working in the research industry. Skilled in videography,  design, Unity (C#), and Mobile Application development (Swift/Java). Strong marketing experience, launched many social media campaigns with different companies and organizations"
                 android:textColor="@color/LightGrey"
                 android:textSize="12sp"
                 android:textStyle="normal"
@@ -223,7 +189,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/business_about_header"
-                app:layout_constraintVertical_bias="0" />
+                app:layout_constraintVertical_bias="0.004" />
 
             <TextView
                 android:id="@+id/business_job_opening_header"
@@ -252,9 +218,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
                 android:lineSpacingExtra="3dp"
-                android:text="My underlying belief is to make a positive contribution to the society and ensuring environment
-sustainability. I strive to create a healthier world and enrich lives of all communities
-at large through my initiatives. "
                 android:textColor="@color/LightGrey"
                 android:textSize="12sp"
                 android:textStyle="normal"
@@ -270,15 +233,16 @@ at large through my initiatives. "
                 android:layout_width="70dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginBottom="5dp"
+
                 android:padding="0dp"
                 android:text="Edit"
                 android:textSize="10sp"
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/business_delete_button"
-                app:layout_constraintHorizontal_bias=".5"
-                app:layout_constraintStart_toEndOf="@+id/business_follower_count"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@+id/business_profile_picture"
                 app:layout_constraintTop_toBottomOf="@+id/business_website"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -286,15 +250,15 @@ at large through my initiatives. "
                 android:id="@+id/business_delete_button"
                 android:layout_width="80dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="35dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginStart="20dp"
                 android:text="Delete"
                 android:textSize="10sp"
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@+id/business_edit"
                 app:layout_constraintTop_toBottomOf="@+id/business_website"
                 app:layout_constraintVertical_bias="0" />
 
