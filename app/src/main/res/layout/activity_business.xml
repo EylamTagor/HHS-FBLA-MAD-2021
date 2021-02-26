@@ -127,13 +127,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/business_divider2"
                 app:layout_constraintVertical_bias="0" />
 
-            <Button
+            <TextView
                 android:id="@+id/business_CSR_report_link"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="5dp"
                 android:padding="0dp"
                 android:text="CSR Report Link"
@@ -151,30 +150,27 @@
                 android:id="@+id/business_ESG_score_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:text="ESG Score:"
                 android:textColor="@color/Green"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/business_CSR_report_link"
                 app:layout_constraintEnd_toStartOf="@+id/business_ESG_score"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintStart_toEndOf="@+id/business_CSR_report_link"
-                app:layout_constraintTop_toTopOf="@+id/business_divider3" />
+                app:layout_constraintTop_toTopOf="@+id/business_CSR_report_link" />
 
             <TextView
                 android:id="@+id/business_ESG_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:text="17"
                 android:textColor="@color/Green"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/business_ESG_score_header"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintTop_toTopOf="@+id/business_divider3" />
+                app:layout_constraintTop_toTopOf="@+id/business_ESG_score_header" />
 
             <TextView
                 android:id="@+id/business_about"
