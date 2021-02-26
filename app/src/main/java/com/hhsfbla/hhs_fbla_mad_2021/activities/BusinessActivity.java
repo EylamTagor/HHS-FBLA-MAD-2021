@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -46,8 +48,8 @@ public class BusinessActivity extends AppCompatActivity {
     private Dialog createJobOfferDialog;
     private CircleImageView logo;
     private FloatingActionButton createJobButton;
-    private Button CSRReportLink, edit, delete;
-    private TextView name, website, about, CSRVision, followerCount, ESGScore;
+    private Button edit, delete;
+    private TextView name, website, about, CSRVision, CSRReportLink, followerCount, ESGScore;
     private RecyclerView jobsOfferView;
     private ArrayList<JobsRVModel> jobOffers = new ArrayList<>();
     private JobsRVAdapter jobsRVAdapter;
@@ -97,7 +99,10 @@ public class BusinessActivity extends AppCompatActivity {
                         Picasso.get().load(Uri.parse(biz.getLogo())).into(logo);
                     }
                 }
-                CSRReportLink.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(biz.getCSRLink())), null));
+
+//                CSRReportLink.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(biz.getCSRLink())), null));
+                CSRReportLink.setText(Html.fromHtml("<a href='" + biz.getCSRLink() + "'>CSR Report Link</androidx.constraintlayout.widget.ConstraintLayout</a>"));
+                CSRReportLink.setMovementMethod(LinkMovementMethod.getInstance());
 
                 db.collection("jobOffers").get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -111,7 +116,6 @@ public class BusinessActivity extends AppCompatActivity {
 
             });
         });
-
 
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.toObject(User.class).getMyBusinesses().contains(getIntent().getStringExtra("BUSINESS_ID"))) {
