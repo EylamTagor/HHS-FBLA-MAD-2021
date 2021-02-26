@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,6 +48,12 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
     private List<User> followingPeopleList;
     private ArrayList<PeopleRVModel> followersRVModels;
     private List<User> followersPeopleList;
+    private TextView noFollowersMessage;
+    private TextView notFollowingMessage;
+    private int numFollowing;
+    private int numFollowers;
+    private boolean isFollowingTab;
+
 
     /**
      * Returns a new Instance of the PeopleFragment
@@ -79,6 +87,12 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
         followingPeopleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         followingButton = rootView.findViewById(R.id.people_following);
         followingSelected = rootView.findViewById(R.id.people_following_selected);
+        notFollowingMessage = rootView.findViewById(R.id.people_not_following_message);
+        noFollowersMessage = rootView.findViewById(R.id.people_no_followers_message);
+        notFollowingMessage.setVisibility(View.GONE);
+        noFollowersMessage.setVisibility(View.GONE);
+
+        isFollowingTab = false;
 
         //Firebase
         db = FirebaseFirestore.getInstance();
@@ -86,25 +100,46 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
 
         //transition to followers tab
         followersButton.setOnClickListener(v -> {
+            isFollowingTab = false;
             followingButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
             followingSelected.setVisibility(View.INVISIBLE);
             followingPeopleView.setVisibility(View.INVISIBLE);
             followingButton.setAlpha(.5f);
             followingButton.setTextColor(Color.parseColor("#F2F2F2"));
 
+            //no follower/following message handle
+            notFollowingMessage.setVisibility(View.GONE);
+            if (numFollowers < 2) {
+                noFollowersMessage.setVisibility(View.VISIBLE);
+            } else {
+                noFollowersMessage.setVisibility(View.GONE);
+            }
+
             followersButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
             followersSelected.setVisibility(View.VISIBLE);
             followersPeopleView.setVisibility(View.VISIBLE);
             followersButton.setTextColor(Color.parseColor("#10C380"));
             followersButton.setAlpha(1);
+
+
         });
         //transition to following tab
         followingButton.setOnClickListener(v -> {
+            isFollowingTab = true;
             followersButton.setTypeface(followingButton.getTypeface(), Typeface.NORMAL);
             followersSelected.setVisibility(View.INVISIBLE);
             followersPeopleView.setVisibility(View.INVISIBLE);
             followersButton.setAlpha(.5f);
             followersButton.setTextColor(Color.parseColor("#F2F2F2"));
+
+            //no follower/following message handle
+            noFollowersMessage.setVisibility(View.GONE);
+            if (numFollowing < 2) {
+                notFollowingMessage.setVisibility(View.VISIBLE);
+            } else {
+                notFollowingMessage.setVisibility(View.GONE);
+            }
+
 
             followingButton.setTypeface(followingButton.getTypeface(), Typeface.BOLD);
             followingSelected.setVisibility(View.VISIBLE);
@@ -118,11 +153,20 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
         followingRVModels = new ArrayList<>();
         followingRVAdapter = new PeopleRVAdapter(followingRVModels);
         followingPeopleView.setAdapter(followingRVAdapter);
+
+        //getting users who are following
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(snapshot -> {
             final User u = snapshot.toObject(User.class);
+            numFollowing = u.getFollowing().size();
+            if(numFollowing < 2 && isFollowingTab){
+                    notFollowingMessage.setVisibility(View.VISIBLE);
+            }
+            else{
+                notFollowingMessage.setVisibility(View.GONE);
+            }
 
             for (String id : u.getFollowing())
-                if (!id.equals(fuser.getUid()))
+                if (!id.equals(fuser.getUid())) {
                     db.collection("users").document(id).get().addOnSuccessListener(snapshot1 -> {
                         User u1 = snapshot1.toObject(User.class);
                         followingPeopleList.add(u1);
@@ -130,6 +174,7 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
                         followingRVAdapter.setSearches(followingRVModels);
                         followingRVAdapter.notifyDataSetChanged();
                     });
+                }
         });
 
         //Follower people RV
@@ -137,9 +182,16 @@ public class PeopleFragment extends Fragment implements PeopleRVAdapter.OnItemCl
         followersRVAdapter = new PeopleRVAdapter(followersRVModels);
         followersPeopleView.setAdapter(followersRVAdapter);
         followersPeopleList = new ArrayList<>();
+        //getting users who are followers
         db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(snapshot -> {
             final User u = snapshot.toObject(User.class);
-
+            numFollowers = u.getFollowers().size();
+            if(numFollowers < 2 && !isFollowingTab){
+                noFollowersMessage.setVisibility(View.VISIBLE);
+            }
+            else{
+                noFollowersMessage.setVisibility(View.GONE);
+            }
             for (String id : u.getFollowers())
                 if (!id.equals(fuser.getUid()))
                     db.collection("users").document(id).get().addOnSuccessListener(snapshot1 -> {

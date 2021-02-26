@@ -11,7 +11,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         >
         <!-- staticText--> the UI for an individual searched item that appears when you search for a user or business. All individual elements are identifiable by their ID.
 
@@ -38,7 +37,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/search_item_pfp"
-            app:layout_constraintTop_toBottomOf="@id/saved_divider"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0" />
 
         <TextView
@@ -69,7 +68,8 @@
             android:background="@color/LightGrey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/search_item_pfp"/>
 
 
 

@@ -98,6 +98,10 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.RVView
                 if (u.getLogo() != null && !u.getLogo().equalsIgnoreCase("")) {
                     Picasso.get().load(Uri.parse(u.getLogo())).into(holder.pfp);
                 }
+                else {
+                    if(!currentItem.isUser())
+                        holder.pfp.setImageResource(R.drawable.ic_no_business_logo);
+                }
             }
         });
     }
