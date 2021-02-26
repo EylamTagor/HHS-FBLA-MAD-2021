@@ -91,13 +91,8 @@ public class SavedRVAdapter extends RecyclerView.Adapter<SavedRVAdapter.StaticRV
         public StaticRVViewHolder(@NonNull View savedJobView) {
             super(savedJobView);
             apply = savedJobView.findViewById(R.id.saved_apply_button);
-            apply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    view.getContext().startActivity(intent);
-                    startActivity(view.getContext(), new Intent(Intent.ACTION_VIEW, Uri.parse(link)), null);
-                }
+            apply.setOnClickListener(view -> {
+                startActivity(view.getContext(), new Intent(Intent.ACTION_VIEW, Uri.parse(link)), null);
             });
 
             title = savedJobView.findViewById(R.id.saved_title);
