@@ -130,6 +130,8 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
         //Tabs
 
         followingButton.setOnClickListener(v -> {
+            initFollowing();
+
             trendingButton.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
             trendingSelected.setVisibility(View.INVISIBLE);
             trendingPostsView.setVisibility(View.INVISIBLE);
@@ -141,16 +143,16 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             followingPostsView.setVisibility(View.VISIBLE);
             followingButton.setTextColor(Color.parseColor("#10C380"));
             followingButton.setAlpha(1);
-            if(usersFollowingPostsID.size() == 0){
+            if (usersFollowingPostsID.size() == 0) {
                 notFollowingMessage.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 notFollowingMessage.setVisibility(View.GONE);
-
+                followingPostsRVModels = new ArrayList<>();
             }
-
         });
         trendingButton.setOnClickListener(v -> {
+            initTrending();
+
             followingButton.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
             followingSelected.setVisibility(View.INVISIBLE);
             followingPostsView.setVisibility(View.INVISIBLE);
@@ -164,118 +166,12 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
             trendingPostsView.setVisibility(View.VISIBLE);
             trendingButton.setTextColor(Color.parseColor("#10C380"));
             trendingButton.setAlpha(1);
-
         });
 
-        searchButton.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), SearchActivity.class));
-        });
+        searchButton.setOnClickListener(v -> startActivity(new Intent(getActivity(), SearchActivity.class)));
 
-        followingPostsRVModels = new ArrayList<>();
-
-
-        // trending Posts RV
-
-        trendingPostsRVModels = new ArrayList<>();
-        trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
-        trendingPostsView.setAdapter(trendingPostsRVAdapter);
-
-        trendingPostsList = new ArrayList<>();
-
-        db.collection("posts")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            trendingPostsList.add(document.toObject(Post.class));
-                            trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                            trendingPostsRVAdapter.setPosts(trendingPostsList);
-                            trendingPostsRVAdapter.sortTrendingPosts();
-                            trendingPostsRVAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-
-
-        //FollowingPostsRV
-        followingPostsRVModels = new ArrayList<>();
-        followingPostsRVAdapter = new PostsRVAdapter(followingPostsRVModels);
-        followingPostsView.setAdapter(followingPostsRVAdapter);
-        followingPostsList = new ArrayList<>();
-
-        //Get the list of people that the user is following
-        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
-            User u = documentSnapshot.toObject(User.class);
-            usersFollowingID = u.getFollowing();
-
-            ArrayList<User> usersFollowing = new ArrayList<>();
-            usersFollowingPostsID = new ArrayList<>();
-
-            //Get users that user follow
-            db.collection("users")
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                for (String ID : usersFollowingID) {
-                                    if (document.getId().equals(ID)) {
-                                        usersFollowing.add(document.toObject(User.class));
-                                        break;
-                                    }
-
-                                }
-
-
-                            }
-
-                            //Add all the IDs of the posts of the users that user follows
-                            for (User user : usersFollowing) {
-                                for (String post : user.getMyPosts()) {
-                                    {
-                                        usersFollowingPostsID.add(post);
-                                    }
-                                }
-                            }
-                            if(usersFollowingPostsID.size() == 0){
-                                notFollowingMessage.setVisibility(View.VISIBLE);
-                            }
-                            else{
-                                notFollowingMessage.setVisibility(View.GONE);
-
-                            }
-                            //match post ids of the posts of the users that the user follows to the posts
-                            db.collection("posts")
-                                    .get()
-                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful()) {
-
-                                                for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                                    for (String ID : usersFollowingPostsID) {
-                                                        if (document.getId().equals(ID)) {
-                                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                                            followingPostsList.add(document.toObject(Post.class));
-                                                            followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
-                                                            Log.println(Log.DEBUG, "adsd", "Loading following posts");
-                                                            followingPostsRVAdapter.setPosts(followingPostsList);
-                                                            followingPostsRVAdapter.sortFollowingPosts();
-                                                            followingPostsRVAdapter.notifyDataSetChanged();
-                                                        }
-                                                    }
-
-                                                }
-                                            }
-                                        }
-                                    });
-                        }
-                    });
-
-            Log.println(Log.DEBUG, "adsd", "Trump " + usersFollowingPostsID.size());
-
-
-        });
+        initTrending();
+        initFollowing();
 
         followingPostsRVAdapter.setOnItemClickListener(this);
         trendingPostsRVAdapter.setOnItemClickListener(this);
@@ -377,5 +273,105 @@ public class HomeFragment extends Fragment implements PostsRVAdapter.OnItemClick
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void initFollowing() {
+        //FollowingPostsRV
+        followingPostsRVModels = new ArrayList<>();
+        followingPostsRVAdapter = new PostsRVAdapter(followingPostsRVModels);
+        followingPostsView.setAdapter(followingPostsRVAdapter);
+        followingPostsList = new ArrayList<>();
+
+        //Get the list of people that the user is following
+        db.collection("users").document(fuser.getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            User u = documentSnapshot.toObject(User.class);
+            usersFollowingID = u.getFollowing();
+
+            ArrayList<User> usersFollowing = new ArrayList<>();
+            usersFollowingPostsID = new ArrayList<>();
+
+            //Get users that user follow
+            db.collection("users")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                for (String ID : usersFollowingID) {
+                                    if (document.getId().equals(ID)) {
+                                        usersFollowing.add(document.toObject(User.class));
+                                        break;
+                                    }
+
+                                }
+
+
+                            }
+
+                            //Add all the IDs of the posts of the users that user follows
+                            for (User user : usersFollowing) {
+                                for (String post : user.getMyPosts()) {
+                                    {
+                                        usersFollowingPostsID.add(post);
+                                    }
+                                }
+                            }
+                            if (usersFollowingPostsID.size() == 0) {
+                                notFollowingMessage.setVisibility(View.VISIBLE);
+                            } else {
+                                notFollowingMessage.setVisibility(View.GONE);
+
+                            }
+                            //match post ids of the posts of the users that the user follows to the posts
+                            db.collection("posts")
+                                    .get()
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+
+                                            for (QueryDocumentSnapshot document : task1.getResult()) {
+
+                                                for (String ID : usersFollowingPostsID) {
+                                                    if (document.getId().equals(ID)) {
+                                                        followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                                        followingPostsList.add(document.toObject(Post.class));
+                                                        followingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                                                        Log.println(Log.DEBUG, "adsd", "Loading following posts");
+                                                        followingPostsRVAdapter.setPosts(followingPostsList);
+                                                        followingPostsRVAdapter.sortFollowingPosts();
+                                                        followingPostsRVAdapter.notifyDataSetChanged();
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    });
+                        }
+                    });
+
+            Log.println(Log.DEBUG, "adsd", "Trump " + usersFollowingPostsID.size());
+
+
+        });
+    }
+
+    private void initTrending() {
+        // trending Posts RV
+
+        trendingPostsRVModels = new ArrayList<>();
+        trendingPostsRVAdapter = new PostsRVAdapter(trendingPostsRVModels);
+        trendingPostsView.setAdapter(trendingPostsRVAdapter);
+
+        trendingPostsList = new ArrayList<>();
+
+        db.collection("posts").get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            trendingPostsList.add(document.toObject(Post.class));
+                            trendingPostsRVModels.add(new PostsRVModel(document.toObject(Post.class)));
+                            trendingPostsRVAdapter.setPosts(trendingPostsList);
+                            trendingPostsRVAdapter.sortTrendingPosts();
+                            trendingPostsRVAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
     }
 }

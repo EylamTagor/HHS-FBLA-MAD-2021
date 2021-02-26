@@ -18,6 +18,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Represents a utility class that helps with rotating images with uneven resolutions
+ */
 public class ImageRotator {
 
     private Context context;
