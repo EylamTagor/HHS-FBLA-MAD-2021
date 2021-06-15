@@ -2,7 +2,6 @@ README
 
 by Homestead FBLA
 Mobile Application Development 2021
-GitHub - EylamTagor/HHS-FBLA-MAD-2021
 Created by Eylam Tagor, Ayush Satyavarpu, and Anthony Sky Ng-Thow-Hing
 
 [IMPORTANT NOTES]:
